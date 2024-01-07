@@ -47,6 +47,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { CAIA_LAVEL_ONE } from '@/lib/data/exams'
 
 const data = [...BookmarkData]
 
@@ -168,6 +169,22 @@ export default function Bookmark() {
       rowSelection,
     },
   })
+  const chapters = CAIA_LAVEL_ONE.chapters.map((data) => data.chapter)
+
+// Extract topics from CAIA_LAVEL_ONE data
+const topics = () => {
+  const topics = CAIA_LAVEL_ONE.chapters.map((e) => {
+    // Check if topics are represented as strings
+    if (typeof e.topics[0] === 'string') {
+      return e;
+    }
+    // Check if topics are represented as objects and map them
+    if (typeof e.topics[0] === 'object') {
+      return e.topics.map((e) => e.topics);
+    }
+  })
+  return topics;
+}
 
   const allRowsSelected =
     table.getIsAllRowsSelected() || table.getIsSomePageRowsSelected()

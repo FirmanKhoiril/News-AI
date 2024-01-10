@@ -23,7 +23,7 @@ function Register() {
       </div>
       <div className='flex justify-center items-center h-full w-full'>
         <div className='px-5 max-w-6xl max-h-[85vh] bg-transparent overflow-hidden drop-shadow-2xl grid grid-cols-2 w-full'>
-          <div className='relative bg-[#755bf4] rounded-l-2xl w-full h-full max-h-[85vh]  flex justify-center items-center'>
+          <div className='relative bg-[#755bf4] rounded-l-2xl w-full h-screen max-h-[760px] flex justify-center items-center'>
             {/* Image */}
             <div className="relative w-full h-full">
             <div className="">

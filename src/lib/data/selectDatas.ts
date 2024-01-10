@@ -7,6 +7,7 @@ export const languageList = [
 ]
 
 export const writingStyle = [
+  "Standard",
   'Descriptive Style',
   'Narrative Style',
   'Poetic Style',
@@ -24,7 +25,7 @@ export const writingStyle = [
 ]
 
 export const purposeOfWriting = [
-  'Normal',
+  'Standard',
   'Essay',
   'Article',
   'Marketing Material',

@@ -1,29 +1,22 @@
 import { FiSun } from 'react-icons/fi'
 import { BsMoonFill } from 'react-icons/bs'
 // import Selector from './chat/subcomp/selector'
-import { useAtom } from 'jotai'
-import { MdOutlineMenu } from 'react-icons/md'
 import { IoMdSearch } from 'react-icons/io'
 import { Link } from 'react-router-dom'
-import { openSideBar } from '@/lib/context'
 import useDarkMode from '@/lib/useDarkMode'
 import { Button } from './ui/button'
+import { HiOutlineBell } from "react-icons/hi2";
+import { BiMessageDots } from "react-icons/bi";
 
 function TopNav() {
   const [darkMode, toggleDarkMode] = useDarkMode()
-  const [openSideBarValue, setOpenSideBarValue] = useAtom(openSideBar)
+
   return (
     <div
-      className={`border-b dark:border-gray-700 shadow-sm z-50 px-3 py-2 top-0 fixed ${
-        !openSideBarValue ? 'w-[85.4vw]' : 'w-[95vw]'
-      } bg-white dark:bg-[#0A0A0A] flex justify-between items-center`}
+      className={`border-b dark:border-gray-700 shadow-sm z-50 px-5 py-2 top-0 fixed w-[85.8vw] bg-white dark:bg-[#0A0A0A] flex justify-between items-center`}
     >
       <div className='flex items-center gap-4 w-full'>
-        <MdOutlineMenu
-          className='text-2 w-6 h-auto'
-          role='button'
-          onClick={() => setOpenSideBarValue(!openSideBarValue)}
-        />
+
         <div className='max-w-sm w-full flex dark:border-gray-700 dark:bg-gray-900  py-1.5 px-3 shadow items-center gap-3 rounded-md bg-primary/10 border-0 text-sm'>
           <input
             type='text'
@@ -33,8 +26,14 @@ function TopNav() {
           <IoMdSearch className='w-5 h-auto text-primary' />
         </div>
       </div>
-      <div className='flex gap-3 items-center w-full justify-end px-2'>
-        <p className='text-base font-medium'>Hello, John</p>
+      <div className='flex gap-10 items-center w-full justify-end px-2'>
+        <button type='button'>
+          <HiOutlineBell />
+        </button>
+        <button type='button'>
+          <BiMessageDots />
+        </button>
+       <div className="flex items-center gap-5">
         <Link to='/profile'>
           <img
             src={'https://eu.ui-avatars.com/api/?name=John+Doe&size=250'}
@@ -42,6 +41,8 @@ function TopNav() {
             className='w-8 h-auto rounded-full'
           />
         </Link>
+        <p className='text-base font-medium'>Hello, John</p>
+       </div>
         <Button
           variant='secondary'
           onClick={toggleDarkMode as never}

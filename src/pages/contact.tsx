@@ -23,10 +23,10 @@ export default function Contact() {
   const [currentChatList, setCurrentChatList] = useState(chatLabels.inbox)
 
   return (
-    <main className='p-5 mt-5'>
+    <main className='p-5 mt-5 h-full'>
       <div className='card space-y-5'>
         <div className='flex justify-between'>
-          <div className='max-w-sm w-full flex  dark:bg-gray-900  py-2.5 px-3 shadow dark:border-gray-700 border items-center gap-3 rounded-md bg-white text-sm'>
+          <div className='max-w-sm w-full flex h-full  dark:bg-gray-900 max-h-screen py-2.5 px-3 shadow dark:border-gray-700 border items-center gap-3 rounded-md bg-white text-sm'>
             <IoMdSearch className='w-5 h-auto text-gray-700' />
             <input
               type='text'
@@ -43,17 +43,16 @@ export default function Contact() {
           >
             <div className='flex justify-end'>
               <button>
-                {showChatList && (
+                {showChatList ? (
                   <MdMenuOpen
                     className='w-6 h-auto rounded-full text-2 border shadow dark:border-gray-700'
                     onClick={() => setShowChatList((prev) => !prev)}
                   />
-                )}
-                {!showChatList && (
+                ) : (
                   <IoChatboxOutline
-                    className='w-6 h-auto rounded-full text-2'
-                    onClick={() => setShowChatList((prev) => !prev)}
-                  />
+                  className='w-6 h-auto rounded-full text-2'
+                  onClick={() => setShowChatList((prev) => !prev)}
+                />
                 )}
               </button>
             </div>
@@ -78,8 +77,8 @@ export default function Contact() {
                   </div>
                 </div>
                 <div className='space-y-3' key={currentChatList}>
-                  <ScrollArea className='h-[60vh]'>
-                    {[...Array(5)].map((e, i) => (
+                  <ScrollArea className=' max-h-[84vh] h-full overflow-y-auto'>
+                    {[...Array(10)].map((e, i) => (
                       <div
                         className='flex gap-3 pb-4 border-b shadow dark:border-gray-800 mb-3'
                         key={i}
@@ -113,7 +112,7 @@ export default function Contact() {
               showChatList ? 'w-full' : ''
             } space-y-6`}
           >
-            <div className='flex gap-7 text-gray-700 dark:text-gray-200 border-b shadow dark:border-gray-600 pt-2 pb-5'>
+            <div className='flex gap-7 pl-4 text-gray-700 dark:text-gray-200 border-b shadow dark:border-gray-600 pt-2 pb-5'>
               <FaArrowLeft />
               <FaPencil />
               <IoFlagOutline />
@@ -139,7 +138,8 @@ export default function Contact() {
                 <p className='text-2 text-xs'>October 23, 2023 - 10:00 AM</p>
               </div>
             </div>
-            <div className='space-y-5'>
+            <div className='space-y-5 justify-between  flex flex-col
+            '>
               {chatLabels.chat !== currentChatList && (
                 <>
                   <div className='space-y-2'>
@@ -197,8 +197,29 @@ export default function Contact() {
                 </>
               )}
               {chatLabels.chat === currentChatList && (
-                <>
-                  <div className='flex flex-col gap-y-5 px-5'>
+                  <div className='flex flex-col gap-y-5 px-5 max-h-[68vh] h-full overflow-y-auto'>
+                    <div className='self-end max-w-sm w-full text-black dark:text-gray-400 text-sm rounded-2xl border shadow dark:border-gray-600 p-3'>
+                      <div className='flex justify-end'>
+                        <p className='text-xs text-2 mb-3'>
+                          Oct 12, 2023 10:00 AM
+                        </p>
+                      </div>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Labore ut vero ad quasi accusantium corporis cumque
+                      praesentium fuga omnis aliquam odio similique inventore
+                      nemo, eum, nobis quas, laboriosam magni quia!
+                    </div>
+                    <div className='self-start max-w-sm w-full text-black dark:text-gray-400 text-sm rounded-2xl border shadow dark:border-gray-600 p-3'>
+                      <div className='flex justify-end'>
+                        <p className='text-xs text-2 mb-3'>
+                          Oct 12, 2023 10:00 AM
+                        </p>
+                      </div>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Labore ut vero ad quasi accusantium corporis cumque
+                      praesentium fuga omnis aliquam odio similique inventore
+                      nemo, eum, nobis quas, laboriosam magni quia!
+                    </div>
                     <div className='self-end max-w-sm w-full text-black dark:text-gray-400 text-sm rounded-2xl border shadow dark:border-gray-600 p-3'>
                       <div className='flex justify-end'>
                         <p className='text-xs text-2 mb-3'>
@@ -222,9 +243,8 @@ export default function Contact() {
                       nemo, eum, nobis quas, laboriosam magni quia!
                     </div>
                   </div>
-                </>
               )}
-              <div className='border-t shadow dark:border-gray-700 space-y-5 p-2'>
+              <div className='border-t shadow dark:border-gray-700 space-y-2  px-2 py-4'>
                 <div className='flex gap-2'>
                   <Button variant='outline' className='gap-2'>
                     <RiArrowGoBackLine />

@@ -208,7 +208,7 @@ const GridLayout = () => {
     </div>
   )
   const Component4 = () => (
-    <div className='border shadow flex flex-col justify-between dark:border-gray-700 h-full rounded-md'>
+    <div className='border shadow flex flex-col justify-between w-full overflow-y-auto dark:border-gray-700 h-full max-h-full rounded-md'>
       <Editor />
       <div className='flex justify-between items-center w-full'>
         <div className='flex justify-between gap-2 py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>
@@ -232,9 +232,11 @@ const GridLayout = () => {
         <div>
           <Popover>
             <PopoverTrigger>
-              <button className='bg-white px-3 drop-shadow-2xl py-1 rounded-full'>
+             <div className="px-3 py-2">
+             <button className='bg-white px-3 py-1.5 drop-shadow-4xl rounded-full'>
                 <IoChatboxOutline className='w-6 h-auto dark:text-primary text-primary' />
               </button>
+             </div>
             </PopoverTrigger>
             <PopoverContent className='border rounded-2xl overflow-hidden'>
               <div className='bg-white text-black space-y-3'>

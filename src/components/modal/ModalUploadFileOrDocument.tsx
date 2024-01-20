@@ -1,16 +1,22 @@
 import { useStoreState } from "@/context/useStore"
+import React from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 const ModalUploadFileOrDocument = () => {
-    const {  isSelectUpload, setShowSelectUploadFile} = useStoreState()
+    const {  isSelectUpload, setShowSelectUploadFile, selectedDocs, setSelectedDocs} = useStoreState()
 
     const handleClearSelectedUpload = () => {
         setShowSelectUploadFile(false)
     }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+    }
+    console.table(selectedDocs)
   return (
     <>
     <div onClick={handleClearSelectedUpload} className="bg-black/80 w-full h-screen fixed z-40 " />
-    <form className="fixed mx-auto h-full max-h-[400px] flex flex-col gap-4 max-w-[350px] overflow-y-auto z-50 inset-0 border dark:border-gray-800/80 top-1/4 card">
+    <form onSubmit={handleSubmit} className="fixed mx-auto h-full max-h-[400px] flex flex-col gap-4 max-w-[350px] overflow-y-auto z-50 inset-0 border dark:border-gray-800/80 top-1/4 card">
         {isSelectUpload === "Paste Text" && (
             <>
             <label htmlFor="copyAndPasteText">Copy and Paste a text</label>
@@ -45,7 +51,14 @@ const ModalUploadFileOrDocument = () => {
                         </p>
                         <input
                         type='file'
+                        multiple
                         id='file-upload'
+                        onChange={(e) => { 
+                            const newFiles = e.target.files;
+                             if(newFiles.length > 0) {
+                            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, ...Array.from(newFiles)]);
+                            }}
+                          }
                         className='hidden'
                         />
                     </label>
@@ -57,7 +70,7 @@ const ModalUploadFileOrDocument = () => {
             <button  onClick={handleClearSelectedUpload} className='max-w-[170px] max-h-[40px]  border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
             Cancel
             </button>
-            <button type="button" className='max-w-[170px] max-h-[40px] text-white  rounded-md bg-primary py-2 px-1 w-full text-xs'>
+            <button type="submit" className='max-w-[170px] max-h-[40px] text-white  rounded-md bg-primary py-2 px-1 w-full text-xs'>
             Validate
             </button>
         </div>

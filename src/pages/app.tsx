@@ -50,9 +50,12 @@ const GridLayout = () => {
   const [showSave, setShowSave] = useState(false)
   const [showDownload, setShowDownload] = useState(false)
   const { setIsSelectUpload, setShowSelectUploadFile} = useStoreState()
-  const { transcript, listening, handleMic} = useMicSpeechRecognition()
+  const {browserSupportsSpeechRecognition, transcript, listening, handleMic} = useMicSpeechRecognition()
 
- 
+  useEffect(() => {
+    if (!browserSupportsSpeechRecognition) toast.error("Browser didnt support speech recognition")
+  }, [])
+  
   
   useEffect(() => {
     divRef.current.scrollIntoView({behavior: "instant"})   

@@ -43,16 +43,16 @@ import GoogleDrive from '../assets/GoogleDrive.png'
 
 const GridLayout = () => {
   const navigate = useNavigate()
-  const divRef = useRef<HTMLDivElement>(null)
+  const divRef = useRef<HTMLDivElement>()
   const [isStandart, setIsStandart] = useState("")
   const [toogleSendEmailWord, setToogleSendEmailWord] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [showDownload, setShowDownload] = useState(false)
   const { setIsSelectUpload, setShowSelectUploadFile} = useStoreState()
-  const {browserSupportsSpeechRecognition, transcript, listening, handleMic} = useMicSpeechRecognition()
+  const { transcript, listening, handleMic} = useMicSpeechRecognition()
 
-  if (!browserSupportsSpeechRecognition) toast.error("Browser didnt support speech recognition")
+ 
   
   useEffect(() => {
     divRef.current.scrollIntoView({behavior: "instant"})   

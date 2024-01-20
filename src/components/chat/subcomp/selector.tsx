@@ -31,7 +31,7 @@ export default function Selector({
             {/* <SelectLabel>{title}s</SelectLabel> */}
             {options.map((opt) => {
               return (
-                <SelectItem value={opt as string}>
+                <SelectItem key={opt as string} value={opt as string}>
                   <span>{opt}</span>
                 </SelectItem>
               )
@@ -43,7 +43,7 @@ export default function Selector({
               {/* <SelectLabel>{title}s</SelectLabel> */}
               {options.map((opt) => {
                 return (
-                  <SelectItem value={opt as string}>
+                  <SelectItem key={opt as string} value={opt as string}>
                     <span>{opt}</span>
                   </SelectItem>
                 )

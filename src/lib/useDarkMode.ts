@@ -15,12 +15,15 @@ const useDarkMode = () => {
     const newDarkMode = !darkMode
     setDarkMode(newDarkMode)
     localStorage.setItem('darkMode', String(newDarkMode))
-    console.log('hi')
   }
 
   // Apply dark mode class to the document's root element
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
+
+    return () => {
+      document.documentElement.classList.toggle('dark', false)
+    }
   }, [darkMode])
 
   return [darkMode, toggleDarkMode]

@@ -4,12 +4,18 @@ import TopNav from '@/components/TopNav'
 import { Toaster } from '@/components/ui/toaster'
 import { useAtom } from 'jotai'
 import { openSideBar } from '@/lib/context'
+import ModalUploadFileOrDocument from '@/components/modal/ModalUploadFileOrDocument'
+import { useStoreState } from '@/context/useStore'
+import {Toaster as Toast} from 'sonner'
 
 function AppLayout() {
   const [openSideBarValue] = useAtom(openSideBar)
+  const { showSelectUploadFile} = useStoreState()
 
   return (
     <main className='flex w-full'>
+      {showSelectUploadFile && <ModalUploadFileOrDocument /> }
+      <Toast richColors theme='dark' position='top-center' />
       <section className={`${openSideBarValue ? 'w-[4.5%]' : 'w-2/12'}`}>
         <aside className='w-full sticky top-0 h-full md:max-h-[95vh]'>
           {/* Content for sidebar/Header goes here */}

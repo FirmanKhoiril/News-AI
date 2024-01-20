@@ -1,4 +1,4 @@
-import { MdEmail } from 'react-icons/md'
+import { MdClose, MdEmail } from 'react-icons/md'
 import { Switch } from '@/components/ui/switch'
 import { Input } from '@/components/ui/input'
 import { IoMicOutline } from 'react-icons/io5'
@@ -17,6 +17,9 @@ import {
 import { IoMdSearch } from 'react-icons/io'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import pdf from '@/assets/pdf-2.png'
+
 function Emailai() {
   return (
     <div className='grid grid-cols-12 gap-3 py-2 px-3'>
@@ -175,7 +178,26 @@ function Emailai() {
           </div>
         </div>
       </section>
-      <section className='col-span-4 card'>
+      <section className='col-span-4 space-y-2 card'>
+        <div className="flex flex-col pb-4 w-full">
+        <div className="bg-[#040C34] w-full flex justify-between text-white rounded-t-[5px] py-3 px-2">
+          <div className='flex items-center ml-4 gap-6'>
+            <button type='button'>
+              <MdClose size={25} />
+            </button>
+            <p className='font-semibold text-sm'>Preview</p>
+          </div>
+          <button type='button' className='p-0.5 border mr-4 border-white rounded-full'>
+            <HiOutlineDotsHorizontal size={18} />
+          </button>
+        </div>
+        <div className="w-full flex gap-4 py-4 items-center justify-center flex-col text-white rounded-b-[5px] bg-[rgba(4,_12,_52,_0.50)]">
+          <img src={pdf} alt="Pdf Preview" width={324} height={324} />
+          <button type='button' className='bg-[#040C34] w-[84px] h-[22px] text-[10px] font-semibold rounded-[10px]'>
+            Page 1 of 2
+          </button>
+        </div>
+        </div>
         <div className='bg-[#040C34D9] rounded-lg px-4 py-2 space-y-3'>
           <p className='text-center font-semibold text-white'>Choose Contact</p>
           <div className='w-full flex dark:border-gray-700 dark:bg-gray-900  py-1.5 px-3 shadow items-center gap-3 rounded-md bg-[#040C34] border-0 text-sm mx-auto max-w-xl'>

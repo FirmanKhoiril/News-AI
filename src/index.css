@@ -217,5 +217,5 @@ body {
 }
 
 .black-button {
-  @apply px-3 py-1 rounded-md text-white bg-[#040C34] dark:bg-[#343434] flex gap-3 items-center;
+  @apply px-3 py-1 rounded-md text-white bg-[#040C34] dark:bg-[#343434] flex gap-1.5 items-center;
 }

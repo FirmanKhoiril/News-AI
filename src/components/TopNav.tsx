@@ -13,7 +13,7 @@ function TopNav() {
 
   return (
     <div
-      className={`border-b dark:border-gray-700 shadow-sm z-50 px-5 py-2 top-0 fixed w-[85.8vw] bg-white dark:bg-[#0A0A0A] flex justify-between items-center`}
+      className={`border-b dark:border-gray-700 shadow-sm z-30 px-5 py-2 top-0 fixed w-[85.8vw] bg-white dark:bg-[#0A0A0A] flex justify-between items-center`}
     >
       <div className='flex items-center gap-4 w-full'>
 
@@ -26,11 +26,12 @@ function TopNav() {
           <IoMdSearch className='w-5 h-auto text-primary' />
         </div>
       </div>
-      <div className='flex gap-10 items-center w-full justify-end px-2'>
-        <button type='button'>
+      <div className='flex gap-7 items-center w-full justify-end px-2'>
+        <button type='button' className='w-[32px] h-[32px] flex relative justify-center items-center rounded-full border border-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
+          <div className=' absolute top-[9px] right-[10px] w-[4px] h-[4px] rounded-full bg-black border border-slate-200' />
           <HiOutlineBell />
         </button>
-        <button type='button'>
+        <button type='button' className='w-[32px] h-[32px] flex justify-center items-center rounded-full border border-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
           <BiMessageDots />
         </button>
        <div className="flex items-center gap-5">

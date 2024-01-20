@@ -1,33 +1,25 @@
 import { CgProfile } from 'react-icons/cg'
-import { IoChatboxOutline } from 'react-icons/io5'
-import { IoMdMail } from 'react-icons/io'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { MdFileDownload } from 'react-icons/md'
-import { FaShareAlt,FaPencilAlt,FaSave } from 'react-icons/fa'
+import { MdFileDownload,MdContentCopy } from 'react-icons/md'
+import { FaShareAlt,FaPencilAlt,FaSave, FaFacebook, FaInstagram } from 'react-icons/fa'
 import { Switch } from '@/components/ui/switch'
-import { IoMicOutline,IoSend } from 'react-icons/io5'
+import { IoMicOutline,IoSend,IoChatboxOutline,IoShareSocialSharp, IoLogoTiktok} from 'react-icons/io5'
 import { CiFaceSmile } from 'react-icons/ci'
 import { HiOutlineEmojiSad } from 'react-icons/hi'
 import { Slider } from '@/components/ui/slider'
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
-import React, { useState } from 'react'
-import RGL, { WidthProvider } from 'react-grid-layout'
+import  { useState, useEffect, useRef } from 'react'
+import { LiaLinkSolid } from "react-icons/lia";
 import { Input } from '@/components/ui/input'
 import Selector from '@/components/chat/subcomp/selector'
 import { Button } from '@/components/ui/button'
-import Youtube from '@/assets/icon/yt.png'
-import URL from '@/assets/icon/url.png'
-import PasteText from '@/assets/icon/paste.png'
-import PDF from '@/assets/icon/pdf.png'
-import PPT from '@/assets/icon/ppt.png'
-import Excel from '@/assets/icon/xls.png'
-import Audio from '@/assets/icon/sound.png'
-import ImageFile from '@/assets/icon/image-files.png'
+import { AiFillDropboxCircle } from "react-icons/ai";
+import { IoMdAddCircleOutline ,IoMdMail, IoLogoWhatsapp} from "react-icons/io";
 import {
   fontFormat,
   fontType,
@@ -38,73 +30,107 @@ import {
   writingStyle,
   popularColors,
 } from '@/lib/data/selectDatas'
-const ReactGridLayout = WidthProvider(RGL)
+import UseDoneUpload from '@/lib/hooks/useDoneUpload'
+import { useStoreState } from '@/context/useStore'
+import { qnaOrReport, uploadList } from '@/lib/data/dummyData'
+import { BiMessageDots,BiTargetLock } from "react-icons/bi";
+import {toast} from 'sonner'
+import { LuBookOpen } from "react-icons/lu";
+import { useMicSpeechRecognition } from '@/lib/hooks/useMicSpeechRecognition'
+import { Link, useNavigate } from 'react-router-dom'
+import { GrOnedrive } from "react-icons/gr";
+import GoogleDrive from '../assets/GoogleDrive.png'
 
 const GridLayout = () => {
-  const initialLayout = [
-    { i: '1', x: 0, y: 0, w: 2, h: 2.4 },
-    { i: '2', x: 3, y: 0, w: 2, h: 2.4 },
-    { i: '3', x: 0, y: 2, w: 2, h: 2.4 },
-    { i: '4', x: 3, y: 2, w: 2, h: 2.4 },
-  ]
+  const navigate = useNavigate()
+  const divRef = useRef<HTMLDivElement>(null)
+  const [isStandart, setIsStandart] = useState("")
+  const [toogleSendEmailWord, setToogleSendEmailWord] = useState(false)
+  const [showShare, setShowShare] = useState(false)
+  const [showSave, setShowSave] = useState(false)
+  const [showDownload, setShowDownload] = useState(false)
+  const { setIsSelectUpload, setShowSelectUploadFile} = useStoreState()
+  const {browserSupportsSpeechRecognition, transcript, listening, handleMic} = useMicSpeechRecognition()
 
-  const [layout, setLayout] = useState(initialLayout)
-
-  const onLayoutChange = (newLayout) => {
-    setLayout(newLayout)
+  if (!browserSupportsSpeechRecognition) toast.error("Browser didnt support speech recognition")
+  
+  useEffect(() => {
+    divRef.current.scrollIntoView({behavior: "instant"})   
+  }, [toogleSendEmailWord, isStandart === "standart"])
+  
+  const handleStandart = () => {
+    setIsStandart("standart")
   }
 
-  const uploadList = [
-    { image: Youtube, title: 'YouTube URL' },
-    { image: URL, title: 'URL' },
-    { image: PasteText, title: 'Paste Text' },
-    { image: ImageFile, title: 'Picture/Text extraction' },
-    { image: PDF, title: 'PDF' },
-    { image: PPT, title: 'PPT' },
-    { image: Excel, title: 'Excel' },
-    { image: Audio, title: 'Audio' },
-  ]
+  const handleCustomized = () => {
+    setIsStandart("customized")
+  }
+
   function UploadGrid({ image, title }) {
+
+    const handlePopupUploadFile = () => {
+      setIsSelectUpload(title)
+      setShowSelectUploadFile(true)
+    }
     return (
-      <div className='h-full flex flex-col'>
-        <div className='border dark:border-gray-600 shadow rounded-md flex flex-col items-center justify-center w-full px-4 py-2 h-full'>
-          <div className='flex justify-end w-full mb-0'>
+      <div className="h-full flex items-start gap-2">
+        <div className='h-full   w-full flex flex-col'>
+       <button onClick={handlePopupUploadFile} type='button' className='border relative dark:border-gray-600 shadow rounded-md flex gap-1 flex-col items-center justify-center w-full px-4 py-2 h-full'>
+          <div className=' absolute top-1  right-1 p-1 z-10 mb-0'>
             <FaPencilAlt className='text-xs text-2' />
           </div>
-          <img src={image} alt='' className='w-8 h-8 object-contain' />
+          {title === "URL" ? <LiaLinkSolid size={35} /> :  <img src={image} alt={title} className='w-8 h-8 object-contain' />}
           <p className='text-center font-semibold text-xs'>{title}</p>
-        </div>
+        </button>
         <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
           100%
+        </div>
+        </div>
+        <div className="flex flex-col items-center gap-1  justify-between h-[100%]">
+          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
+          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
+          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
+          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]"/>
+          <button type='button' onClick={handlePopupUploadFile}>
+            <IoMdAddCircleOutline size={18} color="#5C3CFb" />
+          </button>
         </div>
       </div>
     )
   }
+
   const Component1 = () => (
-    <div>
-      <div className='flex justify-between gap-2'>
-        <Button variant='outline'>Standard</Button>
-        <Button variant='outline'>Customized</Button>
+    <div className=' card h-full overflow-y-auto '>
+      <div className='flex justify-between flex-wrap gap-2'>
+        <Button variant='outline' onClick={handleStandart}>Standard</Button>
+        <Button variant='outline' onClick={handleCustomized}>Customized</Button>
       </div>
-      <div className='mt-3 grid grid-cols-5 gap-2'>
-        {uploadList.map((e, i) => (
-          <div key={i} className='h-full'>
-            <UploadGrid {...e} />
+      <div className='grid my-4 grid-rows-3 grid-cols-3 gap-y-6 h-full'>
+        {uploadList.map((e) => (
+          <div key={e.title} className='h-full max-w-[180px] w-full'>
+            <UploadGrid image={e.image} title={e.title} />
           </div>
         ))}
-        <div className='space-y-2'>
-          <button className='border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
+       {isStandart === "standart" ? (
+         <button className='max-w-[154px] mt-2 max-h-[40px] border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
+         Validate
+       </button>
+       ) :  (
+        <div className='space-y-2 mt-2'>
+          <button className='max-w-[154px] border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
             Generate
           </button>
-          <button className='px-3 py-2 rounded-lg text-xs bg-[#5E3AFF] text-white w-full'>
+          <button className='max-w-[154px] px-3 py-2 rounded-lg text-xs bg-[#5E3AFF] text-white w-full'>
             Generate & Send Report
           </button>
         </div>
+       )}
       </div>
     </div>
   )
-  const Component2 = () => <div className='w-full h-full flex flex-row gap-4 items-center p-2'>
-    <div className="w-full max-w-[140px] h-full overflow-y-auto">
+
+  const Component2 = () => <div className='w-full card  flex flex-row gap-4 items-center p-2'>
+    <div className=" max-w-[140px] h-full overflow-y-auto">
       {/* Images */}Test
 
     </div>
@@ -114,10 +140,31 @@ const GridLayout = () => {
     </div>
   </div>
   const Component3 = () => (
-    <div className='grid gap-3 grid-cols-12 overflow-auto h-full'>
-      <div className='col-span-8 border rounded-md shadow dark:border-gray-700 h-full'>
-        <div className='px-3 py-4 flex flex-col justify-end h-full gap-y-3'>
-          <div className='bg-[#DADAEA] rounded-md px-3 py-2 text-xs space-y-3'>
+    <div className={`${isStandart === "standart" ? "grid  gap-3 grid-cols-12" : "flex items-center gap-2  "} card w-full  overflow-y-auto h-full`}>
+      <div className='col-span-8 border w-full rounded-md shadow dark:border-gray-700 h-full'>
+        <div className={`px-3 py-4 flex flex-col ${listening ? "justify-between" : " justify-end"} h-full gap-3`}>
+        {transcript !== "" && (
+            <div className="bg-[#DADAEA] text-black rounded-md max-w-[90%] px-3 py-2 text-xs space-y-3">
+            <p>{transcript}</p>
+          </div>
+          )}
+          <div className="flex flex-col h-full justify-end gap-4">
+          <div ref={divRef} className='bg-[#DADAEA] rounded-md px-3 py-2 text-xs space-y-3 relative'>
+            {toogleSendEmailWord && (
+              <div className="absolute bottom-8 z-40 flex flex-col gap-2 border border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
+               <Link to={"/emailai"}>
+                  <button type='button' className='p-2 bg-primary rounded-md text-white '>
+                    Email/Text
+                  </button>
+               </Link>
+                <button type='button'  className='p-2 bg-primary rounded-md text-white'>
+                  MS Word
+                </button>
+              </div>
+            )}
+            <button type='button' className={`p-1 opacity-80 bg-[#040C34] dark:bg-[#343434] rounded-md absolute ${toogleSendEmailWord ? "-top-1" : "top-2"} left-2 hover:opacity-100`}>
+              <BiTargetLock size={20} color="white" />
+            </button>
             <div className='flex justify-end'>
               <div className='w-[150px] flex gap-2'>
                 <HiOutlineEmojiSad className='w-6 h-auto dark:text-black' />
@@ -127,12 +174,27 @@ const GridLayout = () => {
             </div>
             <p className='font-bold dark:text-black'>I’m an AI bot!</p>
             <div className='mt-3 flex gap-2 flex-wrap'>
-              <button className='text-xs black-button'>Copy</button>
-              <button className='text-xs black-button'>Share</button>
-              <button className='text-xs black-button'>Edit</button>
-              <button className='text-xs black-button'>Word Count</button>
-              <button className='text-xs black-button'>Feedback</button>
+              <button className='text-xs black-button flex items-center'>
+                <MdContentCopy size={15} />
+                <span>Copy</span>
+              </button> 
+              <button className='text-xs black-button flex items-center'>
+                <IoShareSocialSharp size={15} />
+                <span>Share</span>
+              </button>
+              <button className='text-xs black-button flex items-center'>
+                <LuBookOpen size={15} />
+                <span>Word Count</span>
+              </button>
+              <button className='text-xs black-button flex items-center'>
+                <BiMessageDots size={15} />
+                <span>Feedback</span>
+              </button>
             </div>
+            <button type='button' onClick={() => setToogleSendEmailWord((prev) => !prev)} className='absolute bottom-0 right-0 p-2 opacity-80 hover:opacity-100'>
+              <IoSend size={20} color="black"  className=" rotate-[320deg]" />
+            </button>
+            
           </div>
           <div className='bg-[#040C34CC] text-gray-200 rounded-md px-3 py-2 text-xs'>
             <div>What is your name?</div>
@@ -144,19 +206,34 @@ const GridLayout = () => {
           </div>
           <div className='flex py-2 w-full gap-2'>
             <Input placeholder='Write a Question...' className='w-full' />
-            <button>
-              <IoMicOutline className='w-6 h-auto' />
+            <button type='button' onClick={handleMic}>
+              <IoMicOutline className={`w-6 ${listening ? "text-primary" : "dark:text-white text-black"} h-auto`} />
             </button>
             <button>
-              <IoSend className='w-6 h-auto' />
+              <IoSend className='w-6 h-auto text-primary' />
             </button>
+          </div>
           </div>
         </div>
       </div>
-      <div className='col-span-4 border rounded-md shadow dark:border-gray-700 h-full space-y-3 px-2 py-2'>
-        <Selector
+      {isStandart === "standart" ? (
+        <div className='col-span-4 border rounded-md shadow dark:border-gray-700 h-full space-y-3 px-2 py-2'>
+          <div className="font-bold">
+           <Selector
+          title='QnA/Report'
+          options={qnaOrReport}
+          onValueChange={(e) => {}}
+        />
+        </div>
+         <div className="flex items-center my-1   gap-4">
+          <input id="tableContent" type="checkbox" className="accent-[#5E3AFF] h-5 w-5 " />
+          <label htmlFor="tableContent" className='opacity-80'>Table of Content</label>
+        </div>
+       
+       <Selector
           title='Select Language'
           options={languageList}
+          
           onValueChange={() => {}}
         />
         <Selector
@@ -174,8 +251,8 @@ const GridLayout = () => {
           options={formatOptions}
           onValueChange={() => {}}
         />
-        <div className='flex gap-2'>
-          <p className='text-2 font-semibold text-xs'>
+        <div className='flex gap-1'>
+          <p className='text-2 text-[10px]'>
             Number of word to be generated
           </p>
           <Input type='number' min='1' max='100' />
@@ -201,30 +278,80 @@ const GridLayout = () => {
           <Switch />
         </div>
         <div className='text-xs justify-between px-2 flex gap-2'>
-          <p className='text-2 font-semibold'>Correlation Analysis</p>
+          <p className='text-2 font-semibold'>Highlight</p>
           <Switch />
         </div>
       </div>
+      ) : ""}
     </div>
   )
   const Component4 = () => (
-    <div className='border shadow flex flex-col justify-between w-full overflow-y-auto dark:border-gray-700 h-full max-h-full rounded-md'>
-      <Editor />
-      <div className='flex justify-between items-center w-full'>
-        <div className='flex justify-between gap-2 py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>
+    <div className='border shadow card flex flex-col  justify-between   w-full overflow-y-auto dark:border-gray-700 rounded-md'>
+      <div className="border h-full mb-4 dark:border-gray-700 rounded-md">
+        <Editor  />
+      </div>
+      <div className='flex justify-between items-center w-full z-20'>
+        <div className='flex justify-between gap-2 relative py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>
+          {showDownload && (
+            <div className="absolute flex flex-col bg-white min-w-[100px] gap-1 border top-[-3.5rem] left-[10px] rounded-md ">
+              <button type='button' className='hover:font-semibold'>.pdf</button>
+              <button type='button' className='hover:font-semibold'>.docx</button>
+            </div>
+          )}
+          {showSave && (
+            <div  className="absolute flex items-center justify-center bg-white py-3 min-w-[100px] gap-3 border top-[-3.5rem] border-black/60 left-[47px] px-2 rounded-md  ">
+            <a target='_blank' href='https://drive.google.com/drive/u/0/home'>
+             <img src={GoogleDrive} alt='' width={30} height={30} />
+            </a>
+            <a target='_blank' href='https://dropbox.com'>
+              <AiFillDropboxCircle color="#4873cd" size={25} />
+            </a>
+            <a target='_blank' href='https://onedrive.com'>
+              <GrOnedrive color="#4c74ed" size={25} />
+            </a>
+          </div>
+          )}
+          {showShare && (
+            <div  className="absolute flex items-center justify-center bg-white py-3 min-w-[100px] gap-3 border top-[-3.5rem] border-black/60 left-[80px] px-2 rounded-md  ">
+              <a target='_blank' href='https://facebook.com'>
+                <FaFacebook color="#4c74ed" size={25} />
+              </a>
+                <a target='_blank' href='https://web.whatsapp.com'>
+                  <IoLogoWhatsapp color="green" size={25} />
+                </a>
+                <a target='_blank' href='https://instagram.com'>
+                  <FaInstagram color="#b5288f" size={25} />
+                </a>
+                <a target='_blank' href='https://tiktok.com'>
+                  <IoLogoTiktok size={25} />
+                </a>
+            </div>
+          )}
           <div className='flex gap-2 w-full'>
-            <button className='bg-white px-1 py-1 rounded-full'>
+            <button onClick={() => {
+              setShowDownload(!showDownload)
+              setShowSave(false)
+              setShowShare(false)
+            }} className='bg-white px-1 py-1 rounded-full'>
               <MdFileDownload className='w-5 h-auto' />
             </button>
-            <button className='bg-white px-1 py-1 rounded-full'>
+            <button onClick={() => {
+              setShowSave(!showSave)
+              setShowDownload(false)
+              setShowShare(false)
+            }} className='bg-white px-1 py-1 rounded-full'>
               <FaSave className='w-5 h-auto' />
             </button>
-            <button className='bg-white px-1 py-1 rounded-full'>
+            <button onClick={() => {
+              setShowShare(!showShare)
+              setShowDownload(false)
+              setShowSave(false)
+            }} className='bg-white px-1 py-1 rounded-full'>
               <FaShareAlt className='w-5 h-auto' />
             </button>
           </div>
           <div>
-            <button className='flex  items-center gap-2 text-sm bg-white px-1 py-1 rounded-md w-full font-bold'>
+            <button type='button' onClick={() => navigate("/contact")} className='flex  items-center gap-2 text-sm bg-white px-1 py-1 rounded-md w-full font-bold'>
               Send <IoMdMail />
             </button>
           </div>
@@ -238,7 +365,7 @@ const GridLayout = () => {
               </button>
              </div>
             </PopoverTrigger>
-            <PopoverContent className='border rounded-2xl overflow-hidden'>
+            <PopoverContent className='border bg-white rounded-2xl overflow-hidden'>
               <div className='bg-white text-black space-y-3'>
                 <div className='space-y-1 py-2 px-2 bg-gray-100 rounded-2xl'>
                   <p className='text-base font-semibold'>Cluadia Dias</p>
@@ -282,26 +409,12 @@ const GridLayout = () => {
     </div>
   )
 
-  const generateDOM = () => {
-    const components = [Component1, Component2, Component3, Component4]
-    return layout.map((item, index) => (
-      <div key={item.i} style={{ width: `${item.w * 25}%` }} className='card'>
-        {React.createElement(components[index])}
-      </div>
-    ))
-  }
-
   return (
-    <main className='mt-12 w-full h-full'>
-      <ReactGridLayout
-        className='layout'
-        layout={layout}
-        onLayoutChange={onLayoutChange}
-        cols={4}
-        // isDraggable={false}
-      >
-        {generateDOM()}
-      </ReactGridLayout>
+    <main className='mt-12 grid relative grid-cols-2 gap-3 max-h-screen grid-rows-2 w-full p-2 h-full'>
+      <Component1 />
+      <Component2 />
+      <Component3 />
+      <Component4 />
     </main>
   )
 }

@@ -101,7 +101,7 @@ function Login() {
                 </div>
               </div>
             </div>
-            <button className='btn-primary w-full max-w-md'>Sign Up</button>
+            <button className='btn-primary w-full max-w-md'>Sign In</button>
             <div className='flex gap-3'>
               <div
                 role='button'

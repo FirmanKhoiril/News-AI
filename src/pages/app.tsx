@@ -4,12 +4,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { MdFileDownload,MdContentCopy } from 'react-icons/md'
+import { MdFileDownload,MdContentCopy, MdClose } from 'react-icons/md'
+import { IoIosArrowDown } from "react-icons/io";
 import { FaShareAlt,FaPencilAlt,FaSave, FaFacebook, FaInstagram } from 'react-icons/fa'
 import { Switch } from '@/components/ui/switch'
 import { IoMicOutline,IoSend,IoChatboxOutline,IoShareSocialSharp, IoLogoTiktok} from 'react-icons/io5'
 import { CiFaceSmile } from 'react-icons/ci'
-import { HiOutlineEmojiSad } from 'react-icons/hi'
+import { HiOutlineDotsHorizontal, HiOutlineEmojiSad } from 'react-icons/hi'
 import { Slider } from '@/components/ui/slider'
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
@@ -39,7 +40,12 @@ import { LuBookOpen } from "react-icons/lu";
 import { useMicSpeechRecognition } from '@/lib/hooks/useMicSpeechRecognition'
 import { Link, useNavigate } from 'react-router-dom'
 import { GrOnedrive } from "react-icons/gr";
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import GoogleDrive from '../assets/GoogleDrive.png'
+import pdfImage from '@/assets/pdf-2.png'
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
 const GridLayout = () => {
   const navigate = useNavigate()
@@ -49,14 +55,14 @@ const GridLayout = () => {
   const [showShare, setShowShare] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [showDownload, setShowDownload] = useState(false)
-  const { setIsSelectUpload, setShowSelectUploadFile} = useStoreState()
+  const { setIsSelectUpload, setShowSelectUploadFile, selectedDocs} = useStoreState()
   const {browserSupportsSpeechRecognition, transcript, listening, handleMic} = useMicSpeechRecognition()
 
   useEffect(() => {
     if (!browserSupportsSpeechRecognition) toast.error("Browser didnt support speech recognition")
   }, [])
   
-  
+
   useEffect(() => {
     divRef.current.scrollIntoView({behavior: "instant"})   
   }, [toogleSendEmailWord, isStandart === "standart"])
@@ -69,12 +75,18 @@ const GridLayout = () => {
     setIsStandart("customized")
   }
 
-  function UploadGrid({ image, title }) {
 
+  function UploadGrid({ image, title }) {
     const handlePopupUploadFile = () => {
       setIsSelectUpload(title)
       setShowSelectUploadFile(true)
     }
+
+    const colorIcon = selectedDocs && selectedDocs[0] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
+    const colorIconTwo =  selectedDocs && selectedDocs[1] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
+    const colorIconThree =  selectedDocs && selectedDocs[2] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
+    const colorIconFour =  selectedDocs && selectedDocs[3] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
+
     return (
       <div className="h-full flex items-start gap-2">
         <div className='h-full   w-full flex flex-col'>
@@ -90,10 +102,10 @@ const GridLayout = () => {
         </div>
         </div>
         <div className="flex flex-col items-center gap-1  justify-between h-[100%]">
-          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-          <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]"/>
+          <UseDoneUpload className={colorIcon} />
+          <UseDoneUpload className={colorIconTwo} />
+          <UseDoneUpload className={colorIconThree} />
+          <UseDoneUpload className={colorIconFour}/>
           <button type='button' onClick={handlePopupUploadFile}>
             <IoMdAddCircleOutline size={18} color="#5C3CFb" />
           </button>
@@ -111,7 +123,7 @@ const GridLayout = () => {
       <div className='grid my-4 grid-rows-3 grid-cols-3 gap-y-6 h-full'>
         {uploadList.map((e) => (
           <div key={e.title} className='h-full max-w-[180px] w-full'>
-            <UploadGrid image={e.image} title={e.title} />
+            <UploadGrid image={e.image}  title={e.title} />
           </div>
         ))}
        {isStandart === "standart" ? (
@@ -132,16 +144,128 @@ const GridLayout = () => {
     </div>
   )
 
-  const Component2 = () => <div className='w-full card  flex flex-row gap-4 items-center p-2'>
-    <div className=" max-w-[140px] h-full overflow-y-auto">
-      {/* Images */}Test
-
+  const Component2 = () => {
+    return (
+      <div className='w-full card  flex flex-row gap-4 items-center p-2'>
+    <div className=" max-w-[180px] pr-4 flex flex-col items-center justify-start gap-2 space-y-2 w-full h-full overflow-y-auto py-2">
+  
+    <div className="w-full border h-full flex items-center flex-col border-black/10">
+    {selectedDocs[1] ? <div className='max-h-[180px] h-full w-full'>
+    {selectedDocs[1].type === "application/pdf" ? (
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+        <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
+      </Worker>
+) : selectedDocs[1].type === `image/png` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+ ) : selectedDocs[1].type === `image/jpg` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+ ) : selectedDocs[1].type === `image/jpeg` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+ ) : selectedDocs[1].type === `image/webp` && (
+  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+ ) 
+    }
+    </div> : 
+     <img src={pdfImage} alt="PDF Example" width={200} />}
+      <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-[10px] w-full text-black text-center py-2 rounded-b-[5px] shadow-[0px_4px_4px_0px] shadow-black/30 ">
+        <p>{selectedDocs[1] ? `${selectedDocs[1].name.slice(0, 15)}` : "Document01.pdf"}</p>
+      </div>
     </div>
-    <div className="w-full h-full">
-      tEST
-      {/* Big Images */}
+
+    <div className="w-full border h-full flex items-center flex-col border-black/10">
+    {selectedDocs[2] ? <div  className='max-h-[180px] h-full w-full'>
+      {selectedDocs[2].type === "application/pdf" ? (
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+        <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[2])} />
+      </Worker>
+) : selectedDocs[2].type === `image/png` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
+ ) : selectedDocs[2].type === `image/jpg` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
+ ) : selectedDocs[2].type === `image/jpeg` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
+ ) : selectedDocs[2].type === `image/webp` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
+ ) : selectedDocs[2].type === `application/vnd.ms-powerpoint` ? (
+  <iframe  width="100%" height="600"  src={`https://docs.google.com/gview?url=${window.URL.createObjectURL(selectedDocs[2])}&embedded=true`}></iframe>
+ ) : ""
+    }
+    </div>:  <img src={pdfImage} alt="PDF Example" width={200} />}
+      <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-[10px] w-full text-black text-center py-2 rounded-b-[5px] shadow-[0px_4px_4px_0px] shadow-black/30 ">
+      <p>{selectedDocs[2] ? `${selectedDocs[2].name.slice(0, 15)}` : "Document02.pdf"}</p>
+      </div>
+    </div>
+      <div className="w-full border border-black/10 flex flex-col items-center">
+      {selectedDocs[3] ? <div  className='max-h-[180px] h-full w-full'>
+      {selectedDocs[3].type === "application/pdf" ? (
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+        <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[3])} />
+      </Worker>
+) : selectedDocs[3].type === `image/png` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
+ ) : selectedDocs[3].type === `image/jpg` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
+ ) : selectedDocs[3].type === `image/jpeg` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
+ ) : selectedDocs[3].type === `image/webp` ? (
+  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
+ ) : selectedDocs[3].type === `application/vnd.ms-powerpoint` ? (
+  <iframe  width="100%" height="200"  src={`https://docs.google.com/gview?url=${window.URL.createObjectURL(selectedDocs[3])}&embedded=true`}></iframe>
+ ) : ""
+    }
+    </div> :  <img src={pdfImage} alt="PDF Example" width={200} />}
+        <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-xs text-black text-center py-2 rounded-[5px] shadow-[0px_4px_4px_0px] w-full shadow-black/30 ">
+        <p>{selectedDocs[3] ? `${selectedDocs[3].name.slice(0, 15)}` : "Document03.pdf"}</p>
+        </div>
+      </div>
+      <button type='button' className="border-black/30 dark:border-white/30 border rounded-full p-2">
+        <IoIosArrowDown size={20} />
+      </button>
+    </div>
+    <div className="w-full h-full rounded-md overflow-y-auto">
+       <div className="flex flex-col pb-4 w-full">
+       <div className="bg-[#040C34] w-full flex justify-between text-white rounded-t-[5px] py-3 px-2">
+         <div className='flex items-center ml-4 gap-6'>
+           <button type='button'>
+             <MdClose size={25} />
+           </button>
+          {selectedDocs[0] ?  <p className='font-semibold text-sm'>{selectedDocs[0].name.length >= 39 ? `${selectedDocs[0].name.slice(0, 40) + "... .pdf"}` : selectedDocs[0].name }</p> : <p>Preview</p>}
+         </div>
+         <button type='button' className='p-0.5 border mr-4 border-white rounded-full'>
+           <HiOutlineDotsHorizontal size={18} />
+         </button>
+       </div>
+       <div className="w-full flex gap-4 px-4 py-2 items-center justify-center  flex-col text-white rounded-b-[5px] bg-[#1a1a1a]">
+        {selectedDocs[0] ? (
+          <>
+          {selectedDocs[0].type === "application/pdf" ? (
+         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
+         </Worker>
+      ) : selectedDocs[0].type === `image/png` ? (
+        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+       ) : selectedDocs[0].type === `image/jpg` ? (
+        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+       ) : selectedDocs[0].type === `image/jpeg` ? (
+        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+       ) : selectedDocs[0].type === `image/webp` ? (
+        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+       ) : 
+       <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
+        uri: window.URL.createObjectURL(selectedDocs[0]),
+       }]} />
+       
+          }
+          </>
+        ) : (
+          <img src={pdfImage} alt="Pdf Preview" width={324} height={324} />
+        )}
+         </div>
+       </div>
     </div>
   </div>
+    )
+  }
   const Component3 = () => (
     <div className={`${isStandart === "standart" ? "grid  gap-3 grid-cols-12" : "flex items-center gap-2  "} card w-full  overflow-y-auto h-full`}>
       <div className='col-span-8 border w-full rounded-md shadow dark:border-gray-700 h-full'>

@@ -7,14 +7,14 @@ import Excel from '@/assets/icon/xls.png'
 import Audio from '@/assets/icon/sound.png'
 
 export const uploadList = [
-    { image: Youtube, title: 'YouTube URL' },
-    { title: 'URL' },
-    { image: PasteText, title: 'Paste Text' },
-    { image: ImageFile, title: 'Picture/Text' },
-    { image: PDF, title: 'PDF' },
-    { image: PPT, title: 'PPT' },
-    { image: Excel, title: 'Excel' },
-    { image: Audio, title: 'Audio' },
+    { image: Youtube, title: 'YouTube URL', type: "url" },
+    { title: 'URL', type: 'url' },
+    { image: PasteText, title: 'Paste Text', type: 'text' },
+    { image: ImageFile, title: 'Picture/Text', type: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'] },
+    { image: PDF, title: 'PDF', type: 'application/pdf' },
+    { image: PPT, title: 'PPT', type: ['application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'] },
+    { image: Excel, title: 'Excel', type: 'pplication/vnd.ms-excel' },
+    { image: Audio, title: 'Audio', type: 'audio/mpeg' },
   ]
 
   export const qnaOrReport = ["Qna", "Report"]

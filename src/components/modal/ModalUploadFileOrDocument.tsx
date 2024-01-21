@@ -1,19 +1,23 @@
 import { useStoreState } from "@/context/useStore"
-import React from "react";
+import React, { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 const ModalUploadFileOrDocument = () => {
-    const {  isSelectUpload, setShowSelectUploadFile, selectedDocs, setSelectedDocs} = useStoreState()
+    const {  isSelectUpload, setShowSelectUploadFile,  showSelectUploadFile, setSelectedDocs} = useStoreState()
+    const [fileError, setFileError] = useState(null)
+
+    const allowedFile = ["application/pdf"]
 
     const handleClearSelectedUpload = () => {
         setShowSelectUploadFile(false)
+        
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement> | any) => {
         e.preventDefault()
+       
     }
-    console.table(selectedDocs)
-  return (
+  return showSelectUploadFile ? (
     <>
     <div onClick={handleClearSelectedUpload} className="bg-black/80 w-full h-screen fixed z-40 " />
     <form onSubmit={handleSubmit} className="fixed mx-auto h-full max-h-[400px] flex flex-col gap-4 max-w-[350px] overflow-y-auto z-50 inset-0 border dark:border-gray-800/80 top-1/4 card">
@@ -76,7 +80,7 @@ const ModalUploadFileOrDocument = () => {
         </div>
     </form>
     </>
-  )
+  ) : ""
 }
 
 

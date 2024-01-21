@@ -14,7 +14,7 @@ function AppLayout() {
 
   return (
     <main className='flex w-full'>
-      {showSelectUploadFile && <ModalUploadFileOrDocument /> }
+      <ModalUploadFileOrDocument />
       <Toast richColors theme='dark' position='top-center' />
       <section className={`${openSideBarValue ? 'w-[4.5%]' : 'w-2/12'}`}>
         <aside className='w-full sticky top-0 h-full md:max-h-[95vh]'>

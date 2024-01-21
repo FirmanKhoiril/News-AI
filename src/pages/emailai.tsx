@@ -179,7 +179,7 @@ function Emailai() {
         </div>
       </section>
       <section className='col-span-4 space-y-2 card'>
-        <div className="flex flex-col pb-4 w-full">
+      <div className="flex flex-col pb-4 w-full">
         <div className="bg-[#040C34] w-full flex justify-between text-white rounded-t-[5px] py-3 px-2">
           <div className='flex items-center ml-4 gap-6'>
             <button type='button'>
@@ -197,7 +197,7 @@ function Emailai() {
             Page 1 of 2
           </button>
         </div>
-        </div>
+      </div>
         <div className='bg-[#040C34D9] rounded-lg px-4 py-2 space-y-3'>
           <p className='text-center font-semibold text-white'>Choose Contact</p>
           <div className='w-full flex dark:border-gray-700 dark:bg-gray-900  py-1.5 px-3 shadow items-center gap-3 rounded-md bg-[#040C34] border-0 text-sm mx-auto max-w-xl'>

@@ -5,7 +5,7 @@ type Store = {
     setIsSelectUpload: (isSelectUpload: string) => void
     showSelectUploadFile: boolean
     setShowSelectUploadFile: (showSelectUploadFile: boolean) => void
-    selectedDocs: File[];
+    selectedDocs?: File[];
     setSelectedDocs: (update: (prevSelectedDocs: File[]) => File[]) => void;
 }
 

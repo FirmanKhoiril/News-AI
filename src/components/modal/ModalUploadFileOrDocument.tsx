@@ -1,21 +1,19 @@
 import { useStoreState } from "@/context/useStore"
-import React, { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 const ModalUploadFileOrDocument = () => {
-    const {  isSelectUpload, setShowSelectUploadFile,  showSelectUploadFile, setSelectedDocs} = useStoreState()
-    const [fileError, setFileError] = useState(null)
-
-    const allowedFile = ["application/pdf"]
+    const {  isSelectUpload, setShowSelectUploadFile, isStandart,pasteTextContent, setShowCustomizedPreviewFileUpload, showSelectUploadFile, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl, setPasteTextContent, setSelectedDocs} = useStoreState() 
 
     const handleClearSelectedUpload = () => {
         setShowSelectUploadFile(false)
-        
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement> | any) => {
         e.preventDefault()
-       
+        if(isStandart === "customized") {
+            setShowSelectUploadFile(false)
+            setShowCustomizedPreviewFileUpload(true)
+        }
     }
   return showSelectUploadFile ? (
     <>
@@ -24,19 +22,19 @@ const ModalUploadFileOrDocument = () => {
         {isSelectUpload === "Paste Text" && (
             <>
             <label htmlFor="copyAndPasteText">Copy and Paste a text</label>
-                <textarea id="copyAndPasteText" rows={5} className=" w-full max-h-[310px] min-h-[150px] overflow-y-auto outline-none border text-sm px-4 py-3 rounded-md border-input bg-background" ></textarea>
+                <textarea value={pasteTextContent} onChange={(e) => setPasteTextContent(e.target.value)} id="copyAndPasteText" rows={5} className=" w-full max-h-[310px] min-h-[150px] overflow-y-auto outline-none border text-sm px-4 py-3 rounded-md border-input bg-background" ></textarea>
             </>
         )}
         {isSelectUpload === "YouTube URL" && (
              <>
                 <label htmlFor="copyYoutubeUrl">Copy Youtube URL</label>
-                <input placeholder="https://youtube.com" id="copyYoutubeUrl" type="url" className=" w-full overflow-y-auto outline-none border text-sm px-4 py-3 rounded-md border-input bg-background" />
+                <input value={youtubeUrl} onChange={(e) => setYoutubeUrl(e.target.value)} placeholder="https://youtube.com" id="copyYoutubeUrl" type="url" className=" w-full overflow-y-auto outline-none border text-sm px-4 py-3 rounded-md border-input bg-background" />
              </>
         )}
         {isSelectUpload === "URL" && (
              <>
                 <label htmlFor="copyWebsiteUrl">Copy URL Website</label>
-                <input placeholder="https://example.com" id="copyWebsiteUrl" type="url" className=" w-full overflow-y-auto outline-none border text-sm px-4 py-3 rounded-md border-input bg-background" />
+                <input placeholder="https://example.com" value={websiteUrl} onChange={(e) => setWebsiteUrl(e.target.value)} id="copyWebsiteUrl" type="url" className=" w-full overflow-y-auto outline-none border text-sm px-4 py-3 rounded-md border-input bg-background" />
              </>
         )}
         {isSelectUpload !== "URL" && isSelectUpload !== "YouTube URL" && isSelectUpload !== "Paste Text"  &&  (
@@ -74,7 +72,7 @@ const ModalUploadFileOrDocument = () => {
             <button  onClick={handleClearSelectedUpload} className='max-w-[170px] max-h-[40px]  border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
             Cancel
             </button>
-            <button type="submit" className='max-w-[170px] max-h-[40px] text-white  rounded-md bg-primary py-2 px-1 w-full text-xs'>
+            <button type="submit" onClick={handleSubmit} className='max-w-[170px] max-h-[40px] text-white  rounded-md bg-primary py-2 px-1 w-full text-xs'>
             Validate
             </button>
         </div>

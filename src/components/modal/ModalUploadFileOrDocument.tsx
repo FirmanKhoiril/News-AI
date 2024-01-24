@@ -14,7 +14,9 @@ const ModalUploadFileOrDocument = () => {
             setShowSelectUploadFile(false)
             setShowCustomizedPreviewFileUpload(true)
         }
+        setShowSelectUploadFile(false)
     }
+    
   return showSelectUploadFile ? (
     <>
     <div onClick={handleClearSelectedUpload} className="bg-black/80 w-full h-screen fixed z-40 " />

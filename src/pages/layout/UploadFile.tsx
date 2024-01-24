@@ -9,7 +9,7 @@ import { LiaLinkSolid } from 'react-icons/lia'
 
 
 const UploadFile = () => {
-    const { setIsSelectUpload, setShowSelectUploadFile, selectedDocs, isStandart, setIsStandart} = useStoreState()
+    const { setIsSelectUpload, setShowSelectUploadFile, selectedDocs, websiteUrl, youtubeUrl, isStandart, setIsStandart} = useStoreState()
     const handleStandart = () => {
         setIsStandart("standart")
       }
@@ -20,7 +20,7 @@ const UploadFile = () => {
 
      
   
-      const colorIcon = selectedDocs && selectedDocs[0] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
+      const colorIcon = selectedDocs && selectedDocs[0] || websiteUrl || youtubeUrl ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
       const colorIconTwo =  selectedDocs && selectedDocs[1] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
       const colorIconThree =  selectedDocs && selectedDocs[2] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
       const colorIconFour =  selectedDocs && selectedDocs[3] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"

@@ -22,20 +22,17 @@ const FileUploadPreview = () => {
     {selectedDocs[1] ? 
     <div className='max-h-[180px] h-full w-full'>
     {selectedDocs[1].type === "application/pdf" ? (
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
-      </Worker>
-) : selectedDocs[1].type === `image/png` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
- ) : selectedDocs[1].type === `image/jpg` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
- ) : selectedDocs[1].type === `image/jpeg` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
- ) : selectedDocs[1].type === `image/webp` && (
-  <img src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
- ) 
-    }
-    </div> : 
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
+        </Worker>
+      ) : selectedDocs[1].type.startsWith("image/") ? (
+        <div className="max-h-[180px] rounded-t-md overflow-hidden">
+          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+        </div>
+      ) : (
+        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{ uri: window.URL.createObjectURL(selectedDocs[1]) }]} />
+      )}
+    </div>  : 
      <img src={pdfImage} alt="PDF Example" width={200} />}
       <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-[10px] w-full text-black text-center py-2 rounded-b-[5px] shadow-[0px_4px_4px_0px] shadow-black/30 ">
         <p>{selectedDocs[1] ? `${selectedDocs[1].name.slice(0, 20)}` : "Document01.pdf"}</p>
@@ -44,22 +41,17 @@ const FileUploadPreview = () => {
 
     <div className="w-full border h-full flex items-center flex-col border-black/10">
     {selectedDocs[2] ? <div  className='max-h-[180px] h-full w-full'>
-      {selectedDocs[2].type === "application/pdf" ? (
+    {selectedDocs[2].type === "application/pdf" ? (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[2])} />
-      </Worker>
-) : selectedDocs[2].type === `image/png` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
- ) : selectedDocs[2].type === `image/jpg` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
- ) : selectedDocs[2].type === `image/jpeg` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
- ) : selectedDocs[2].type === `image/webp` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
- ) : selectedDocs[2].type === `application/vnd.ms-powerpoint` ? (
-  <iframe  width="100%" height="600"  src={`https://docs.google.com/gview?url=${window.URL.createObjectURL(selectedDocs[2])}&embedded=true`}></iframe>
- ) : ""
-    }
+          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[2])} />
+        </Worker>
+      ) : selectedDocs[2].type.startsWith("image/") ? (
+        <div className="max-h-[180px] rounded-t-md overflow-hidden">
+          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
+        </div>
+      ) : (
+        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{ uri: window.URL.createObjectURL(selectedDocs[2]) }]} />
+      )}
     </div>:  <img src={pdfImage} alt="PDF Example" width={200} />}
       <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-[10px] w-full text-black text-center py-2 rounded-b-[5px] shadow-[0px_4px_4px_0px] shadow-black/30 ">
       <p>{selectedDocs[2] ? `${selectedDocs[2].name.slice(0, 20)}` : "Document02.pdf"}</p>
@@ -69,20 +61,15 @@ const FileUploadPreview = () => {
       {selectedDocs[3] ? <div  className='max-h-[180px] h-full w-full'>
       {selectedDocs[3].type === "application/pdf" ? (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[3])} />
-      </Worker>
-) : selectedDocs[3].type === `image/png` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
- ) : selectedDocs[3].type === `image/jpg` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
- ) : selectedDocs[3].type === `image/jpeg` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
- ) : selectedDocs[3].type === `image/webp` ? (
-  <img src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
- ) : selectedDocs[3].type === `application/vnd.ms-powerpoint` ? (
-  <iframe  width="100%" height="200"  src={`https://docs.google.com/gview?url=${window.URL.createObjectURL(selectedDocs[3])}&embedded=true`}></iframe>
- ) : ""
-    }
+          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[3])} />
+        </Worker>
+      ) : selectedDocs[3].type.startsWith("image/") ? (
+        <div className="max-h-[180px] rounded-t-md overflow-hidden">
+          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
+        </div>
+      ) : (
+        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{ uri: window.URL.createObjectURL(selectedDocs[3]) }]} />
+      )}
     </div> :  <img src={pdfImage} alt="PDF Example" width={200} />}
         <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-xs text-black text-center py-2 rounded-[5px] shadow-[0px_4px_4px_0px] w-full shadow-black/30 ">
         <p>{selectedDocs[3] ? `${selectedDocs[3].name.slice(0, 20)}` : "Document03.pdf"}</p>
@@ -118,20 +105,14 @@ const FileUploadPreview = () => {
          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
           <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
          </Worker>
-      ) : selectedDocs[0].type === `image/png` ? (
-        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
-       ) : selectedDocs[0].type === `image/jpg` ? (
-        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
-       ) : selectedDocs[0].type === `image/jpeg` ? (
-        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
-       ) : selectedDocs[0].type === `image/webp` ? (
-        <img src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
-       )  :
+      ) : selectedDocs[0].type.startsWith("image/") ? (
+        <div className="max-h-[180px] rounded-t-md overflow-hidden">
+          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+        </div>
+      ) : 
        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
         uri: window.URL.createObjectURL(selectedDocs[0]),
-       }]} />
-       
-          }
+       }]} />}
           </div>
         ) :  (
           <img src={pdfImage} alt="Pdf Preview" width={324} height={324} />

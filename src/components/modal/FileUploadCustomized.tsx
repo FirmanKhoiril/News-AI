@@ -10,19 +10,22 @@ import { useStoreState } from "@/context/useStore"
 import Microlink from "@microlink/react";
 import pdfImage from '@/assets/pdf-2.png'
 import ReactPlayer from 'react-player/youtube'
+import { Viewer, Worker } from "@react-pdf-viewer/core"
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 
 const FileUploadCustomized = () => {
-  const {pasteTextContent, setShowCustomizedPreviewFileUpload, youtubeUrl, websiteUrl, setWebsiteUrl, setYoutubeUrl,  setPasteTextContent} = useStoreState()
+  const {pasteTextContent, setShowCustomizedPreviewFileUpload, youtubeUrl, setSelectedDocs,  selectedDocs, websiteUrl, setWebsiteUrl, setYoutubeUrl,  setPasteTextContent} = useStoreState()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setShowCustomizedPreviewFileUpload(false)
     setWebsiteUrl("")
     setYoutubeUrl("")
+    setSelectedDocs((prev: File[]) => [])
     setPasteTextContent("")
   }
   return (
     <div className='fixed z-30 px-4 py-6 top-16 rounded-md shadow-[0px_5px_5px_0px] shadow-black/30 bg-white dark:text-white text-black h-full max-h-[90dvh] w-[83%] mx-3 dark:bg-black flex gap-1'>
-    <div className='col-span-4 border max-w-[300px] rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
+    <div className='col-span-4 border max-w-[300px] max-h-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
         <div className="font-bold">
          <Selector
         title='QnA/Report'
@@ -113,13 +116,49 @@ const FileUploadCustomized = () => {
 		media="logo"  />
          </div> :
           <div className="w-full flex-col items-center  gap-6 justify-center max-h-[85%] h-full">
-            <div className="flex pb-4 justify-between px-10 items-center w-full">
-            <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
-            <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
+              <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
+              {selectedDocs[0] ? (
+                <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
+                {selectedDocs[0].type === "application/pdf" ? (
+               <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
+               </Worker>
+            ) : selectedDocs[0].type.startsWith("image/") ? (
+              <div className="max-h-[180px] rounded-t-md overflow-hidden">
+                <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+              </div>
+            ) : 
+             <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
+              uri: window.URL.createObjectURL(selectedDocs[0]),
+             }]} />}
+                </div>
+            ) : (
+              <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
+            ) }
+            {selectedDocs[1] ? (
+                <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
+                {selectedDocs[1].type === "application/pdf" ? (
+               <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
+               </Worker>
+            ) : selectedDocs[1].type.startsWith("image/") ? (
+              <div className="max-h-[180px] rounded-t-md overflow-hidden">
+                <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+              </div>
+            ) : 
+             <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
+              uri: window.URL.createObjectURL(selectedDocs[1]),
+             }]} />}
+                </div>
+            ) : (
+              <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
+            ) }
             </div>
-            <button type='button' className='bg-[#040C34] mx-auto flex items-center justify-center text-white w-[84px] h-[25px] text-[10px] font-semibold rounded-[10px]'>
+          <button type='button' className='bg-[#040C34] mx-auto flex items-center justify-center text-white w-[84px] h-[25px] text-[10px] font-semibold rounded-[10px]'>
             Page 1 of 2
           </button>
+            
+          
           </div>
          }
         <form onSubmit={handleSubmit} className="flex items-center gap-6">

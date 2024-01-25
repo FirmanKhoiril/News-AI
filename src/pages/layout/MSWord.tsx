@@ -84,7 +84,7 @@ const MSWord = () => {
             </button>
           </div>
           <div>
-            <button type='button' onClick={() => navigate("/contact")} className='flex  items-center gap-2 text-sm bg-white px-1 py-1 rounded-md w-full font-bold'>
+            <button type='button' onClick={() => navigate("/emailai")} className='flex  items-center gap-2 text-sm bg-white px-1 py-1 rounded-md w-full font-bold'>
               Send <IoMdMail />
             </button>
           </div>
@@ -98,31 +98,39 @@ const MSWord = () => {
               </button>
              </div>
             </PopoverTrigger>
-            <PopoverContent className='border bg-white rounded-2xl overflow-hidden'>
+            <PopoverContent className='border max-w-[500px] w-full bg-white rounded-2xl overflow-hidden'>
               <div className='bg-white text-black space-y-3'>
                 <div className='space-y-1 py-2 px-2 bg-gray-100 rounded-2xl'>
                   <p className='text-base font-semibold'>Cluadia Dias</p>
                   <p className='text-sm flex'>Online</p>
                 </div>
                 <div>
-                  <div className='flex py-2 px-2 bg-gray-100 rounded-2xl'>
+                  <div className='flex py-2 px-2 gap-2 bg-gray-100 rounded-2xl'>
                     <div>
                       <CgProfile className='w-8 h-auto' />
                     </div>
-                    <div className='space-y-3'>
-                      <p className='text-center text-sm font-semibold'>
-                        Talk Suggestion
-                      </p>
-                      <button className='text-sm border border-primary bg-primary/10 rounded-full px-3 py-1'>
-                        Hello! How can i help you?
+                      <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-full px-4 flex flex-col items-start py-2'>
+                        <p className='font-semibold text-base px-2 gap-2'>Claudia Dias</p>
+                        <span>Hello Josh! How are you today 😊</span>
                       </button>
-                      <button className='text-sm border border-primary bg-primary/10 rounded-full px-3 py-1'>
-                        Hello! If you need any help?
-                      </button>
-                      <button className='text-sm border border-primary bg-primary/10 rounded-full px-3 py-1'>
-                        I need more helps
-                      </button>
+                  </div>
+                  <div className='flex py-2 px-2 gap-2 flex-row-reverse bg-gray-100 rounded-2xl'>
+                    <div>
+                      <CgProfile className='w-8 h-auto' />
                     </div>
+                    <button className='text-sm max-w-[90%] text-white bg-primary rounded-full px-4 flex flex-col items-end py-2'>
+                        <p className='font-semibold text-base px-2 gap-2'>You</p>
+                        <span>Pretty good! thanks</span>
+                      </button>
+                  </div>
+                  <div className='flex py-2 px-2 gap-2 bg-gray-100 rounded-2xl'>
+                    <div>
+                      <CgProfile className='w-8 h-auto' />
+                    </div>
+                       <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-full px-4 flex flex-col items-start py-2'>
+                        <p className='font-semibold text-base px-2 gap-2'>Claudia Dias</p>
+                        <span>Certainly! Is there anything specific you would like to talk about or ask?</span>
+                      </button>
                   </div>
                 </div>
                 <div className='flex py-2 w-full gap-2'>

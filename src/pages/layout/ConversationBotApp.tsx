@@ -13,9 +13,10 @@ import { HiOutlineEmojiSad } from 'react-icons/hi'
 import { IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
 import { LuBookOpen } from 'react-icons/lu'
 import { MdContentCopy } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const ConversationBotApp = () => {
+  const location = useLocation()
     const [toogleSendEmailWord, setToogleSendEmailWord] = useState(false)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
     const {isStandart} = useStoreState()
@@ -159,7 +160,7 @@ const ConversationBotApp = () => {
         <Switch />
       </div>
       <div className='text-xs justify-between px-2 flex gap-2'>
-        <p className='text-2 font-semibold'>Highlight</p>
+        <p className='text-2 font-semibold'>Correlation Analysis</p>
         <Switch />
       </div>
     </div>

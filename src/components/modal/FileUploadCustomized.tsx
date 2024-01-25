@@ -87,14 +87,14 @@ const FileUploadCustomized = () => {
         <Switch />
       </div>
       <div className='text-xs justify-between px-2 flex gap-2'>
-        <p className='text-2 font-semibold'>Highlight</p>
+        <p className='text-2 font-semibold'>Correlation Analysis</p>
         <Switch />
       </div>
     </div>
     <div className="w-full min-h-full px-4 flex flex-col">
       <div className="w-full flex text-white items-center justify-between px-4 bg-[#040C34] rounded-t-md h-12">
        <div className="flex items-center gap-6">
-       <button>
+       <button type="button" onClick={() => setShowCustomizedPreviewFileUpload(false)}>
           <MdClose size={23}  />
         </button>
         <p className="font-semibold ">{pasteTextContent ? "Paste Text" : youtubeUrl ? youtubeUrl : websiteUrl ? websiteUrl : "Preview"}</p>
@@ -157,8 +157,6 @@ const FileUploadCustomized = () => {
           <button type='button' className='bg-[#040C34] mx-auto flex items-center justify-center text-white w-[84px] h-[25px] text-[10px] font-semibold rounded-[10px]'>
             Page 1 of 2
           </button>
-            
-          
           </div>
          }
         <form onSubmit={handleSubmit} className="flex items-center gap-6">

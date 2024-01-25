@@ -159,7 +159,7 @@ function Emailai() {
               <Switch />
             </div>
             <div className='text-sm flex gap-2'>
-              <p className='text-2 font-semibold'>Correlation Analysis</p>
+              <p className='text-2 font-semibold'>Highlight</p>
               <Switch />
             </div>
           </div>

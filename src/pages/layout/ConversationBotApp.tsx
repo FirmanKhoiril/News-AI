@@ -13,10 +13,9 @@ import { HiOutlineEmojiSad } from 'react-icons/hi'
 import { IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
 import { LuBookOpen } from 'react-icons/lu'
 import { MdContentCopy } from 'react-icons/md'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const ConversationBotApp = () => {
-  const location = useLocation()
     const [toogleSendEmailWord, setToogleSendEmailWord] = useState(false)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
     const {isStandart} = useStoreState()

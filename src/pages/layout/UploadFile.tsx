@@ -9,7 +9,7 @@ import { LiaLinkSolid } from 'react-icons/lia'
 
 
 const UploadFile = () => {
-    const { setIsSelectUpload, setShowSelectUploadFile, selectedDocs, websiteUrl, youtubeUrl, isStandart, setIsStandart} = useStoreState()
+    const { setIsSelectUpload, setShowSelectUploadFile, setIsEditMode, selectedDocs, websiteUrl, youtubeUrl, isStandart, setIsStandart} = useStoreState()
     const handleStandart = () => {
         setIsStandart("standart")
       }
@@ -17,8 +17,6 @@ const UploadFile = () => {
       const handleCustomized = () => {
         setIsStandart("customized")
       }
-
-     
   
       const colorIcon = selectedDocs && selectedDocs[0] || websiteUrl || youtubeUrl ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
       const colorIconTwo =  selectedDocs && selectedDocs[1] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
@@ -32,12 +30,9 @@ const UploadFile = () => {
         setShowSelectUploadFile(true)
       }
         return (
-          <div className="h-full flex items-start gap-2">
+          <div className="h-full relative flex items-start gap-2">
             <div className='h-full   w-full flex flex-col'>
-           <button onClick={handlePopupUploadFile} type='button' className='border relative dark:border-gray-600 shadow rounded-md flex gap-1 flex-col items-center justify-center w-full px-4 py-2 h-full'>
-              <div className=' absolute top-1  right-1 p-1 z-10 mb-0'>
-                <FaPencilAlt className='text-xs text-2' />
-              </div>
+           <button onClick={handlePopupUploadFile} type='button' className='border  dark:border-gray-600 shadow rounded-md flex gap-1 flex-col items-center justify-center w-full px-4 py-2 h-full'>
               {title === "URL" ? <LiaLinkSolid size={35} /> :  <img src={image} alt={title} className='w-8 h-8 object-contain' />}
               <p className='text-center font-semibold text-xs'>{title}</p>
             </button>
@@ -45,6 +40,9 @@ const UploadFile = () => {
               100%
             </div>
             </div>
+            <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
+                <FaPencilAlt className='text-xs text-2' />
+            </button>
             <div className="flex flex-col items-center gap-1  justify-between h-[100%]">
               <UseDoneUpload className={colorIcon} />
               <UseDoneUpload className={colorIconTwo} />

@@ -23,10 +23,14 @@ type Store = {
     setWebsiteUrl: (websiteUrl: string) => void
     showAiReplace: boolean
     setShowAiReplace: (showAiReplace: boolean) => void
+    isEditMode: boolean
+    setIsEditMode: (isEditMode: boolean) => void
 }
 
 export const useStoreState = create<Store>()((set) => ({
  isSelectUpload: "",
+ isEditMode: false,
+ setIsEditMode: (isEditMode) => set({isEditMode}),
  isSelectUploadAiReplace: "",
  setIsSelectUploadAiReplace: (isSelectUploadAiReplace) => set({isSelectUploadAiReplace}),
  showAiReplace: false,

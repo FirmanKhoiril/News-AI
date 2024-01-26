@@ -1,5 +1,3 @@
-import { FiEdit } from "react-icons/fi"
-import { HiOutlineDotsHorizontal } from "react-icons/hi"
 import { Switch } from "../ui/switch"
 import { MdClose } from "react-icons/md"
 import Selector from "../chat/subcomp/selector"

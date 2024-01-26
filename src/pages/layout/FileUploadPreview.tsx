@@ -12,7 +12,7 @@ import ReactPlayer from "react-player/youtube";
 import Microlink from "@microlink/react";
 
 const FileUploadPreview = () => {
-    const {selectedDocs, youtubeUrl, websiteUrl} = useStoreState()
+    const {selectedDocs, youtubeUrl, websiteUrl, isEditMode} = useStoreState()
 
   return (
     <div className='w-full card  flex flex-row gap-4 items-center p-2'>
@@ -89,9 +89,12 @@ const FileUploadPreview = () => {
           {youtubeUrl ? youtubeUrl : websiteUrl ? websiteUrl : selectedDocs[0] ?  <p className='font-semibold text-sm'>{selectedDocs[0].name.length >= 39 ? `${selectedDocs[0].name.slice(0, 40) + "... .pdf"}` : selectedDocs[0].name }</p> : <p>Preview</p>}
          </div>
          <div className="flex items-center gap-5">
+          {isEditMode && (
+
          <button type='button' className=''>
            <FiEdit size={18} />
          </button>
+          )}
          <button type='button' className='p-0.5 border mr-4 border-white rounded-full'>
            <HiOutlineDotsHorizontal size={18} />
          </button>

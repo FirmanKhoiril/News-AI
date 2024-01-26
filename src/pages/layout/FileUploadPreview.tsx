@@ -97,7 +97,7 @@ const FileUploadPreview = () => {
          </button>
          </div>
        </div>
-       <div className="w-full flex gap-4 px-4 py-2 items-center justify-center  flex-col text-white rounded-b-[5px] bg-[#1a1a1a]">
+       <div className="w-full flex  gap-4 px-4 py-2 items-center justify-center  flex-col text-white rounded-b-[5px] bg-[#1a1a1a]">
         {websiteUrl ? <Microlink   url={websiteUrl} size="large" 
         media="logo"  /> : youtubeUrl ? <ReactPlayer width={420} height={300}  style={{borderRadius: '5px'}} url={youtubeUrl} controls muted /> : selectedDocs[0] && !youtubeUrl && !websiteUrl ? (
           <div className="w-full h-full p-4">

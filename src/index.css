@@ -4,7 +4,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  @apply dark:text-gray-200 dark:bg-[#000000CC];
+  @apply dark:text-gray-200 dark:bg-[#000000CC] overflow-x-hidden;
 }
 /* custom scrollbar */
 *::-webkit-scrollbar {

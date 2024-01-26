@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import {useState} from 'react'
-import { AiFillDropboxCircle } from 'react-icons/ai'
+import {useEffect, useState} from 'react'
+import { AiFillDropboxCircle,AiOutlineCloudUpload } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
 import { FaFacebook, FaInstagram, FaSave, FaShareAlt } from 'react-icons/fa'
 import { GrOnedrive } from 'react-icons/gr'
@@ -12,16 +12,64 @@ import { useNavigate } from 'react-router-dom'
 import { MdFileDownload } from 'react-icons/md'
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
+import { MdFindReplace } from "react-icons/md";
+import { useStoreState } from '@/context/useStore'
 
 const MSWord = () => {
+  const { setShowAiReplace, setIsSelectUploadAiReplace, setShowSelectUploadFileAiReplace} = useStoreState()
     const navigate = useNavigate()
+    const [show, setShow] = useState(false)
+    const [points, setPoints] = useState({
+      x: 0,
+      y: 0
+    })
     const [showShare, setShowShare] = useState(false)
     const [showSave, setShowSave] = useState(false)
     const [showDownload, setShowDownload] = useState(false)
+  
+
+    useEffect(() => {
+      const handleClick = () => setShow(false);
+      window.addEventListener('click', handleClick);
+      return () => window.removeEventListener('click', handleClick);
+    }, []);
+
   return (
-    <div className='border shadow card flex flex-col  justify-between   w-full overflow-y-auto dark:border-gray-700 rounded-md'>
-      <div className="border h-full mb-4 dark:border-gray-700 rounded-md">
+    <div className='border shadow overflow-x-hidden card flex flex-col  justify-between   w-full overflow-y-auto dark:border-gray-700 rounded-md'>
+      <div onContextMenu={(e) => {
+            e.preventDefault();
+              setShow(true);
+              setPoints({ x: e.pageX, y: e.pageY });
+  
+          }}  className="border h-full mb-4 overflow-y-auto dark:border-gray-700 rounded-md">
         <Editor  />
+        {show && (
+          <div style={{top: points.y - 25, left: points.x - 250}} className={`z-20 w-full gap-2 max-w-[350px] absolute bg-white text-black p-2 flex items-center justify-between  border-[4px] border-black`}>
+              <button onClick={() => {
+                setShowAiReplace(true)
+                setIsSelectUploadAiReplace("")
+              }} type='button' className='flex items-center gap-2 pr-2'>
+                <MdFindReplace size={25} />
+                AI Replace
+              </button>
+              <div className="relative group">
+                <button  type='button' className='flex border-l pl-2 border-black/20 items-center gap-2'>
+                  <AiOutlineCloudUpload size={25} />
+                  AI Replace Upload
+                </button>
+                <div className="flex border border-black flex-col group opacity-0 absolute group-hover:opacity-100 -top-[330px] right-0 bg-white w-full z-50 gap-2">
+                  {["Youtube URL", "URL", "Picture/Text", "PDF", "PPT", "Excel", "Audio"].map((item) => (
+                    <button type='button' onClick={() => {
+                      setIsSelectUploadAiReplace(item)  
+                      setShowSelectUploadFileAiReplace(true)
+                    }} key={item} className=' py-2 hover:bg-gray-200'>
+                    {item}
+                  </button>
+                  ))}
+                </div>
+              </div>
+          </div>
+        )}
       </div>
       <div className='flex justify-between items-center w-full z-20'>
         <div className='flex justify-between gap-2 relative py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>

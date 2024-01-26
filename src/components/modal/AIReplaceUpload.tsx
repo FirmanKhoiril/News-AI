@@ -1,26 +1,23 @@
-import { qnaOrReport } from "@/lib/data/dummyData"
+import { FiEdit } from "react-icons/fi"
+import { HiOutlineDotsHorizontal } from "react-icons/hi"
+import { Switch } from "../ui/switch"
+import { MdClose } from "react-icons/md"
 import Selector from "../chat/subcomp/selector"
 import { fontFormat, fontType, formatOptions, languageList, llms, popularColors, purposeOfWriting, writingStyle } from "@/lib/data/selectDatas"
 import { Input } from "../ui/input"
-import { Switch } from "../ui/switch"
-import { MdClose } from "react-icons/md"
+import { qnaOrReport } from "@/lib/data/dummyData"
 import { useStoreState } from "@/context/useStore"
-import Microlink from "@microlink/react";
-import pdfImage from '@/assets/pdf-2.png'
-import ReactPlayer from 'react-player/youtube'
 import { Viewer, Worker } from "@react-pdf-viewer/core"
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
+import ReactPlayer from "react-player"
+import Microlink from "@microlink/react";
+import pdfImage from '@/assets/pdf-2.png'
 
-const FileUploadCustomized = () => {
-  const {pasteTextContent, setShowCustomizedPreviewFileUpload, youtubeUrl, setSelectedDocs,  selectedDocs, websiteUrl, setWebsiteUrl, setYoutubeUrl,  setPasteTextContent} = useStoreState()
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setShowCustomizedPreviewFileUpload(false)
-    setWebsiteUrl("")
-    setYoutubeUrl("")
-    setSelectedDocs((prev: File[]) => [])
-    setPasteTextContent("")
-  }
+const AIReplaceUpload = () => {
+    const {setShowAiReplace, selectedDocs, youtubeUrl, websiteUrl} = useStoreState()
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+    }
   return (
     <div className='fixed z-30 px-4 py-6 top-16 rounded-md shadow-[0px_5px_5px_0px] shadow-black/30 bg-white dark:text-white text-black h-full max-h-[90dvh] w-[83%] mx-3 dark:bg-black flex gap-1'>
     <div className='col-span-4 border max-w-[300px] max-h-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
@@ -92,14 +89,15 @@ const FileUploadCustomized = () => {
     <div className="w-full min-h-full px-4 flex flex-col">
       <div className="w-full flex text-white items-center justify-between px-4 bg-[#040C34] rounded-t-md h-12">
        <div className="flex items-center gap-6">
-       <button type="button" onClick={() => setShowCustomizedPreviewFileUpload(false)}>
+       <button type="button" onClick={() => setShowAiReplace(false)}>
           <MdClose size={23}  />
         </button>
-        <p className="font-semibold ">{pasteTextContent ? "Paste Text" : youtubeUrl ? youtubeUrl : websiteUrl ? websiteUrl : "Preview"}</p>
+        <p className="font-semibold ">AI Replace Upload</p>
        </div>
       </div>
       <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
-         {pasteTextContent ?  <textarea onChange={(e) => setPasteTextContent(e.target.value)} value={pasteTextContent} rows={20} placeholder="Paste your content here ..." className="px-4  py-3 text-sm w-full resize-none rounded-md text-black  h-[90%] outline-none"></textarea> : youtubeUrl ? <div className="w-full h-full">
+      <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
+         {youtubeUrl ? <div className="w-full h-full">
          <ReactPlayer width={900} height={450} style={{borderRadius: '5px'}} url={youtubeUrl} controls muted />
          </div> : websiteUrl ? <div className="flex items-center justify-center w-full h-full">
          <Microlink  lazy={{ threshold: 0.5 }} url={websiteUrl} size="large" 
@@ -156,9 +154,10 @@ const FileUploadCustomized = () => {
        </button>
         </form>
       </div>
+      </div>
     </div>
     </div>
   )
 }
 
-export default FileUploadCustomized
+export default AIReplaceUpload

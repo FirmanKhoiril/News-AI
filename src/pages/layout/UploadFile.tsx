@@ -63,22 +63,22 @@ const UploadFile = () => {
         <Button variant='outline' onClick={handleStandart}>Standard</Button>
         <Button variant='outline' onClick={handleCustomized}>Customized</Button>
       </div>
-      <div className='grid my-4 grid-rows-3 grid-cols-3 gap-y-6 h-full'>
+      <div className='grid my-4 grid-rows-3 gap-x-6 grid-cols-3 gap-y-6 h-full'>
         {uploadList.map((e) => (
-          <div key={e.title} className='h-full max-w-[180px] w-full'>
+          <div key={e.title} className='h-full max-w-[240px] max-h-[300px] w-full'>
             <UploadGrid image={e.image}  title={e.title} />
           </div>
         ))}
        {isStandart === "standart" ? (
-         <button className='max-w-[154px] mt-2 max-h-[40px] border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
+         <button className='max-w-[214px] mt-2 max-h-[40px] border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
          Validate
        </button>
        ) :  (
         <div className='space-y-2 mt-2'>
-          <button className='max-w-[154px] border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
+          <button className='max-w-[214px] border-2 rounded-md border-primary bg-primary/10 py-2 px-1 w-full text-xs'>
             Generate
           </button>
-          <button className='max-w-[154px] px-3 py-2 rounded-lg text-xs bg-[#5E3AFF] text-white w-full'>
+          <button className='max-w-[214px] px-3 py-2 rounded-lg text-xs bg-[#5E3AFF] text-white w-full'>
             Generate & Send Report
           </button>
         </div>

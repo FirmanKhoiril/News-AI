@@ -1,4 +1,3 @@
-import React from 'react'
 import History from '@/components/chat/subcomp/history'
 import { Textarea } from '@/components/ui/textarea'
 import {

@@ -14,11 +14,6 @@ import Audio from '@/assets/icon/sound.png'
 const FeedUploadGrid = () => {
     const {setIsSelectUpload, setShowSelectUploadFile, setIsEditMode, selectedDocs, pasteTextContent, websiteUrl, youtubeUrl} = useStoreState()
 
-    const colorIcon = selectedDocs && selectedDocs[0] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorIconTwo =  selectedDocs && selectedDocs[1] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorIconThree =  selectedDocs && selectedDocs[2] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorIconFour =  selectedDocs && selectedDocs[3] ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-
     const validImageTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
     const colorImageIcon = validImageTypes.includes(selectedDocs[0]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]";
     const colorImageIconTwo =  validImageTypes.includes(selectedDocs[1]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
@@ -215,7 +210,7 @@ const FeedUploadGrid = () => {
                 <UseDoneUpload className={colorPPTIcon} />
                 <UseDoneUpload className={colorPPTIconTwo} />
                 <UseDoneUpload className={colorPPTIconThree} />
-                <UseDoneUpload className={colorAudioIconFour}/>
+                <UseDoneUpload className={colorPPTIconFour}/>
                 <button type='button'  onClick={() =>  {
                 setIsSelectUpload("PPT")
                 setShowSelectUploadFile(true)

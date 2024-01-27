@@ -6,12 +6,12 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useStoreState } from "@/context/useStore";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdClose } from "react-icons/md";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
 import ReactPlayer from "react-player/youtube";
 import Microlink from "@microlink/react";
 import { useState } from "react";
 import DeleteFile from "@/components/button/DeleteFile";
+import PreviewDocs from "@/components/card/PreviewDocs";
 
 const FileUploadPreview = () => {
     const {selectedDocs, setShowSelectUploadFile, youtubeUrl, setShowEditUploadFile, websiteUrl, isEditMode, isStandart, setShowCustomizedPreviewFileUpload} = useStoreState()
@@ -25,68 +25,16 @@ const FileUploadPreview = () => {
         setShowSelectUploadFile(false)
       }
      }
+
   return (
     <>
     <div className='w-full card  flex flex-row gap-4 items-center p-2'>
     <div className=" max-w-[180px] pr-4 flex flex-col items-center justify-start gap-2 space-y-2 w-full h-full overflow-y-auto py-2">
+    <PreviewDocs datas={selectedDocs[1]} />
+    <PreviewDocs datas={selectedDocs[2]} />
+    <PreviewDocs datas={selectedDocs[3]} />
+    {selectedDocs.slice(4, 30).map((doc, index) => doc && <PreviewDocs key={doc.name + index} datas={doc} />)}
   
-    <div className="w-full border h-full flex items-center flex-col border-black/10">
-    {selectedDocs[1] ? 
-    <div className='max-h-[180px] h-full w-full'>
-    {selectedDocs[1].type === "application/pdf" ? (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
-        </Worker>
-      ) : selectedDocs[1].type.startsWith("image/") ? (
-        <div className="max-h-[180px] rounded-t-md overflow-hidden">
-          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
-        </div>
-      ) : (
-        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{ uri: window.URL.createObjectURL(selectedDocs[1]) }]} />
-      )}
-    </div>  : 
-     <img src={pdfImage} alt="PDF Example" width={200} />}
-      <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-[10px] w-full text-black text-center py-2 rounded-b-[5px] shadow-[0px_4px_4px_0px] shadow-black/30 ">
-        <p>{selectedDocs[1] ? `${selectedDocs[1].name.slice(0, 20)}` : "Document01.pdf"}</p>
-      </div>
-    </div>
-
-    <div className="w-full border h-full flex items-center flex-col border-black/10">
-    {selectedDocs[2] ? <div  className='max-h-[180px] h-full w-full'>
-    {selectedDocs[2].type === "application/pdf" ? (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[2])} />
-        </Worker>
-      ) : selectedDocs[2].type.startsWith("image/") ? (
-        <div className="max-h-[180px] rounded-t-md overflow-hidden">
-          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[2])} alt={selectedDocs[2].name} />
-        </div>
-      ) : (
-        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{ uri: window.URL.createObjectURL(selectedDocs[2]) }]} />
-      )}
-    </div>:  <img src={pdfImage} alt="PDF Example" width={200} />}
-      <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-[10px] w-full text-black text-center py-2 rounded-b-[5px] shadow-[0px_4px_4px_0px] shadow-black/30 ">
-      <p>{selectedDocs[2] ? `${selectedDocs[2].name.slice(0, 20)}` : "Document02.pdf"}</p>
-      </div>
-    </div>
-      <div className="w-full border border-black/10 flex flex-col items-center">
-      {selectedDocs[3] ? <div  className='max-h-[180px] h-full w-full'>
-      {selectedDocs[3].type === "application/pdf" ? (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[3])} />
-        </Worker>
-      ) : selectedDocs[3].type.startsWith("image/") ? (
-        <div className="max-h-[180px] rounded-t-md overflow-hidden">
-          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[3])} alt={selectedDocs[3].name} />
-        </div>
-      ) : (
-        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{ uri: window.URL.createObjectURL(selectedDocs[3]) }]} />
-      )}
-    </div> :  <img src={pdfImage} alt="PDF Example" width={200} />}
-        <div className="bg-white border border-transparent dark:border-white/50 dark:bg-black dark:text-white text-xs text-black text-center py-2 rounded-[5px] shadow-[0px_4px_4px_0px] w-full shadow-black/30 ">
-        <p>{selectedDocs[3] ? `${selectedDocs[3].name.slice(0, 20)}` : "Document03.pdf"}</p>
-        </div>
-      </div>
       <button type='button' className="border-black/30 dark:border-white/30 border rounded-full p-2">
         <IoIosArrowDown size={20} />
       </button>
@@ -119,7 +67,7 @@ const FileUploadPreview = () => {
             <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
           </Worker>
         ) : selectedDocs[0].type.startsWith("image/") ? (
-          <div className="max-h-[180px] rounded-t-md overflow-hidden">
+          <div className="max-h-[760px] rounded-t-md overflow-hidden">
             <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
           </div>
         ) : 

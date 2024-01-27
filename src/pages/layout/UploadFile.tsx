@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { useStoreState } from '@/context/useStore'
 
 const UploadFile = () => {
-    const { selectedDocs, websiteUrl, youtubeUrl, isStandart, setIsStandart} = useStoreState()
+    const { isStandart, setIsStandart} = useStoreState()
     const handleStandart = () => {
         setIsStandart("standart")
       }

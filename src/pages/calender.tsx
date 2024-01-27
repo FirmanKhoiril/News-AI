@@ -14,117 +14,14 @@ import CalendarIllustration from '@/assets/calendar.png'
 import { CgTimelapse } from 'react-icons/cg'
 import { useState } from 'react'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import { Card } from '@/components/ui/card'
-import CountUp from 'react-countup'
 import Chart from 'react-apexcharts'
-import { Button } from '@/components/ui/button'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { daySeconds, hourSeconds, minuteSeconds, optionsMonth, optionsWeek } from '@/lib/data/dummyData'
 
-// import { Calendar } from '@/components/ui/calendar'
-
-// functions
 const getTimeSeconds = (time: number) => (minuteSeconds - time) | 0
 const getTimeMinutes = (time: number) =>
   ((time % hourSeconds) / minuteSeconds) | 0
 const getTimeHours = (time: number) => ((time % daySeconds) / hourSeconds) | 0
 const getTimeDays = (time: number) => (time / daySeconds) | 0
-
-// values
-const minuteSeconds = 60
-const hourSeconds = 3600
-const daySeconds = 86400
-
-const optionsWeek = {
-  series: [
-    {
-      name: 'Hour',
-      data: [2, 4, 3, 3, 4, 2, 1.4],
-    },
-  ],
-  colors: ['#16a34a'],
-  chart: {
-    height: 350,
-    type: 'line',
-    zoom: {
-      enabled: false,
-    },
-  },
-  stroke: {
-    curve: 'smooth',
-  },
-  dataLabels: {
-    enabled: false,
-  },
-
-  grid: {
-    row: {
-      // colors: ['#fcfcfc', 'transparent'], // takes an array which will be repeated on columns
-      opacity: 0.5,
-    },
-  },
-  xaxis: {
-    categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  },
-}
-const optionsMonth = {
-  colors: ['#0E71FF90'],
-  series: [
-    {
-      name: 'Month',
-      data: [20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30],
-    },
-  ],
-  chart: {
-    height: '100px', // Adjust the height here
-    type: 'line',
-    zoom: {
-      enabled: false,
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: 'straight',
-  },
-  grid: {
-    row: {
-      // colors: ['#fcfcfc', 'transparent'], // takes an array which will be repeated on columns
-      opacity: 0.5,
-    },
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: 8,
-      // borderRadiusApplication: 'end',
-      // borderRadiusWhenStacked: 'last',
-      columnWidth: '40%',
-      hover: {
-        color: '#FF0000',
-      },
-    },
-  },
-  xaxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
-  },
-}
 
 const renderTime = (dimension: string, time: number) => {
   return (
@@ -134,6 +31,7 @@ const renderTime = (dimension: string, time: number) => {
     </div>
   )
 }
+
 export default function CalenderPage() {
   const stratTime = Date.now() / 1000 // use UNIX timestamp in seconds
   const endTime = stratTime + 243248 // use UNIX timestamp in seconds
@@ -141,7 +39,6 @@ export default function CalenderPage() {
   const remainingTime = endTime - stratTime
   const days = Math.ceil(remainingTime / daySeconds)
   const daysDuration = days * daySeconds
-  const [date, setDate] = useState<Date | undefined>(new Date())
 
   const [calendarState, setCalendarState] = useState({
     selection: {

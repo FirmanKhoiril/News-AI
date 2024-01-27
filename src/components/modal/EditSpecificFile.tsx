@@ -1,5 +1,4 @@
 import { useStoreState } from '@/context/useStore';
-import React from 'react'
 import { IoCloudUploadOutline } from 'react-icons/io5';
 
 const EditSpecificFile = () => {
@@ -22,13 +21,12 @@ const EditSpecificFile = () => {
                 <h1>Edit Your File</h1>
                <div className="w-full overflow-y-auto group outline-none cursor-pointer relative border max-h-[280px] h-full text-sm px-4 py-3 rounded-md border-input bg-background">
                     <div className='absolute inset-0 group-hover:opacity-80 flex items-center  w-full h-full justify-center bg-primary opacity-50 cursor-pointer'>
-                    {/* Upload label and input */}
                         <label
                             htmlFor='file-upload'
                             className='flex items-center w-full h-full flex-col gap-3 justify-center text-white'
                         >
                         <IoCloudUploadOutline size={38} />
-                        <p>
+                        <p> 
                         <span>Edit Your Document  File</span>     
                         </p>
                         <input

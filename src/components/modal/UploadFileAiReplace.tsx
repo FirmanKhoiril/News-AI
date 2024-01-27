@@ -16,6 +16,7 @@ const UploadFileAiReplace = () => {
         setShowAiReplace(true)
         setShowSelectUploadFileAiReplace(false)
     }
+    console.log(isSelectUploadAiReplace)
     
   return showSelectUploadFileAiReplace ? (
     <>

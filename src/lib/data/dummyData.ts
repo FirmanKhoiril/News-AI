@@ -13,7 +13,7 @@ export const uploadList = [
     { image: ImageFile, title: 'Picture/Text', type: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'] },
     { image: PDF, title: 'PDF', type: 'application/pdf' },
     { image: PPT, title: 'PPT', type: ['application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'] },
-    { image: Excel, title: 'Excel', type: 'pplication/vnd.ms-excel' },
+    { image: Excel, title: 'Excel', type: 'application/vnd.ms-excel' },
     { image: Audio, title: 'Audio', type: 'audio/mpeg' },
   ]
 

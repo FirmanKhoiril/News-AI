@@ -7,6 +7,7 @@ import { openSideBar } from '@/lib/context'
 import ModalUploadFileOrDocument from '@/components/modal/ModalUploadFileOrDocument'
 import {Toaster as Toast} from 'sonner'
 import UploadFileAiReplace from '@/components/modal/UploadFileAiReplace'
+import EditSpecificFile from '@/components/modal/EditSpecificFile'
 
 function AppLayout() {
   const [openSideBarValue] = useAtom(openSideBar)
@@ -14,6 +15,7 @@ function AppLayout() {
   return (
     <main className='flex w-full'>
       <ModalUploadFileOrDocument />
+      <EditSpecificFile />
       <UploadFileAiReplace />
       <Toast richColors theme='dark' position='top-center' />
       <section className={`${openSideBarValue ? 'w-[4.5%]' : 'w-2/12'}`}>

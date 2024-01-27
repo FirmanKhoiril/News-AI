@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import {useEffect, useState} from 'react'
-import { AiFillDropboxCircle,AiOutlineCloudUpload } from 'react-icons/ai'
+import { useState} from 'react'
+import { AiFillDropboxCircle } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
 import { FaFacebook, FaInstagram, FaSave, FaShareAlt } from 'react-icons/fa'
 import { GrOnedrive } from 'react-icons/gr'
@@ -10,67 +10,18 @@ import { IoChatboxOutline, IoLogoTiktok, IoMicOutline, IoSend } from 'react-icon
 import GoogleDrive from '@/assets/GoogleDrive.png'
 import { useNavigate } from 'react-router-dom'
 import { MdFileDownload } from 'react-icons/md'
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { Editor } from 'react-draft-wysiwyg'
-import { MdFindReplace } from "react-icons/md";
-import { useStoreState } from '@/context/useStore'
+import TextEditor from '@/components/TextEditor'
 
 const MSWord = () => {
-  const { setShowAiReplace, setIsSelectUploadAiReplace, setShowSelectUploadFileAiReplace} = useStoreState()
     const navigate = useNavigate()
-    const [show, setShow] = useState(false)
-    const [points, setPoints] = useState({
-      x: 0,
-      y: 0
-    })
+
     const [showShare, setShowShare] = useState(false)
     const [showSave, setShowSave] = useState(false)
     const [showDownload, setShowDownload] = useState(false)
-  
-
-    useEffect(() => {
-      const handleClick = () => setShow(false);
-      window.addEventListener('click', handleClick);
-      return () => window.removeEventListener('click', handleClick);
-    }, []);
-
+    
   return (
     <div className='border shadow overflow-x-hidden card flex flex-col  justify-between   w-full overflow-y-auto dark:border-gray-700 rounded-md'>
-      <div onContextMenu={(e) => {
-            e.preventDefault();
-              setShow(true);
-              setPoints({ x: e.pageX, y: e.pageY });
-  
-          }}  className="border h-full mb-4 overflow-y-auto dark:border-gray-700 rounded-md">
-        <Editor  />
-        {show && (
-          <div style={{top: points.y - 25, left: points.x - 250}} className={`z-20 w-full gap-2 max-w-[350px] absolute bg-white text-black p-2 flex items-center justify-between  border-[4px] border-black`}>
-              <button onClick={() => {
-                setShowAiReplace(true)
-                setIsSelectUploadAiReplace("")
-              }} type='button' className='flex items-center gap-2 pr-2'>
-                <MdFindReplace size={25} />
-                AI Replace
-              </button>
-              <div className="relative group">
-                <button  type='button' className='flex border-l pl-2 border-black/20 items-center gap-2'>
-                  <AiOutlineCloudUpload size={25} />
-                  AI Replace Upload
-                </button>
-                <div className="flex border border-black flex-col group opacity-0 absolute group-hover:opacity-100 -top-[330px] right-0 bg-white w-full z-50 gap-2">
-                  {["Youtube URL", "URL", "Picture/Text", "PDF", "PPT", "Excel", "Audio"].map((item) => (
-                    <button type='button' onClick={() => {
-                      setIsSelectUploadAiReplace(item)  
-                      setShowSelectUploadFileAiReplace(true)
-                    }} key={item} className=' py-2 hover:bg-gray-200'>
-                    {item}
-                  </button>
-                  ))}
-                </div>
-              </div>
-          </div>
-        )}
-      </div>
+      <TextEditor />
       <div className='flex justify-between items-center w-full z-20'>
         <div className='flex justify-between gap-2 relative py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>
           {showDownload && (
@@ -146,18 +97,18 @@ const MSWord = () => {
               </button>
              </div>
             </PopoverTrigger>
-            <PopoverContent className='border max-w-[500px] w-full bg-white rounded-2xl overflow-hidden'>
+            <PopoverContent className='border max-w-[500px] w-full bg-white rounded-2xl overflow-x-hidden'>
               <div className='bg-white text-black space-y-3'>
                 <div className='space-y-1 py-2 px-2 bg-gray-100 rounded-2xl'>
                   <p className='text-base font-semibold'>Cluadia Dias</p>
                   <p className='text-sm flex'>Online</p>
                 </div>
-                <div>
+                <div className='max-h-[250px] h-full overflow-y-auto'>
                   <div className='flex py-2 px-2 gap-2 bg-gray-100 rounded-2xl'>
                     <div>
                       <CgProfile className='w-8 h-auto' />
                     </div>
-                      <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-full px-4 flex flex-col items-start py-2'>
+                      <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-b-xl rounded-tr-xl px-4 flex flex-col items-start py-2'>
                         <p className='font-semibold text-base px-2 gap-2'>Claudia Dias</p>
                         <span>Hello Josh! How are you today 😊</span>
                       </button>
@@ -166,7 +117,7 @@ const MSWord = () => {
                     <div>
                       <CgProfile className='w-8 h-auto' />
                     </div>
-                    <button className='text-sm max-w-[90%] text-white bg-primary rounded-full px-4 flex flex-col items-end py-2'>
+                    <button className='text-sm max-w-[90%] text-white bg-primary rounded-b-xl rounded-tl-xl px-4 flex flex-col items-end py-2'>
                         <p className='font-semibold text-base px-2 gap-2'>You</p>
                         <span>Pretty good! thanks</span>
                       </button>
@@ -175,7 +126,7 @@ const MSWord = () => {
                     <div>
                       <CgProfile className='w-8 h-auto' />
                     </div>
-                       <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-full px-4 flex flex-col items-start py-2'>
+                       <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-b-xl rounded-tr-xl px-4 flex flex-col items-start py-2'>
                         <p className='font-semibold text-base px-2 gap-2'>Claudia Dias</p>
                         <span>Certainly! Is there anything specific you would like to talk about or ask?</span>
                       </button>

@@ -2,10 +2,11 @@ import { useStoreState } from "@/context/useStore"
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 const ModalUploadFileOrDocument = () => {
-    const {  isSelectUpload, setShowSelectUploadFile, isStandart,pasteTextContent, setShowCustomizedPreviewFileUpload, showSelectUploadFile, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl, setPasteTextContent, setSelectedDocs} = useStoreState() 
+    const {  isSelectUpload, setIsSelectUpload, setShowSelectUploadFile, isStandart,pasteTextContent, setShowCustomizedPreviewFileUpload, showSelectUploadFile, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl, setPasteTextContent, setSelectedDocs} = useStoreState() 
 
     const handleClearSelectedUpload = () => {
         setShowSelectUploadFile(false)
+        setIsSelectUpload("")
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement> | any) => {

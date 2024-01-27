@@ -7,6 +7,8 @@ type Store = {
     setIsSelectUpload: (isSelectUpload: string) => void
     showSelectUploadFile: boolean
     setShowSelectUploadFile: (showSelectUploadFile: boolean) => void
+    showEditUploadFile: boolean
+    setShowEditUploadFile: (showEditUploadFile: boolean) => void
     showSelectUploadFileAiReplace: boolean
     setShowSelectUploadFileAiReplace: (showSelectUploadFile: boolean) => void
     selectedDocs?: File[];
@@ -37,6 +39,8 @@ export const useStoreState = create<Store>()((set) => ({
  setShowAiReplace: (showAiReplace) => set({showAiReplace}),
  showSelectUploadFile: false,
  setShowSelectUploadFile: (showSelectUploadFile) => set({showSelectUploadFile}),
+ showEditUploadFile: false,
+ setShowEditUploadFile: (showEditUploadFile) => set({showEditUploadFile}),
  showSelectUploadFileAiReplace: false,
  setShowSelectUploadFileAiReplace: (showSelectUploadFileAiReplace) => set({showSelectUploadFileAiReplace}),
  pasteTextContent: "",

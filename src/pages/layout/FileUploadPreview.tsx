@@ -10,11 +10,23 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
 import ReactPlayer from "react-player/youtube";
 import Microlink from "@microlink/react";
+import { useState } from "react";
+import DeleteFile from "@/components/button/DeleteFile";
 
 const FileUploadPreview = () => {
-    const {selectedDocs, youtubeUrl, websiteUrl, isEditMode} = useStoreState()
-
+    const {selectedDocs, setShowSelectUploadFile, youtubeUrl, setShowEditUploadFile, websiteUrl, isEditMode, isStandart, setShowCustomizedPreviewFileUpload} = useStoreState()
+    const [showPreviewImage, setShowPreviewImage] = useState(true)
+    
+    const ShowEditSpecificFile = () => {
+      if(isStandart === "customized") {
+        setShowCustomizedPreviewFileUpload(true)
+      } else {
+        setShowEditUploadFile(true)
+        setShowSelectUploadFile(false)
+      }
+     }
   return (
+    <>
     <div className='w-full card  flex flex-row gap-4 items-center p-2'>
     <div className=" max-w-[180px] pr-4 flex flex-col items-center justify-start gap-2 space-y-2 w-full h-full overflow-y-auto py-2">
   
@@ -81,49 +93,49 @@ const FileUploadPreview = () => {
     </div>
     <div className="w-full h-full rounded-md overflow-y-auto">
        <div className="flex flex-col pb-4 w-full">
-       <div className="bg-[#040C34] w-full flex justify-between text-white rounded-t-[5px] py-3 px-2">
+       <div className="bg-[#040C34] relative w-full flex justify-between text-white rounded-t-[5px] py-3 px-2">
          <div className='flex items-center ml-4 gap-6'>
-           <button type='button'>
+           <button type='button' onClick={() => setShowPreviewImage((prev) => !prev)}>
              <MdClose size={25} />
            </button>
           {youtubeUrl ? youtubeUrl : websiteUrl ? websiteUrl : selectedDocs[0] ?  <p className='font-semibold text-sm'>{selectedDocs[0].name.length >= 39 ? `${selectedDocs[0].name.slice(0, 40) + "... .pdf"}` : selectedDocs[0].name }</p> : <p>Preview</p>}
          </div>
          <div className="flex items-center gap-5">
           {isEditMode && (
-
-         <button type='button' className=''>
+         <button type='button' onClick={ShowEditSpecificFile} className=''>
            <FiEdit size={18} />
          </button>
           )}
-         <button type='button' className='p-0.5 border mr-4 border-white rounded-full'>
-           <HiOutlineDotsHorizontal size={18} />
-         </button>
+          <DeleteFile />
          </div>
        </div>
-       <div className="w-full flex  gap-4 px-4 py-2 items-center justify-center  flex-col text-white rounded-b-[5px] bg-[#1a1a1a]">
-        {websiteUrl ? <Microlink   url={websiteUrl} size="large" 
-        media="logo"  /> : youtubeUrl ? <ReactPlayer width={420} height={300}  style={{borderRadius: '5px'}} url={youtubeUrl} controls muted /> : selectedDocs[0] && !youtubeUrl && !websiteUrl ? (
-          <div className="w-full h-full p-4">
-          {selectedDocs[0].type === "application/pdf" ? (
-         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
-         </Worker>
-      ) : selectedDocs[0].type.startsWith("image/") ? (
-        <div className="max-h-[180px] rounded-t-md overflow-hidden">
-          <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
-        </div>
-      ) : 
-       <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
-        uri: window.URL.createObjectURL(selectedDocs[0]),
-       }]} />}
+        {showPreviewImage && (
+          <div className="w-full flex  gap-4 px-4 py-2 items-center justify-center  flex-col text-white rounded-b-[5px] bg-[#1a1a1a]">
+          {websiteUrl ? <Microlink   url={websiteUrl} size="large" 
+          media="logo"  /> : youtubeUrl ? <ReactPlayer width={420} height={300}  style={{borderRadius: '5px'}} url={youtubeUrl} controls muted /> : selectedDocs[0] && !youtubeUrl && !websiteUrl ? (
+            <div className="w-full h-full p-4">
+            {selectedDocs[0].type === "application/pdf" ? (
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
+          </Worker>
+        ) : selectedDocs[0].type.startsWith("image/") ? (
+          <div className="max-h-[180px] rounded-t-md overflow-hidden">
+            <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
           </div>
-        ) :  (
-          <img src={pdfImage} alt="Pdf Preview" width={324} height={324} />
+        ) : 
+        <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
+          uri: window.URL.createObjectURL(selectedDocs[0]),
+        }]} />}
+            </div>
+          ) :  (
+            <img src={pdfImage} alt="Pdf Preview" width={324} height={324} />
+          )}
+        </div>
         )}
-         </div>
        </div>
     </div>
   </div>
+    </>
   )
 }
 

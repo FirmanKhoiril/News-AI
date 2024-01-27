@@ -1,6 +1,5 @@
 import { FiSun } from 'react-icons/fi'
 import { BsMoonFill } from 'react-icons/bs'
-// import Selector from './chat/subcomp/selector'
 import { IoMdSearch } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import useDarkMode from '@/lib/useDarkMode'
@@ -9,9 +8,22 @@ import { HiOutlineBell } from "react-icons/hi2";
 import { BiMessageDots } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { useEffect, useRef, useState } from 'react'
 
 function TopNav() {
   const [darkMode, toggleDarkMode] = useDarkMode()
+  const menuRef = useRef(null);
+  const [showInviteChat, setShowInviteChat] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: any)=>{
+      if(!menuRef?.current.contains(e.target)){
+        setShowInviteChat(false);
+      }      
+    };
+    window.addEventListener('mousedown', handler);
+    return () => window.removeEventListener('mousedown', handler);
+  }, []);
 
   return (
     <div
@@ -33,20 +45,22 @@ function TopNav() {
           <div className=' absolute top-[9px] right-[10px] w-[4px] h-[4px] rounded-full bg-black border border-slate-200' />
           <HiOutlineBell />
         </button>
-       <div className="group relative">
-        <button type='button' className='w-[32px] h-[32px] flex justify-center items-center rounded-full border border-transparent group-hover:bg-slate-300 group-hover:dark:bg-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
+       <div className="relative" ref={menuRef}>
+            <button type='button' onClick={() => setShowInviteChat((prev) => !prev)} className='w-[32px] h-[32px] flex justify-center items-center rounded-full border border-transparent hover:bg-slate-300 hover:dark:bg-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
             <BiMessageDots />
           </button>
-          <div className="flex absolute group-hover:opacity-100 opacity-0 transition duration-300 bg-slate-200 p-2 rounded-md dark:bg-black flex-col gap-2">
-            <button type='button' className='px-2 hover:opacity-80 flex items-center gap-2'>
-              <IoChatboxEllipsesOutline size={18}/>
-              Chat
-            </button>
-            <button type='button' className='px-2 hover:opacity-80 flex items-center gap-2'>
-              <HiOutlineUserAdd size={18}/>
-              Invite
-            </button>
-          </div>
+         {showInviteChat && (
+           <div className="flex absolute bg-slate-200 dark:border-white border-black border px-2 py-3 rounded-md dark:bg-black flex-col gap-2">
+           <button type='button' className='px-2 py-1.5 hover:opacity-80 flex items-center gap-2'>
+             <IoChatboxEllipsesOutline size={18}/>
+             Chat
+           </button>
+           <button type='button' className='px-2 py-1.5 hover:opacity-80 flex items-center gap-2'>
+             <HiOutlineUserAdd size={18}/>
+             Invite
+           </button>
+         </div>
+         )}
        </div>
        <div className="flex items-center gap-5">
         <Link to='/profile'>

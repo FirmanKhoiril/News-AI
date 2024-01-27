@@ -98,7 +98,7 @@ const FileUploadCustomized = () => {
         <p className="font-semibold ">{pasteTextContent ? "Paste Text" : youtubeUrl ? youtubeUrl : websiteUrl ? websiteUrl : "Preview"}</p>
        </div>
       </div>
-      <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
+      <div className="w-full pt-6 px-8 flex flex-col justify-between gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
          {pasteTextContent ?  <textarea onChange={(e) => setPasteTextContent(e.target.value)} value={pasteTextContent} rows={20} placeholder="Paste your content here ..." className="px-4  py-3 text-sm w-full resize-none rounded-md text-black  h-[90%] outline-none"></textarea> : youtubeUrl ? <div className="w-full h-full">
          <ReactPlayer width={900} height={450} style={{borderRadius: '5px'}} url={youtubeUrl} controls muted />
          </div> : websiteUrl ? <div className="flex items-center justify-center w-full h-full">

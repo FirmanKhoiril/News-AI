@@ -1,5 +1,4 @@
 import { useStoreState } from '@/context/useStore'
-import React from 'react'
 import { IoCloudUploadOutline } from 'react-icons/io5'
 
 const UploadFileAiReplace = () => {
@@ -16,7 +15,6 @@ const UploadFileAiReplace = () => {
         setShowAiReplace(true)
         setShowSelectUploadFileAiReplace(false)
     }
-    console.log(isSelectUploadAiReplace)
     
   return showSelectUploadFileAiReplace ? (
     <>

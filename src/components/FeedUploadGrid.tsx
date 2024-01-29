@@ -12,7 +12,7 @@ import Excel from '@/assets/icon/xls.png'
 import Audio from '@/assets/icon/sound.png'
 
 const FeedUploadGrid = () => {
-    const {setIsSelectUpload, setShowSelectUploadFile, setIsEditMode, selectedDocs, pasteTextContent, websiteUrl, youtubeUrl} = useStoreState()
+    const {setIsSelectUpload, setShowSelectUploadFile, setIsEditMode, selectedDocs, pasteTextContent} = useStoreState()
 
     const validImageTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
     const colorImageIcon = validImageTypes.includes(selectedDocs[0]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]";
@@ -52,10 +52,10 @@ const FeedUploadGrid = () => {
                     <FaPencilAlt className='text-xs text-2' />
                 </button>
                 <div className="flex flex-col items-center gap-1  justify-between h-[100%]">
-                <UseDoneUpload className={`${youtubeUrl ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
-                <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-                <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-                <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
+                <UseDoneUpload className={`${selectedDocs[0]?.type === "youtubeURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
+                <UseDoneUpload  className={`${selectedDocs[1]?.type === "youtubeURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
+                <UseDoneUpload  className={`${selectedDocs[2]?.type === "youtubeURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
+                <UseDoneUpload  className={`${selectedDocs[3]?.type === "youtubeURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
                 <button type='button'  onClick={() =>  {
                 setIsSelectUpload("Youtube URL")
                 setShowSelectUploadFile(true)
@@ -83,10 +83,10 @@ const FeedUploadGrid = () => {
                     <FaPencilAlt className='text-xs text-2' />
                 </button>
                 <div className="flex flex-col items-center gap-1  justify-between h-[100%]">
-                <UseDoneUpload className={`${websiteUrl ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
-                <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-                <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
-                <UseDoneUpload className="dark:stroke-white/80 stroke-[#040C34]" />
+                <UseDoneUpload className={`${selectedDocs[0]?.type === "websiteURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
+                <UseDoneUpload  className={`${selectedDocs[1]?.type === "websiteURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
+                <UseDoneUpload  className={`${selectedDocs[2]?.type === "websiteURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
+                <UseDoneUpload  className={`${selectedDocs[3]?.type === "websiteURL" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}`} />
                 <button type='button'  onClick={() =>  {
                  setIsSelectUpload("URL")
                 setShowSelectUploadFile(true)

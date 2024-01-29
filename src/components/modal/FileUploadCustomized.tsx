@@ -12,7 +12,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core"
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 
 const FileUploadCustomized = () => {
-  const {pasteTextContent, setShowCustomizedPreviewFileUpload, youtubeUrl, setSelectedDocs,  selectedDocs, websiteUrl, setWebsiteUrl, setYoutubeUrl,  setPasteTextContent} = useStoreState()
+  const {pasteTextContent, setShowCustomizedPreviewFileUpload,  setSelectedDocs,  selectedDocs, websiteUrl, setWebsiteUrl, setYoutubeUrl,  setPasteTextContent} = useStoreState()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setShowCustomizedPreviewFileUpload(false)
@@ -23,7 +23,7 @@ const FileUploadCustomized = () => {
   }
   return (
     <div className='fixed z-30 px-4 py-6 top-16 rounded-md shadow-[0px_5px_5px_0px] shadow-black/30 bg-white dark:text-white text-black h-full max-h-[90dvh] w-[83%] mx-3 dark:bg-black flex gap-1'>
-    <div className='col-span-4 border max-w-[300px] max-h-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
+    <div className='col-span-4 border max-w-[300px] max-h-full w-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
         <div className="font-bold">
          <Selector
         title='QnA/Report'
@@ -95,21 +95,21 @@ const FileUploadCustomized = () => {
        <button type="button" onClick={() => setShowCustomizedPreviewFileUpload(false)}>
           <MdClose size={23}  />
         </button>
-        <p className="font-semibold ">{pasteTextContent ? "Paste Text" : youtubeUrl ? youtubeUrl : websiteUrl ? websiteUrl : "Preview"}</p>
+        <p className="font-semibold ">{pasteTextContent ? "Paste Text" : selectedDocs[0]?.type === "youtubeURL" ? selectedDocs[0]?.name : selectedDocs[0]?.type === "websiteURL" ? selectedDocs[0]?.name : "Preview"}</p>
        </div>
       </div>
       <div className="w-full pt-6 px-8 flex flex-col justify-between gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
-         {pasteTextContent ?  <textarea onChange={(e) => setPasteTextContent(e.target.value)} value={pasteTextContent} rows={20} placeholder="Paste your content here ..." className="px-4  py-3 text-sm w-full resize-none rounded-md text-black  h-[90%] outline-none"></textarea> : youtubeUrl ? <div className="w-full h-full">
-         <ReactPlayer width={900} height={450} style={{borderRadius: '5px'}} url={youtubeUrl} controls muted />
-         </div> : websiteUrl ? <div className="flex items-center justify-center w-full h-full">
-         <Microlink  lazy={{ threshold: 0.5 }} url={websiteUrl} size="large" 
-		media="logo"  />
-         </div> :
+         {pasteTextContent ?  <textarea onChange={(e) => setPasteTextContent(e.target.value)} value={pasteTextContent} rows={20} placeholder="Paste your content here ..." className="px-4  py-3 text-sm w-full resize-none rounded-md text-black  h-[90%] outline-none"></textarea> :
           <div className="w-full flex-col items-center  gap-6 justify-center max-h-[85%] h-full">
               <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
-              {selectedDocs[0] ? (
+              {selectedDocs[0] && (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
-                {selectedDocs[0].type === "application/pdf" ? (
+                {selectedDocs[0]?.type === "youtubeURL" ? <div className="w-full h-full max-w-[200px]">
+         <ReactPlayer  style={{borderRadius: '5px'}} url={selectedDocs[0]?.name} controls muted />
+         </div> : selectedDocs[0]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
+         <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[0]?.name} size="large" 
+		media="logo"  />
+         </div> : selectedDocs[0].type === "application/pdf" ? (
                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                 <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
                </Worker>
@@ -122,12 +122,15 @@ const FileUploadCustomized = () => {
               uri: window.URL.createObjectURL(selectedDocs[0]),
              }]} />}
                 </div>
-            ) : (
-              <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
-            ) }
+            )}
             {selectedDocs[1] ? (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
-                {selectedDocs[1].type === "application/pdf" ? (
+                {selectedDocs[1]?.type === "youtubeURL" ? <div className="w-full h-full max-w-[200px]">
+         <ReactPlayer  style={{borderRadius: '5px'}} url={selectedDocs[1]?.name} controls muted />
+         </div> : selectedDocs[1]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
+         <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[1]?.name} size="large" 
+		media="logo"  />
+         </div>  : selectedDocs[1].type === "application/pdf" ? (
                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                 <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
                </Worker>

@@ -17,7 +17,7 @@ const TextEditor = () => {
 
     useEffect(() => {
         const handleClick = (e: any) => {
-          if(!menuRef?.current.contains(e.target)) {
+          if(menuRef.current && !menuRef?.current.contains(e.target)) {
             setShow(false)
             setShowDroplistSelectedUploadFile(false)
           }

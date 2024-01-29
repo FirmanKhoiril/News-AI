@@ -2,7 +2,7 @@ import { useStoreState } from '@/context/useStore';
 import { IoCloudUploadOutline } from 'react-icons/io5';
 
 const EditSpecificFile = () => {
-    const {setShowEditUploadFile, showEditUploadFile,  setSelectedDocs} = useStoreState()
+    const {setShowEditUploadFile, showEditUploadFile,  setSelectedDocs } = useStoreState()
 
     const handleClearSelectedUpload = () => {
         setShowEditUploadFile(false)

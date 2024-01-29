@@ -95,15 +95,15 @@ const AIReplaceUpload = () => {
       </div>
       <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
       <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
-         {youtubeUrl ? <div className="w-full h-full">
-         <ReactPlayer width={900} height={450} style={{borderRadius: '5px'}} url={youtubeUrl} controls muted />
-         </div> : websiteUrl ? <div className="flex items-center justify-center w-full h-full">
-         <Microlink  lazy={{ threshold: 0.5 }} url={websiteUrl} size="large" 
+         {selectedDocs[0]?.type === "youtubeURL" ? <div className="w-full h-full">
+         <ReactPlayer width={900} height={450} style={{borderRadius: '5px'}} url={selectedDocs[0].name} controls muted />
+         </div> : selectedDocs[0]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
+         <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[0].name} size="large" 
 		media="logo"  />
          </div> :
           <div className="w-full flex-col items-center  gap-6 justify-center max-h-[85%] h-full">
               <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
-              {selectedDocs[0] ? (
+              {selectedDocs[0] && (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
                 {selectedDocs[0].type === "application/pdf" ? (
                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
@@ -118,9 +118,7 @@ const AIReplaceUpload = () => {
               uri: window.URL.createObjectURL(selectedDocs[0]),
              }]} />}
                 </div>
-            ) : (
-              <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
-            ) }
+            )  }
             {selectedDocs[1] ? (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
                 {selectedDocs[1].type === "application/pdf" ? (

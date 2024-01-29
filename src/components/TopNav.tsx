@@ -17,7 +17,7 @@ function TopNav() {
 
   useEffect(() => {
     const handler = (e: any)=>{
-      if(!menuRef?.current.contains(e.target)){
+      if(menuRef.current && !menuRef?.current.contains(e.target)){
         setShowInviteChat(false);
       }      
     };

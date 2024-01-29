@@ -1,6 +1,13 @@
 import { useStoreState } from "@/context/useStore"
 import { IoCloudUploadOutline } from "react-icons/io5";
 
+interface YouTubeFile {
+    lastModified: number;
+    name: string;
+    size: number;
+    type: string;
+  }
+
 const ModalUploadFileOrDocument = () => {
     const {  isSelectUpload, setIsSelectUpload, setShowSelectUploadFile, isStandart,pasteTextContent, setShowCustomizedPreviewFileUpload, showSelectUploadFile, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl, setPasteTextContent, setSelectedDocs} = useStoreState() 
 
@@ -15,7 +22,49 @@ const ModalUploadFileOrDocument = () => {
             setShowSelectUploadFile(false)
             setShowCustomizedPreviewFileUpload(true)
         }
-        setShowSelectUploadFile(false)
+        if(youtubeUrl !== "") {
+            const currentTimestamp = new Date().getTime();
+
+            const newFiles: YouTubeFile = {
+                lastModified: currentTimestamp,
+                name: youtubeUrl,
+                size: youtubeUrl.length,
+                type: "youtubeURL",
+              };
+
+              const convertedFile: File = {
+                ...newFiles,
+                webkitRelativePath: "",
+                arrayBuffer: null as any,
+                slice: null as any,
+                stream: null as any,
+                text: null as any,
+              };
+              setYoutubeUrl("")
+              setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+        }
+
+        if(websiteUrl !== "") {
+            const currentTimestamp = new Date().getTime();
+
+            const newFiles: YouTubeFile = {
+                lastModified: currentTimestamp,
+                name: websiteUrl,
+                size: websiteUrl.length,
+                type: "websiteURL",
+              };
+
+              const convertedFile: File = {
+                ...newFiles,
+                webkitRelativePath: "",
+                arrayBuffer: null as any,
+                slice: null as any,
+                stream: null as any,
+                text: null as any,
+              };
+              setWebsiteUrl("")
+              setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+        }
     }
     
   return showSelectUploadFile ? (

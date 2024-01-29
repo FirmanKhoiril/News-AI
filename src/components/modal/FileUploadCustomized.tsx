@@ -12,12 +12,10 @@ import { Viewer, Worker } from "@react-pdf-viewer/core"
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 
 const FileUploadCustomized = () => {
-  const {pasteTextContent, setShowCustomizedPreviewFileUpload,  setSelectedDocs,  selectedDocs, websiteUrl, setWebsiteUrl, setYoutubeUrl,  setPasteTextContent} = useStoreState()
+  const {pasteTextContent, setShowCustomizedPreviewFileUpload,  setSelectedDocs,  selectedDocs,  setPasteTextContent} = useStoreState()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setShowCustomizedPreviewFileUpload(false)
-    setWebsiteUrl("")
-    setYoutubeUrl("")
     setSelectedDocs((prev: File[]) => [])
     setPasteTextContent("")
   }

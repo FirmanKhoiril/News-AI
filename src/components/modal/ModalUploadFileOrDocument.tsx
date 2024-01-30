@@ -42,7 +42,7 @@ const ModalUploadFileOrDocument = () => {
               };
               setYoutubeUrl("")
               setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
-              setShowSelectUploadFile(false)
+              setShowSelectUploadFile(false)  
         }
 
         if(websiteUrl !== "") {
@@ -67,6 +67,7 @@ const ModalUploadFileOrDocument = () => {
               setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
               setShowSelectUploadFile(false)
         }
+        setShowSelectUploadFile(false)  
     }
     
   return showSelectUploadFile ? (

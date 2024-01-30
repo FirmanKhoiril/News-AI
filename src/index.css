@@ -109,7 +109,7 @@ body {
   fill: #006aff;
 }
 .card {
-  @apply bg-white dark:bg-[#000000CC] w-full p-4 rounded-xl;
+  @apply bg-white dark:bg-black/80 w-full p-4 rounded-xl;
 }
 
 .text-2 {

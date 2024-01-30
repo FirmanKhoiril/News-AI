@@ -10,15 +10,17 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 import ReactPlayer from "react-player"
 import Microlink from "@microlink/react";
 import pdfImage from '@/assets/pdf-2.png'
+import ReactAudioPlayer from "react-audio-player"
 
 const AIReplaceUpload = () => {
-    const {setShowAiReplace, selectedDocs, youtubeUrl, websiteUrl} = useStoreState()
+    const {setShowAiReplace, selectedDocs} = useStoreState()
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
   return (
     <div className='fixed z-30 px-4 py-6 top-16 rounded-md shadow-[0px_5px_5px_0px] shadow-black/30 bg-white dark:text-white text-black h-full max-h-[90dvh] w-[83%] mx-3 dark:bg-black flex gap-1'>
-    <div className='col-span-4 border max-w-[300px] max-h-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
+    <div className='col-span-4 border max-w-[300px] w-full max-h-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
         <div className="font-bold">
          <Selector
         title='QnA/Report'
@@ -93,15 +95,19 @@ const AIReplaceUpload = () => {
         <p className="font-semibold ">AI Replace Upload</p>
        </div>
       </div>
-      <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
-      <div className="w-full pt-6 px-8 flex flex-col gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
-         {selectedDocs[0]?.type === "youtubeURL" ? <div className="w-full h-full">
-         <ReactPlayer width={900} height={450} style={{borderRadius: '5px'}} url={selectedDocs[0].name} controls muted />
+      <div className="w-full pt-6 px-8 flex flex-col justify-between gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
+         <div className="">
+          <div className="flex items-center gap-4 justify-between w-full">
+          {selectedDocs[0]?.type === "audio/mpeg" ? <ReactAudioPlayer
+              src={window.URL.createObjectURL(selectedDocs[0])}
+              controls
+            /> :  selectedDocs[0]?.type === "youtubeURL" ? <div className="w-full h-full">
+         <ReactPlayer width={450} height={400} style={{borderRadius: '5px'}} url={selectedDocs[0].name} controls muted />
          </div> : selectedDocs[0]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
          <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[0].name} size="large" 
 		media="logo"  />
          </div> :
-          <div className="w-full flex-col items-center  gap-6 justify-center max-h-[85%] h-full">
+          <div className="w-full items-center  gap-6 max-h-[85%] h-full">
               <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
               {selectedDocs[0] && (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
@@ -118,8 +124,22 @@ const AIReplaceUpload = () => {
               uri: window.URL.createObjectURL(selectedDocs[0]),
              }]} />}
                 </div>
-            )  }
-            {selectedDocs[1] ? (
+              )}
+            </div>
+          </div>
+         }
+          {selectedDocs[1]?.type === "audio/mpeg" ? <ReactAudioPlayer
+              src={window.URL.createObjectURL(selectedDocs[1])}
+              controls
+            /> :  selectedDocs[1]?.type === "youtubeURL" ? <div className="w-full h-full">
+         <ReactPlayer width={450} height={400} style={{borderRadius: '5px'}} url={selectedDocs[1].name} controls muted />
+         </div> : selectedDocs[1]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
+         <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[1].name} size="large" 
+		media="logo"  />
+         </div> :
+          <div className="w-full items-center  gap-6 max-h-[85%] h-full">
+              <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
+              {selectedDocs[1] && (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
                 {selectedDocs[1].type === "application/pdf" ? (
                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
@@ -134,15 +154,15 @@ const AIReplaceUpload = () => {
               uri: window.URL.createObjectURL(selectedDocs[1]),
              }]} />}
                 </div>
-            ) : (
-              <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
-            ) }
+              )}
             </div>
+          </div>
+         }
+          </div>
           <button type='button' className='bg-[#040C34] mx-auto flex items-center justify-center text-white w-[84px] h-[25px] text-[10px] font-semibold rounded-[10px]'>
             Page 1 of 2
           </button>
-          </div>
-         }
+         </div>
         <form onSubmit={handleSubmit} className="flex items-center gap-6">
           <input type="text" placeholder="Write a Question" className="w-full text-black py-4 px-4 rounded-md outline-none" />
           <button type="submit" className='max-w-[154px] h-full  rounded-md bg-primary text-white py-2 px-1 w-full text-base font-semibold'>
@@ -150,7 +170,7 @@ const AIReplaceUpload = () => {
        </button>
         </form>
       </div>
-      </div>
+
     </div>
     </div>
   )

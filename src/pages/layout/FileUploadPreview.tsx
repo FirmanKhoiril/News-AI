@@ -11,6 +11,7 @@ import Microlink from "@microlink/react";
 import { useState } from "react";
 import DeleteFile from "@/components/button/DeleteFile";
 import PreviewDocs from "@/components/card/PreviewDocs";
+import ReactAudioPlayer from 'react-audio-player';
 
 const FileUploadPreview = () => {
     const {selectedDocs, setShowSelectUploadFile, setShowEditUploadFile, websiteUrl, isEditMode, isStandart, setShowCustomizedPreviewFileUpload} = useStoreState()
@@ -24,6 +25,8 @@ const FileUploadPreview = () => {
         setShowSelectUploadFile(false)
       }
      }
+
+     console.log(selectedDocs)
 
   return (
     <div className='w-full card  flex flex-row gap-4 items-center p-2'>
@@ -48,7 +51,7 @@ const FileUploadPreview = () => {
              <button type='button' onClick={() => setShowPreviewImage((prev) => !prev)}>
                <MdClose size={25} />
              </button>
-            {selectedDocs[0]?.type === "youtubeURL" ? selectedDocs[0]?.name : selectedDocs[0]?.type === "websiteURL" ? selectedDocs[0]?.name : selectedDocs[0] &&  <p className='font-semibold text-sm'>{selectedDocs[0].name.length >= 39 ? `${selectedDocs[0].name.slice(0, 40) + "... .pdf"}` : selectedDocs[0].name }</p>}
+            {selectedDocs[0]?.type === "youtubeURL" ? selectedDocs[0]?.name : selectedDocs[0]?.type === "websiteURL" ? selectedDocs[0]?.name : selectedDocs[0] &&  <p className='font-semibold text-sm'>{selectedDocs[0].name.length >= 39 ? `${selectedDocs[0].name.slice(0, 40) + "..."}` : selectedDocs[0].name }</p>}
            </div>
            <div className="flex items-center gap-5">
             {isEditMode && (
@@ -61,7 +64,10 @@ const FileUploadPreview = () => {
          </div>
           {showPreviewImage && (
             <div className="w-full flex  gap-4 px-4 py-2 items-center justify-center  flex-col text-white rounded-b-[5px] bg-[#1a1a1a]">
-            {selectedDocs[0]?.type === "websiteURL" ? <Microlink url={selectedDocs[0]?.name} size="large" 
+            {selectedDocs[0]?.type === "audio/mpeg" ? <ReactAudioPlayer
+              src={window.URL.createObjectURL(selectedDocs[0])}
+              controls
+            /> : selectedDocs[0]?.type === "websiteURL" ? <Microlink url={selectedDocs[0]?.name} size="large" 
             media="logo"  /> : selectedDocs[0]?.type === "youtubeURL" ? <ReactPlayer width={420} height={300}  style={{borderRadius: '5px'}} url={selectedDocs[0]?.name} controls muted /> : selectedDocs[0]?.type !== "websiteURL" && selectedDocs[0]?.type !== "youtubeURL" && (
               <div className="w-full h-full p-4">
               {selectedDocs[0].type === "application/pdf" ? (

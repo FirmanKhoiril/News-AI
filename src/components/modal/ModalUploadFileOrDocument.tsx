@@ -1,7 +1,7 @@
 import { useStoreState } from "@/context/useStore"
 import { IoCloudUploadOutline } from "react-icons/io5";
 
-interface YouTubeFile {
+export type YouTubeFile = {
     lastModified: number;
     name: string;
     size: number;
@@ -23,15 +23,15 @@ const ModalUploadFileOrDocument = () => {
             setShowCustomizedPreviewFileUpload(true)
         }
         if(youtubeUrl !== "") {
-            const currentTimestamp = new Date().getTime();
+            const currentTimestamp = new Date().getTime();  
 
-            const newFiles: YouTubeFile = {
+              const newFiles: YouTubeFile = {
                 lastModified: currentTimestamp,
                 name: youtubeUrl,
                 size: youtubeUrl.length,
                 type: "youtubeURL",
               };
-
+  
               const convertedFile: File = {
                 ...newFiles,
                 webkitRelativePath: "",

@@ -1,5 +1,7 @@
 import { useStoreState } from '@/context/useStore'
 import { IoCloudUploadOutline } from 'react-icons/io5'
+import { YouTubeFile } from './ModalUploadFileOrDocument'
+
 
 const UploadFileAiReplace = () => {
     const {  isSelectUploadAiReplace, setShowAiReplace, setShowSelectUploadFileAiReplace,  setIsSelectUploadAiReplace,  showSelectUploadFileAiReplace, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl,  setSelectedDocs} = useStoreState() 
@@ -12,6 +14,57 @@ const UploadFileAiReplace = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement> | any) => {
         e.preventDefault()
+
+        if(youtubeUrl !== "") {
+          const currentTimestamp = new Date().getTime();  
+
+            const newFiles: YouTubeFile = {
+              lastModified: currentTimestamp,
+              name: youtubeUrl,
+              size: youtubeUrl.length,
+              type: "youtubeURL",
+            };
+
+            const convertedFile: File = {
+              ...newFiles,
+              webkitRelativePath: "",
+              arrayBuffer: null as any,
+              slice: null as any,
+              stream: null as any,
+              text: null as any,
+            };
+            setYoutubeUrl("")
+            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+            
+          
+         
+      }
+
+      if(websiteUrl !== "") {
+          const currentTimestamp = new Date().getTime();
+
+          const newFiles: YouTubeFile = {
+              lastModified: currentTimestamp,
+              name: websiteUrl,
+              size: websiteUrl.length,
+              type: "websiteURL",
+            };
+
+            const convertedFile: File = {
+              ...newFiles,
+              webkitRelativePath: "",
+              arrayBuffer: null as any,
+              slice: null as any,
+              stream: null as any,
+              text: null as any,
+            };
+            setWebsiteUrl("")
+            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+            setShowAiReplace(true)
+            setShowSelectUploadFileAiReplace(false)
+
+      }
+
         setShowAiReplace(true)
         setShowSelectUploadFileAiReplace(false)
     }

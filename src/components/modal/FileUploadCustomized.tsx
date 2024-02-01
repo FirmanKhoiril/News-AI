@@ -112,7 +112,7 @@ const FileUploadCustomized = () => {
                 <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
                </Worker>
             ) : selectedDocs[0].type.startsWith("image/") ? (
-              <div className="max-h-[180px] rounded-t-md overflow-hidden">
+              <div className="rounded-t-md w-full  overflow-hidden">
                 <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
               </div>
             ) : 
@@ -121,8 +121,8 @@ const FileUploadCustomized = () => {
              }]} />}
                 </div>
             )}
-            {selectedDocs[1] ? (
-                <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
+            {selectedDocs[1] && (
+                <div className="w-full h-full max-h-[55dvh] max-w-[50%] rounded-md overflow-y-auto">
                 {selectedDocs[1]?.type === "youtubeURL" ? <div className="w-full h-full max-w-[200px]">
          <ReactPlayer  style={{borderRadius: '5px'}} url={selectedDocs[1]?.name} controls muted />
          </div> : selectedDocs[1]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
@@ -133,7 +133,7 @@ const FileUploadCustomized = () => {
                 <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
                </Worker>
             ) : selectedDocs[1].type.startsWith("image/") ? (
-              <div className="max-h-[180px] rounded-t-md overflow-hidden">
+              <div className="rounded-t-md w-full  overflow-hidden">
                 <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
               </div>
             ) : 
@@ -141,9 +141,7 @@ const FileUploadCustomized = () => {
               uri: window.URL.createObjectURL(selectedDocs[1]),
              }]} />}
                 </div>
-            ) : (
-              <img src={pdfImage} width={380} loading="lazy" alt="Pdf Example"  className="w-full max-w-[45%]"/>
-            ) }
+            )}
             </div>
           <button type='button' className='bg-[#040C34] mx-auto flex items-center justify-center text-white w-[84px] h-[25px] text-[10px] font-semibold rounded-[10px]'>
             Page 1 of 2

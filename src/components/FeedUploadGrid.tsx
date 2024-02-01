@@ -176,10 +176,10 @@ const FeedUploadGrid = () => {
                     <FaPencilAlt className='text-xs text-2' />
                 </button>
                 <div className="flex flex-col items-center gap-1  justify-between h-[100%]">
-                <UseDoneUpload className={selectedDocs[0]?.type === "application/pdf" ? "stroke-green-500" : selectedDocs[0]?.type !== "application/pdf" && selectedDocs[1]?.type === "application/pdf" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"} />
-                <UseDoneUpload className={selectedDocs[1]?.type === "application/pdf" ? "stroke-green-500" : selectedDocs[1]?.type !== "application/pdf" && selectedDocs[2]?.type === "application/pdf" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"} />
-                <UseDoneUpload className={selectedDocs[2]?.type === "application/pdf" ? "stroke-green-500" : selectedDocs[2]?.type !== "application/pdf" && selectedDocs[3]?.type === "application/pdf" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"} />
-                <UseDoneUpload className={selectedDocs[3]?.type === "application/pdf" ? "stroke-green-500" : selectedDocs[3]?.type !== "application/pdf" && selectedDocs[4]?.type === "application/pdf" ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"}/>
+                <UseDoneUpload className={selectedDocs[0]?.type === "application/pdf" ? "stroke-green-500" :  "dark:stroke-white/80 stroke-[#040C34]"} />
+                <UseDoneUpload className={selectedDocs[1]?.type === "application/pdf" ? "stroke-green-500" :  "dark:stroke-white/80 stroke-[#040C34]"} />
+                <UseDoneUpload className={selectedDocs[2]?.type === "application/pdf" ? "stroke-green-500" :  "dark:stroke-white/80 stroke-[#040C34]"} />
+                <UseDoneUpload className={selectedDocs[3]?.type === "application/pdf" ? "stroke-green-500" :  "dark:stroke-white/80 stroke-[#040C34]"} />
                 <button type='button'  onClick={() =>  {
                 setIsSelectUpload("PDF")
                 setShowSelectUploadFile(true)

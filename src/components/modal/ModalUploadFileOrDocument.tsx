@@ -22,7 +22,7 @@ const ModalUploadFileOrDocument = () => {
             setShowSelectUploadFile(false)
             setShowCustomizedPreviewFileUpload(true)
         }
-        if(youtubeUrl !== "") {
+        if(youtubeUrl !== "" && youtubeUrl !== "https://www.youtube.com/") {
             const currentTimestamp = new Date().getTime();  
 
               const newFiles: YouTubeFile = {
@@ -108,6 +108,7 @@ const ModalUploadFileOrDocument = () => {
                         </p>
                         <input
                         type='file'
+                        accept={isSelectUpload === "Picture/Text" ? "image/*" : isSelectUpload === "PDF" ? "application/pdf" : isSelectUpload === "PPT" ? "application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation" : isSelectUpload === 'Audio' ? "audio/*" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
                         multiple
                         id='file-upload'
                         onChange={(e) => { 

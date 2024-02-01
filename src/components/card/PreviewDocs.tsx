@@ -21,7 +21,7 @@ const PreviewDocs = ({datas}: TDatasDocs) => {
   return (
     <div className="w-full border h-full flex items-center flex-col border-black/10">
     {datas && 
-    <div className='max-h-[180px] h-full w-full overflow-x-hidden'>
+    <div className='max-h-[180px] border-x border-t rounded-t-md border-white h-full w-full overflow-x-hidden'>
     {datas.type === "audio/mpeg" ? <ReactAudioPlayer
               src={window.URL.createObjectURL(datas)}
               controls

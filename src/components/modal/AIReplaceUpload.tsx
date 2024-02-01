@@ -9,7 +9,6 @@ import { Viewer, Worker } from "@react-pdf-viewer/core"
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 import ReactPlayer from "react-player"
 import Microlink from "@microlink/react";
-import pdfImage from '@/assets/pdf-2.png'
 import ReactAudioPlayer from "react-audio-player"
 
 const AIReplaceUpload = () => {

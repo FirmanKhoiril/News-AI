@@ -7,7 +7,6 @@ const UploadFileAiReplace = () => {
     const {  isSelectUploadAiReplace, setShowAiReplace, setShowSelectUploadFileAiReplace,  setIsSelectUploadAiReplace,  showSelectUploadFileAiReplace, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl,  setSelectedDocs} = useStoreState() 
 
     const handleClearSelectedUpload = () => {
-
         setIsSelectUploadAiReplace("")
         setShowSelectUploadFileAiReplace(false)
     }
@@ -34,10 +33,7 @@ const UploadFileAiReplace = () => {
               text: null as any,
             };
             setYoutubeUrl("")
-            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
-            
-          
-         
+            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);   
       }
 
       if(websiteUrl !== "") {
@@ -101,6 +97,7 @@ const UploadFileAiReplace = () => {
                         </p>
                         <input
                         type='file'
+                        accept={isSelectUploadAiReplace === "Picture/Text" ? "image/*" : isSelectUploadAiReplace === "PDF" ? "application/pdf" : isSelectUploadAiReplace === "PPT" ? "application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation" : isSelectUploadAiReplace === 'Audio' ? "audio/*" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
                         multiple
                         id='file-upload'
                         onChange={(e) => { 

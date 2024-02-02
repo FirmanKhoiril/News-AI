@@ -68,7 +68,7 @@ export default function usePersentageAndCheckmark() {
     };
     
     const persentageWebsite = calculateWebsitePercentage(selectedDocs);
-    const finalPercentageWebsite = Math.min(persentageWebsite[persentageWebsite.length - 1] >= 100 ? 100 : (persentageWebsite.length === 0 ? 0 : persentageWebsite[persentageYoutube.length - 1]), 100);
+    const finalPercentageWebsite = Math.min(persentageWebsite[persentageWebsite.length - 1] >= 100 ? 100 : (persentageWebsite.length === 0 ? 0 : persentageWebsite[persentageWebsite.length - 1]), 100);
 
     return { finalPercentageAudio, finalPercentageExcel, finalPercentageImage, finalPercentagePDF, finalPercentagePPT, finalPercentageWebsite, finalPercentageYoutube, colorAudioIcon, colorAudioIconFour, colorAudioIconThree, colorAudioIconTwo, colorImageIcon, colorImageIconTwo, colorImageIconThree, colorImageIconFour, colorPPTIcon, colorPPTIconTwo, colorPPTIconThree, colorPPTIconFour }
 }

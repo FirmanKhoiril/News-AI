@@ -10,27 +10,20 @@ import PDF from '@/assets/icon/pdf.png'
 import PPT from '@/assets/icon/ppt.png'
 import Excel from '@/assets/icon/xls.png'
 import Audio from '@/assets/icon/sound.png'
+import usePersentageAndCheckmark from '@/lib/hooks/usePersentageAndCheckmark'
+
+const ProgressBar = ({persentage}: {persentage: number}) => {
+    return (
+        <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
+            {persentage}%
+        </div>        
+    )
+}
 
 const FeedUploadGrid = () => {
     const {setIsSelectUpload, setShowSelectUploadFile, setIsEditMode, selectedDocs, pasteTextContent} = useStoreState()
 
-    const validImageTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
-    const colorImageIcon = validImageTypes.includes(selectedDocs[0]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]";
-    const colorImageIconTwo =  validImageTypes.includes(selectedDocs[1]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorImageIconThree =  validImageTypes.includes(selectedDocs[2]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorImageIconFour =  validImageTypes.includes(selectedDocs[3]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-
-    const validAudioTypes = ["audio/mpeg", "audio/mp3"];
-    const colorAudioIcon = validAudioTypes.includes(selectedDocs[0]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]";
-    const colorAudioIconTwo =  validAudioTypes.includes(selectedDocs[1]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorAudioIconThree =  validAudioTypes.includes(selectedDocs[2]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorAudioIconFour =  validAudioTypes.includes(selectedDocs[3]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-
-    const validPPTTypes =['application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation']
-    const colorPPTIcon = validPPTTypes.includes(selectedDocs[0]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]";
-    const colorPPTIconTwo =  validPPTTypes.includes(selectedDocs[1]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorPPTIconThree =  validPPTTypes.includes(selectedDocs[2]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
-    const colorPPTIconFour =  validPPTTypes.includes(selectedDocs[3]?.type) ? "stroke-green-500" : "dark:stroke-white/80 stroke-[#040C34]"
+    const {finalPercentageAudio, finalPercentageExcel, finalPercentageImage, finalPercentagePDF, finalPercentagePPT, finalPercentageWebsite, finalPercentageYoutube, colorAudioIcon, colorAudioIconFour, colorAudioIconThree, colorAudioIconTwo,colorImageIcon,colorImageIconFour,colorImageIconThree,colorImageIconTwo,colorPPTIcon,colorPPTIconFour,colorPPTIconThree,colorPPTIconTwo } = usePersentageAndCheckmark()
 
   return (
     <>
@@ -44,9 +37,7 @@ const FeedUploadGrid = () => {
                 <img src={Youtube} alt="Youtube Url" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>Youtube URL</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={finalPercentageYoutube} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -75,9 +66,7 @@ const FeedUploadGrid = () => {
                <LiaLinkSolid size={35} />
                 <p className='text-center font-semibold text-xs'>URL</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={finalPercentageWebsite} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -106,9 +95,7 @@ const FeedUploadGrid = () => {
                 <img src={PasteText} alt="Paste Text Icon" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>Paste Text</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={pasteTextContent.length === 0 ? 0 : pasteTextContent.length >= 100 ? 100 : pasteTextContent.length} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -137,9 +124,7 @@ const FeedUploadGrid = () => {
                 <img src={ImageFile} alt="Picture/Text" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>Picture/Text</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={finalPercentageImage} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -168,9 +153,7 @@ const FeedUploadGrid = () => {
                 <img src={PDF} alt="PDF Icon" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>PDF</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={finalPercentagePDF} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -199,9 +182,7 @@ const FeedUploadGrid = () => {
                 <img src={PPT} alt="PPT" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>PPT</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+               <ProgressBar persentage={finalPercentagePPT} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -230,9 +211,7 @@ const FeedUploadGrid = () => {
                 <img src={Excel} alt="Excel Icon" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>Excel</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={finalPercentageExcel} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />
@@ -261,9 +240,7 @@ const FeedUploadGrid = () => {
                 <img src={Audio} alt="Audio Icon" className='w-8 h-8 object-contain' />
                 <p className='text-center font-semibold text-xs'>Audio</p>
                 </button>
-                <div className='text-xs text-center bg-[#5C3CFB] py-0.5 text-white px-4 rounded-md w-full mt-2'>
-                100%
-                </div>
+                <ProgressBar persentage={finalPercentageAudio} />
                 </div>
                 <button onClick={() => setIsEditMode(true)} type='button' className=' absolute text-black dark:text-white top-2 bg-white dark:bg-black opacity-80 hover:opacity-100 rounded-full  right-8 p-2 z-10'>
                     <FaPencilAlt className='text-xs text-2' />

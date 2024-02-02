@@ -14,7 +14,7 @@ import PreviewDocs from "@/components/card/PreviewDocs";
 import ReactAudioPlayer from 'react-audio-player';
 
 const FileUploadPreview = () => {
-    const {selectedDocs, setShowSelectUploadFile, setShowEditUploadFile, websiteUrl, isEditMode, isStandart, setShowCustomizedPreviewFileUpload} = useStoreState()
+    const {selectedDocs, setShowSelectUploadFile, setShowEditUploadFile, isEditMode, isStandart, setShowCustomizedPreviewFileUpload} = useStoreState()
     const [showPreviewImage, setShowPreviewImage] = useState(true)
     
     const ShowEditSpecificFile = () => {
@@ -25,8 +25,6 @@ const FileUploadPreview = () => {
         setShowSelectUploadFile(false)
       }
      }
-
-     console.log(selectedDocs)
 
   return (
     <div className='w-full card  flex flex-row gap-4 items-center p-2'>

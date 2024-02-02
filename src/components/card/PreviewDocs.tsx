@@ -12,7 +12,7 @@ type FileData = {
     webkitRelativePath: string;
 };
 
-type TDatasDocs = {
+export type TDatasDocs = {
     datas: MediaSource | Blob | FileData[] | any;
 };
 
@@ -20,7 +20,7 @@ const PreviewDocs = ({datas}: TDatasDocs) => {
   return (
     <div className="w-full h-full flex items-center flex-col">
     {datas && 
-    <div className='max-h-[180px] border-x border-t   dark:border-white rounded-t-md   h-full w-full'>
+    <div className='max-h-[180px] border-x border-t   dark:border-white/50   h-full w-full'>
     {datas.type === "audio/mpeg" ? <ReactAudioPlayer
               src={window.URL.createObjectURL(datas)}
               controls
@@ -30,7 +30,7 @@ const PreviewDocs = ({datas}: TDatasDocs) => {
           <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(datas)} />
         </Worker>
       ) : datas.type.startsWith("image/") ? (
-        <div className="max-h-[180px] rounded-t-md overflow-x-hidden">
+        <div className="max-h-[180px] overflow-x-hidden">
           <img className="object-cover" src={window.URL.createObjectURL(datas)} alt={datas.name} />
         </div>
       ) : (

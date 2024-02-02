@@ -43,7 +43,7 @@ const MSWord = () => {
                     <button className='text-sm max-w-[90%] text-white bg-primary rounded-b-xl rounded-tl-xl px-4 flex flex-col items-end py-2'>
                         <p className='font-semibold text-base px-2 gap-2'>You</p>
                         <span>Pretty good! thanks</span>
-                      </button>
+                    </button>
                   </div>
                   <div className='flex py-2 px-2 gap-2 bg-gray-100 rounded-2xl'>
                     <div>

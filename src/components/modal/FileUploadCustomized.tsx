@@ -6,7 +6,6 @@ import { Switch } from "../ui/switch"
 import { MdClose } from "react-icons/md"
 import { useStoreState } from "@/context/useStore"
 import Microlink from "@microlink/react";
-import pdfImage from '@/assets/pdf-2.png'
 import ReactPlayer from 'react-player/youtube'
 import { Viewer, Worker } from "@react-pdf-viewer/core"
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"

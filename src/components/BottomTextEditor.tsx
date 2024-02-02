@@ -16,7 +16,7 @@ const BottomTextEditor = () => {
     const [showSave, setShowSave] = useState(false)
     const [showDownload, setShowDownload] = useState(false)
 
-  return (
+  return (  
     <div className='flex justify-between gap-2 relative py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>
           {showDownload && (
             <div className="absolute flex flex-col bg-white min-w-[100px] gap-1 border top-[-3.5rem] left-[10px] rounded-md ">

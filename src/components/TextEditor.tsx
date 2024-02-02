@@ -54,7 +54,7 @@ const TextEditor = () => {
            {showDroplistSelectedUploadFile && (
              <div className="flex border border-black flex-col group absolute  -top-[339px] -right-[9px] bg-white w-full z-50 gap-2">
              {["YouTube URL", "URL", "Picture/Text", "PDF", "PPT", "Excel", "Audio"].map((item) => (
-               <button type='button' onClick={() => {
+               <button type='button'  onClick={() => {
                  setIsSelectUploadAiReplace(item)  
                  setShowSelectUploadFileAiReplace(true)
                  setShowDroplistSelectedUploadFile(false)

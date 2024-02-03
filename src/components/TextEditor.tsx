@@ -4,6 +4,9 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
 import { MdFindReplace } from 'react-icons/md';
+import { editorStyle } from '@/lib/data/dummyData';
+
+
 
 const TextEditor = () => {
     const { setShowAiReplace, setIsSelectUploadAiReplace, setShowSelectUploadFileAiReplace} = useStoreState()
@@ -34,7 +37,7 @@ const TextEditor = () => {
       
   return (
     <div onContextMenu={handleRightClick}  className="border h-full mb-4 overflow-y-auto dark:border-gray-700 rounded-md">
-    <Editor  />
+    <Editor editorStyle={editorStyle} />
     {show && (
       <div ref={menuRef} style={{top: points.y - 25, left: points.x - 300}} className={`z-20 w-full gap-2 max-w-[350px] absolute bg-white text-black p-2 flex items-center justify-between  border-[4px] border-black`}>
           <button onClick={() => {

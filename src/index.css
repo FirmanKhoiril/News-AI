@@ -87,14 +87,9 @@ body {
     --border: 215 28% 17%;
     --input: 240 3.7% 15.9%;
     --ring: 251, 100%, 61%;
-
     --radius: 7px;
   }
 }
-
-/* .react-multi-carousel-list {
-  position: unset !important;
-} */
 .react-multiple-carousel__arrow {
   bottom: 0;
 }
@@ -115,6 +110,7 @@ body {
 .text-2 {
   @apply text-gray-500 dark:text-gray-400;
 }
+
 .btn-primary {
   @apply px-3 py-2.5 rounded-lg text-sm bg-[#5E3AFF] text-white;
 }

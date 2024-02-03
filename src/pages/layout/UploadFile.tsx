@@ -3,15 +3,25 @@ import { Button } from '@/components/ui/button'
 import { useStoreState } from '@/context/useStore'
 
 const UploadFile = () => {
-    const { isStandart, setIsStandart} = useStoreState()
+    const { showConfirmSwitchMode, isStandart, setIsStandart, selectedDocs, setShowConfirmSwitchMode} = useStoreState()
     const handleStandart = () => {
+      if(selectedDocs.length !== 0 && isStandart === "customized")  {
+        setShowConfirmSwitchMode(true)
+      } else {
         setIsStandart("standart")
+      }
       }
     
       const handleCustomized = () => {
-        setIsStandart("customized")
+        if(selectedDocs.length !== 0 && isStandart === "standart") {
+          setShowConfirmSwitchMode(true)
+        } else {
+          setIsStandart("customized")
+        }
+        
       }
 
+      console.log(showConfirmSwitchMode)
   return (
     <div className=' card h-full overflow-y-auto '>
       <div className='flex justify-between flex-wrap gap-2'>

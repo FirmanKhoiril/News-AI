@@ -6,19 +6,33 @@ import { useStoreState } from '@/context/useStore'
 import { qnaOrReport } from '@/lib/data/dummyData'
 import { fontFormat, fontType, formatOptions, languageList, llms, popularColors, purposeOfWriting, writingStyle } from '@/lib/data/selectDatas'
 import { useMicSpeechRecognition } from '@/lib/hooks/useMicSpeechRecognition'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BiMessageDots, BiTargetLock } from 'react-icons/bi'
 import { CiFaceSmile } from 'react-icons/ci'
+import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import { HiOutlineEmojiSad } from 'react-icons/hi'
-import { IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
+import { IoLogoWhatsapp } from 'react-icons/io'
+import { IoLogoTiktok, IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
 import { LuBookOpen } from 'react-icons/lu'
 import { MdContentCopy } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 const ConversationBotApp = () => {
     const [toogleSendEmailWord, setToogleSendEmailWord] = useState(false)
+    const [showShare, setShowShare] = useState(false)
+    const menuRef = useRef(null)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
-    const {isStandart} = useStoreState()
+    const {isStandart, setShowFeedbackModal} = useStoreState()
+
+    useEffect(() => {
+      const handler = (e: any)=>{
+        if(menuRef.current && !menuRef?.current.contains(e.target)){
+          setShowShare(false)
+        }      
+      };
+      window.addEventListener('mousedown', handler);
+      return () => window.removeEventListener('mousedown', handler);
+    }, []);
 
   return (
     <div className={`${isStandart === "standart" ? "grid  gap-3 grid-cols-12" : "flex items-center gap-2  "} card w-full  overflow-y-auto h-full`}>
@@ -54,20 +68,36 @@ const ConversationBotApp = () => {
             </div>
           </div>
           <p className='font-bold dark:text-black'>I’m an AI bot!</p>
-          <div className='mt-3 flex gap-2 flex-wrap'>
+          <div ref={menuRef} className='mt-3 flex gap-2 flex-wrap'>
             <button className='text-xs black-button flex items-center'>
               <MdContentCopy size={15} />
               <span>Copy</span>
             </button> 
-            <button className='text-xs black-button flex items-center'>
+            <button onClick={() => setShowShare((prev) => !prev)} className='text-xs black-button flex items-center'>
               <IoShareSocialSharp size={15} />
               <span>Share</span>
             </button>
+            {showShare && (
+            <div  className="absolute flex items-center justify-center bg-white py-3 min-w-[100px] gap-3 border top-[24px] border-black/60 left-[97px] px-2 rounded-md  ">
+              <a target='_blank' href='https://facebook.com'>
+                <FaFacebook color="#4c74ed" size={25} />
+              </a>
+                <a target='_blank' href='https://web.whatsapp.com'>
+                  <IoLogoWhatsapp color="green" size={25} />
+                </a>
+                <a target='_blank' href='https://instagram.com'>
+                  <FaInstagram color="#b5288f" size={25} />
+                </a>
+                <a target='_blank' href='https://tiktok.com'>
+                  <IoLogoTiktok size={25} color="black" />
+                </a>
+            </div>
+          )}
             <button className='text-xs black-button flex items-center'>
               <LuBookOpen size={15} />
               <span>Word Count</span>
             </button>
-            <button className='text-xs black-button flex items-center'>
+            <button onClick={() => setShowFeedbackModal(true)} className='text-xs black-button flex items-center'>
               <BiMessageDots size={15} />
               <span>Feedback</span>
             </button>

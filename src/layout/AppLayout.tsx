@@ -8,6 +8,8 @@ import ModalUploadFileOrDocument from '@/components/modal/ModalUploadFileOrDocum
 import {Toaster as Toast} from 'sonner'
 import UploadFileAiReplace from '@/components/modal/UploadFileAiReplace'
 import EditSpecificFile from '@/components/modal/EditSpecificFile'
+import Feedback from '@/components/modal/Feedback'
+import ConfirmSwitchStandartMode from '@/components/modal/ConfirmSwitchStandartMode'
 
 function AppLayout() {
   const [openSideBarValue] = useAtom(openSideBar)
@@ -15,6 +17,8 @@ function AppLayout() {
   return (
     <main className='flex w-full'>
       <ModalUploadFileOrDocument />
+      <ConfirmSwitchStandartMode />
+      <Feedback />
       <EditSpecificFile />
       <UploadFileAiReplace />
       <Toast richColors theme='dark' position='top-center' />

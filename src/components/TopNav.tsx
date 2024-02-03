@@ -7,18 +7,22 @@ import { Button } from './ui/button'
 import { HiOutlineBell } from "react-icons/hi2";
 import { BiMessageDots } from "react-icons/bi";
 import { HiOutlineUserAdd } from "react-icons/hi";
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { IoChatboxEllipsesOutline, IoMicOutline, IoSend } from "react-icons/io5";
 import { useEffect, useRef, useState } from 'react'
+import { CgProfile } from 'react-icons/cg'
+import { Input } from './ui/input'
 
 function TopNav() {
   const [darkMode, toggleDarkMode] = useDarkMode()
   const menuRef = useRef(null);
   const [showInviteChat, setShowInviteChat] = useState(false)
+  const [showChatMessage, setShowChatMessage] = useState(false)
 
   useEffect(() => {
     const handler = (e: any)=>{
       if(menuRef.current && !menuRef?.current.contains(e.target)){
         setShowInviteChat(false);
+        setShowChatMessage(false)
       }      
     };
     window.addEventListener('mousedown', handler);
@@ -46,16 +50,67 @@ function TopNav() {
           <HiOutlineBell />
         </button>
        <div className="relative" ref={menuRef}>
-            <button type='button' onClick={() => setShowInviteChat((prev) => !prev)} className='w-[32px] h-[32px] flex justify-center items-center rounded-full border border-transparent hover:bg-slate-300 hover:dark:bg-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
+            <button type='button' onClick={() => {
+              setShowInviteChat((prev) => !prev)
+              setShowChatMessage(false)
+            }} className='w-[32px] h-[32px] flex justify-center items-center rounded-full border border-transparent hover:bg-slate-300 hover:dark:bg-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
             <BiMessageDots />
           </button>
          {showInviteChat && (
            <div className="flex absolute bg-slate-200 dark:border-white border-black border px-2 py-3 rounded-md dark:bg-black flex-col gap-2">
-           <button type='button' className='px-2 py-1.5 hover:opacity-80 flex items-center gap-2'>
+           <button type='button' onClick={() => setShowChatMessage((prev) => !prev)} className='px-2 py-1.5 hover:opacity-80 flex items-center gap-2'>
              <IoChatboxEllipsesOutline size={18}/>
              Chat
            </button>
-           <button type='button' className='px-2 py-1.5 hover:opacity-80 flex items-center gap-2'>
+
+             <div className={`border max-w-[500px] fixed p-2 bottom-2 right-4 w-full bg-white rounded-2xl overflow-x-hidden ${showChatMessage ? "scale-100 opacity-100" : "scale-50 opacity-0"} transition duration-100`}>
+             <div className='bg-white text-black space-y-3'>
+               <div className='space-y-1 py-2 px-2 bg-gray-100 rounded-2xl'>
+                 <p className='text-base font-semibold'>Cluadia Dias</p>
+                 <p className='text-sm flex'>Online</p>
+               </div>
+               <div className='max-h-[250px] h-full overflow-y-auto'>
+                 <div className='flex py-2 px-2 gap-2 bg-gray-100 rounded-2xl'>
+                   <div>
+                     <CgProfile className='w-8 h-auto' />
+                   </div>
+                     <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-b-xl rounded-tr-xl px-4 flex flex-col items-start py-2'>
+                       <p className='font-semibold text-base px-2 gap-2'>Claudia Dias</p>
+                       <span>Hello Josh! How are you today 😊</span>
+                     </button>
+                 </div>
+                 <div className='flex py-2 px-2 gap-2 flex-row-reverse bg-gray-100 rounded-2xl'>
+                   <div>
+                     <CgProfile className='w-8 h-auto' />
+                   </div>
+                   <button className='text-sm max-w-[90%] text-white bg-primary rounded-b-xl rounded-tl-xl px-4 flex flex-col items-end py-2'>
+                       <p className='font-semibold text-base px-2 gap-2'>You</p>
+                       <span>Pretty good! thanks</span>
+                   </button>
+                 </div>
+                 <div className='flex py-2 px-2 gap-2 bg-gray-100 rounded-2xl'>
+                   <div>
+                     <CgProfile className='w-8 h-auto' />
+                   </div>
+                      <button className='text-sm max-w-[90%] border border-primary bg-primary/10 rounded-b-xl rounded-tr-xl px-4 flex flex-col items-start py-2'>
+                       <p className='font-semibold text-base px-2 gap-2'>Claudia Dias</p>
+                       <span>Certainly! Is there anything specific you would like to talk about or ask?</span>
+                     </button>
+                 </div>
+               </div>
+               <div className='flex py-2 w-full gap-2'>
+                 <Input placeholder='Write a Question...' className='w-full' />
+                 <button>
+                   <IoMicOutline className='w-6 h-auto' />
+                 </button>
+                 <button>
+                   <IoSend className='w-6 h-auto' />
+                 </button>
+               </div>
+             </div>
+           </div>
+           
+           <button type='button' onClick={() => setShowChatMessage((prev) => !prev)} className='px-2 py-1.5 hover:opacity-80 flex items-center gap-2'>
              <HiOutlineUserAdd size={18}/>
              Invite
            </button>

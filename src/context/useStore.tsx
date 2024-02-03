@@ -27,9 +27,17 @@ type Store = {
     setShowAiReplace: (showAiReplace: boolean) => void
     isEditMode: boolean
     setIsEditMode: (isEditMode: boolean) => void
+    showFeedbackModal: boolean
+    setShowFeedbackModal: (showFeedbackModal: boolean) => void
+    showConfirmSwitchMode: boolean
+    setShowConfirmSwitchMode: (showConfirmSwitchMode: boolean) => void
 }
 
 export const useStoreState = create<Store>()((set) => ({
+    showFeedbackModal: false,
+    showConfirmSwitchMode: false,
+    setShowConfirmSwitchMode: (showConfirmSwitchMode) => set({showConfirmSwitchMode}),
+    setShowFeedbackModal: (showFeedbackModal) => set({showFeedbackModal}),
     isSelectUpload: "",
     isEditMode: false,
     setIsEditMode: (isEditMode) => set({isEditMode}),

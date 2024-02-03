@@ -73,8 +73,8 @@ const FileUploadPreview = () => {
               <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
             </Worker>
           ) : selectedDocs[0].type.startsWith("image/") ? (
-            <div className="max-h-[760px] rounded-t-md overflow-hidden">
-              <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+            <div className="max-h-[760px] rounded-t-md w-full overflow-hidden">
+              <img className="object-cover w-full" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
             </div>
           ) : 
           <DocViewer pluginRenderers={DocViewerRenderers} documents={[{

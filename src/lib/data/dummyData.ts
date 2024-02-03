@@ -17,8 +17,15 @@ export const uploadList = [
     { image: Audio, title: 'Audio', type: 'audio/mpeg' },
   ]
 
-  export const qnaOrReport = ["Qna", "Report"]
+  export const editorStyle = {
+    border: '1px solid rgba(0, 0, 0, 0.1)',
+    padding: '2px 5px',
+    borderRadius: '0px 5px',
+    height: '240px',
+    width: '100%',
+  };
 
+  export const qnaOrReport = ["Qna", "Report"]
   // values
 export const minuteSeconds = 60
 export const hourSeconds = 3600

@@ -17,8 +17,7 @@ import {
 import { IoMdSearch } from 'react-icons/io'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import pdf from '@/assets/pdf-2.png'
+import MSWordEmailAI from '@/components/MSWordEmailAI'
 
 function Emailai() {
   return (
@@ -154,14 +153,11 @@ function Emailai() {
               onValueChange={() => {}}
             />
             <Selector title='LLM' options={llms} onValueChange={() => {}} />
-            <div className='text-sm flex gap-2'>
+            <div className='text-sm flex pb-2 gap-2'>
               <p className='text-2 font-semibold'>Bold key words</p>
               <Switch />
             </div>
-            <div className='text-sm flex gap-2'>
-              <p className='text-2 font-semibold'>Highlight</p>
-              <Switch />
-            </div>
+           
           </div>
         </div>
         <div className='grid gap-3 grid-cols-12 overflow-auto w-full'>
@@ -169,9 +165,13 @@ function Emailai() {
             <button className='border-2 rounded-md border-primary bg-primary/10 py-2 px-4 text-sm'>
               Remake
             </button>
-            <button className='btn-primary flex gap-2 items-center'>
+            <div className="flex items-center gap-4">
+               <button className='btn-primary focus:bg-primary/90 dark:focus:bg-primary'>Highlight</button>
+               <button className='btn-primary flex gap-2 items-center'>
               Send <MdEmail />
             </button>
+            </div> 
+            
           </div>
           <div className='flex justify-end col-span-4'>
             <button className='btn-primary'>Generate</button>
@@ -179,25 +179,7 @@ function Emailai() {
         </div>
       </section>
       <section className='col-span-4 space-y-2 card'>
-      <div className="flex flex-col pb-4 w-full">
-        <div className="bg-[#040C34] w-full flex justify-between text-white rounded-t-[5px] py-3 px-2">
-          <div className='flex items-center ml-4 gap-6'>
-            <button type='button'>
-              <MdClose size={25} />
-            </button>
-            <p className='font-semibold text-sm'>Preview</p>
-          </div>
-          <button type='button' className='p-0.5 border mr-4 border-white rounded-full'>
-            <HiOutlineDotsHorizontal size={18} />
-          </button>
-        </div>
-        <div className="w-full flex gap-4 py-4 items-center justify-center flex-col text-white rounded-b-[5px] bg-[rgba(4,_12,_52,_0.50)]">
-          <img src={pdf} alt="Pdf Preview" width={324} height={324} />
-          <button type='button' className='bg-[#040C34] w-[84px] h-[22px] text-[10px] font-semibold rounded-[10px]'>
-            Page 1 of 2
-          </button>
-        </div>
-      </div>
+        <MSWordEmailAI />
         <div className='bg-[#040C34D9] rounded-lg px-4 py-2 space-y-3'>
           <p className='text-center font-semibold text-white'>Choose Contact</p>
           <div className='w-full flex dark:border-gray-700 dark:bg-gray-900  py-1.5 px-3 shadow items-center gap-3 rounded-md bg-[#040C34] border-0 text-sm mx-auto max-w-xl'>

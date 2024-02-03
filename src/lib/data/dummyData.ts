@@ -21,7 +21,7 @@ export const uploadList = [
     border: '1px solid rgba(0, 0, 0, 0.1)',
     padding: '2px 5px',
     borderRadius: '0px 5px',
-    height: '240px',
+    height: '380px',
     width: '100%',
   };
 

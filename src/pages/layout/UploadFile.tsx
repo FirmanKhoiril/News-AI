@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { useStoreState } from '@/context/useStore'
 
 const UploadFile = () => {
-    const { showConfirmSwitchMode, isStandart, setIsStandart, selectedDocs, setShowConfirmSwitchMode} = useStoreState()
+    const { isStandart, setIsStandart, selectedDocs, setShowConfirmSwitchMode} = useStoreState()
     const handleStandart = () => {
       if(selectedDocs.length !== 0 && isStandart === "customized")  {
         setShowConfirmSwitchMode(true)
@@ -24,8 +24,8 @@ const UploadFile = () => {
   return (
     <div className=' card h-full overflow-y-auto '>
       <div className='flex justify-between flex-wrap gap-2'>
-        <Button variant='outline' onClick={handleStandart}>Standard</Button>
-        <Button variant='outline' onClick={handleCustomized}>Customized</Button>
+        <Button variant='outline' disabled={isStandart === "standart"} onClick={handleStandart}>Standard</Button>
+        <Button variant='outline' disabled={isStandart === "customized"}  onClick={handleCustomized}>Customized</Button>
       </div>
       <div className='grid my-4 grid-rows-3 gap-x-6 grid-cols-3 gap-y-6 h-full'>
         <FeedUploadGrid />

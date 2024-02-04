@@ -21,7 +21,6 @@ const UploadFile = () => {
         
       }
 
-      console.log(showConfirmSwitchMode)
   return (
     <div className=' card h-full overflow-y-auto '>
       <div className='flex justify-between flex-wrap gap-2'>

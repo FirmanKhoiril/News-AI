@@ -22,7 +22,7 @@ const ConversationBotApp = () => {
     const [showShare, setShowShare] = useState(false)
     const menuRef = useRef(null)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
-    const {isStandart, setShowFeedbackModal} = useStoreState()
+    const {isStandart, setShowFeedbackModal, setContentMSWord} = useStoreState()
 
     useEffect(() => {
       const handler = (e: any)=>{
@@ -48,11 +48,14 @@ const ConversationBotApp = () => {
           {toogleSendEmailWord && (
             <div className="absolute bottom-8 z-40 flex flex-col gap-2 border border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
              <Link to={"/emailai"}>
-                <button type='button' className='p-2 bg-primary rounded-md text-white '>
+                <button type='button' onClick={() => setContentMSWord("I'm an AI bot!")} className='p-2 bg-primary rounded-md text-white '>
                   Email/Text
                 </button>
              </Link>
-              <button type='button'  className='p-2 bg-primary rounded-md text-white'>
+              <button type='button'  onClick={() => {
+                setContentMSWord("I'm an AI bot!")
+                setToogleSendEmailWord(false)
+              }} className='p-2 bg-primary rounded-md text-white'>
                 MS Word
               </button>
             </div>

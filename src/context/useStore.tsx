@@ -22,6 +22,8 @@ type Store = {
     setYoutubeUrl: (youtubeUrl: string) => void
     setShowCustomizedPreviewFileUpload: (showCustomizedPreviewFileUpload: boolean) => void
     websiteUrl: string
+    contentMSWord: string
+    setContentMSWord: (contentMSWord: string) => void
     setWebsiteUrl: (websiteUrl: string) => void
     showAiReplace: boolean
     setShowAiReplace: (showAiReplace: boolean) => void
@@ -35,6 +37,8 @@ type Store = {
 
 export const useStoreState = create<Store>()((set) => ({
     showFeedbackModal: false,
+    contentMSWord: "",
+    setContentMSWord: (contentMSWord) => set({contentMSWord}),
     showConfirmSwitchMode: false,
     setShowConfirmSwitchMode: (showConfirmSwitchMode) => set({showConfirmSwitchMode}),
     setShowFeedbackModal: (showFeedbackModal) => set({showFeedbackModal}),

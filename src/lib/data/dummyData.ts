@@ -118,3 +118,16 @@ export const optionsMonth = {
     ],
   },
 }
+
+export const exampleConversation = [
+  {
+    role: "user",
+    content: 'What is your name?',
+    id: "1"
+  },
+  {
+    role: "bot",
+    content: "I'm an AI bot!'",
+    id: "2"
+  }
+]

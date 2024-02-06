@@ -1,14 +1,18 @@
 import { useStoreState } from '@/context/useStore'
-import { MdOutlineClose } from 'react-icons/md'
+import { MdOutlineClose,MdFeedback } from 'react-icons/md'
+
 
 const Feedback = () => {
     const {showFeedbackModal, setShowFeedbackModal} = useStoreState()
   return showFeedbackModal ? (
     <>
     <div onClick={() => setShowFeedbackModal(false)} className="bg-black/80 w-full h-screen fixed z-40 " />
-    <div className="fixed mx-auto h-full max-h-[420px] dark:text-[#ececf1] flex flex-col gap-4 max-w-[1000px] overflow-y-auto z-50 inset-0 border dark:border-gray-800/80 top-1/4 card">
+    <div className="fixed mx-auto h-full max-h-[400px] dark:text-[#ececf1] flex flex-col gap-4 max-w-[1000px] overflow-y-auto z-50 inset-0 border dark:border-gray-800/80 top-1/4 card">
         <div className="border-b border-black/10 dark:border-white/10 pt-4 pb-8 w-full flex items-center justify-between">
-            <div className="">
+            <div className="flex gap-6 items-center">
+                <div className="bg-gray-200 rounded-full p-4">
+                    <MdFeedback size={30} color='black' />
+                </div>
                 <h1 className='font-semibold text-2xl'>Provide additional feedback</h1>
             </div>
             <button type='button' onClick={() => setShowFeedbackModal(false)}>
@@ -20,36 +24,6 @@ const Feedback = () => {
             <div className="flex items-center pt-2 gap-2">
                 <input type="checkbox" className=' appearance-none h-5 w-5 rounded-md border peer relative  border-black dark:border-white checked:bg-primary' />
                 <label htmlFor="harmful" className='text-sm'>This is harmful / unsafe</label>
-                <svg
-                    className="absolute w-4 h-4 pointer-events-none hidden peer-checked:block stroke-white ml-[2px] outline-none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    >
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-            </div>
-            <div className="flex items-center gap-2">
-                <input type="checkbox" className=' appearance-none h-5 peer relative  w-5 rounded-md border border-black dark:border-white checked:bg-primary' />
-                <label htmlFor="true" className='text-sm'>This is'nt true</label>
-                <svg
-                    className="absolute w-4 h-4 pointer-events-none hidden peer-checked:block stroke-white ml-[2px] outline-none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    >
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-            </div>
-            <div className="flex items-center gap-2">
-                <input type="checkbox" className=' appearance-none h-5 w-5 peer relative  rounded-md border border-black dark:border-white checked:bg-primary' />
-                <label htmlFor="helpful" className='text-sm'>This is'nt helpful</label>
                 <svg
                     className="absolute w-4 h-4 pointer-events-none hidden peer-checked:block stroke-white ml-[2px] outline-none"
                     xmlns="http://www.w3.org/2000/svg"

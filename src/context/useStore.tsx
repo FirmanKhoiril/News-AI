@@ -2,6 +2,8 @@ import { create } from 'zustand'
 
 type Store = {
     isSelectUploadAiReplace: string
+    toogleSendEmailWord: boolean
+    setToogleSendEmailWord: (toogleSendEmailWord: boolean) => void
     setIsSelectUploadAiReplace: (isSelectUploadAiReplace: string) => void
     isSelectUpload: string
     setIsSelectUpload: (isSelectUpload: string) => void
@@ -33,10 +35,16 @@ type Store = {
     setShowFeedbackModal: (showFeedbackModal: boolean) => void
     showConfirmSwitchMode: boolean
     setShowConfirmSwitchMode: (showConfirmSwitchMode: boolean) => void
+    imageURL: string
+    setImageURL: (imageURL: null | string) => void
 }
 
 export const useStoreState = create<Store>()((set) => ({
     showFeedbackModal: false,
+    imageURL: 'https://eu.ui-avatars.com/api/?name=John+Doe&size=250',
+    setImageURL: (imageURL) => set({imageURL}),
+    setToogleSendEmailWord: (toogleSendEmailWord) => set({toogleSendEmailWord}),
+    toogleSendEmailWord: false,
     contentMSWord: "",
     setContentMSWord: (contentMSWord) => set({contentMSWord}),
     showConfirmSwitchMode: false,

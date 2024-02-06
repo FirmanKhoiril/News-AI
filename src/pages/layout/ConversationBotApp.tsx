@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
 import { Switch } from '@/components/ui/switch'
 import { useStoreState } from '@/context/useStore'
-import { qnaOrReport } from '@/lib/data/dummyData'
+import { exampleConversation, qnaOrReport } from '@/lib/data/dummyData'
 import { fontFormat, fontType, formatOptions, languageList, llms, popularColors, purposeOfWriting, writingStyle } from '@/lib/data/selectDatas'
 import { useMicSpeechRecognition } from '@/lib/hooks/useMicSpeechRecognition'
 import { useEffect, useRef, useState } from 'react'
@@ -18,11 +18,13 @@ import { MdContentCopy } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 const ConversationBotApp = () => {
-    const [toogleSendEmailWord, setToogleSendEmailWord] = useState(false)
+
     const [showShare, setShowShare] = useState(false)
     const menuRef = useRef(null)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
-    const {isStandart, setShowFeedbackModal, setContentMSWord} = useStoreState()
+    const [conversationFocusedById, setConversationFocusedById] = useState("")
+    const [focusedConversation, setFocusedConversation] = useState(false)
+    const {isStandart, setShowFeedbackModal, setContentMSWord, setToogleSendEmailWord, toogleSendEmailWord} = useStoreState()
 
     useEffect(() => {
       const handler = (e: any)=>{
@@ -44,80 +46,100 @@ const ConversationBotApp = () => {
         </div>
         )}
         <div className="flex flex-col h-full justify-end gap-4">
-        <div  className='bg-[#DADAEA] rounded-md px-3 py-2 text-xs space-y-3 relative'>
-          {toogleSendEmailWord && (
+          {exampleConversation.map((item) => (
+            <div key={item.id} className={` ${item.role === "bot" ? `${focusedConversation && conversationFocusedById === item.id ?  "bg-[#a7a4f7] text-white" : "bg-[#DADAEA] text-black" } ` : "bg-[#040C34CC] text-white dark:text-gray-200"}  space-y-3 relative  rounded-md px-3 py-2 text-xs`}>
+          {item.role === "bot" && toogleSendEmailWord && conversationFocusedById === item.id && (
             <div className="absolute bottom-8 z-40 flex flex-col gap-2 border border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
              <Link to={"/emailai"}>
-                <button type='button' onClick={() => setContentMSWord("I'm an AI bot!")} className='p-2 bg-primary rounded-md text-white '>
+                <button type='button' onClick={() => setContentMSWord(item.content)} className='p-2 bg-primary rounded-md text-white '>
                   Email/Text
                 </button>
              </Link>
               <button type='button'  onClick={() => {
-                setContentMSWord("I'm an AI bot!")
+                setContentMSWord(item.content)
                 setToogleSendEmailWord(false)
+                setShowShare(false)
               }} className='p-2 bg-primary rounded-md text-white'>
                 MS Word
               </button>
             </div>
           )}
-          <button type='button' className={`p-1 opacity-80 bg-[#040C34] dark:bg-[#343434] rounded-md absolute ${toogleSendEmailWord ? "-top-1" : "top-2"} left-2 hover:opacity-100`}>
+          {item.role === "bot" && (
+            <button type='button' onClick={() => {
+              setConversationFocusedById(item.id)
+              setToogleSendEmailWord(false)
+              setFocusedConversation(true)
+              setShowShare(false)
+            }} className={`p-1 opacity-80 bg-[#040C34] dark:bg-[#343434] rounded-md absolute ${toogleSendEmailWord && item.id === conversationFocusedById ? "-top-1" : "top-2"} left-2 hover:opacity-100`}>
             <BiTargetLock size={20} color="white" />
           </button>
-          <div className='flex justify-end'>
-            <div className='w-[150px] flex gap-2'>
-              <HiOutlineEmojiSad className='w-6 h-auto dark:text-black' />
-              <Slider defaultValue={[50]} max={100} step={1} />
-              <CiFaceSmile className='w-6 h-auto dark:text-black' />
-            </div>
-          </div>
-          <p className='font-bold dark:text-black'>I’m an AI bot!</p>
-          <div ref={menuRef} className='mt-3 flex gap-2 flex-wrap'>
-            <button className='text-xs black-button flex items-center'>
-              <MdContentCopy size={15} />
-              <span>Copy</span>
-            </button> 
-            <button onClick={() => setShowShare((prev) => !prev)} className='text-xs black-button flex items-center'>
-              <IoShareSocialSharp size={15} />
-              <span>Share</span>
-            </button>
-            {showShare && (
-            <div  className="absolute flex items-center justify-center bg-white py-3 min-w-[100px] gap-3 border top-[24px] border-black/60 left-[97px] px-2 rounded-md  ">
-              <a target='_blank' href='https://facebook.com'>
-                <FaFacebook color="#4c74ed" size={25} />
-              </a>
-                <a target='_blank' href='https://web.whatsapp.com'>
-                  <IoLogoWhatsapp color="green" size={25} />
-                </a>
-                <a target='_blank' href='https://instagram.com'>
-                  <FaInstagram color="#b5288f" size={25} />
-                </a>
-                <a target='_blank' href='https://tiktok.com'>
-                  <IoLogoTiktok size={25} color="black" />
-                </a>
-            </div>
           )}
-            <button className='text-xs black-button flex items-center'>
-              <LuBookOpen size={15} />
-              <span>Word Count</span>
-            </button>
-            <button onClick={() => setShowFeedbackModal(true)} className='text-xs black-button flex items-center'>
-              <BiMessageDots size={15} />
-              <span>Feedback</span>
-            </button>
-          </div>
-          <button type='button' onClick={() => setToogleSendEmailWord((prev) => !prev)} className='absolute bottom-0 right-0 p-2 opacity-80 hover:opacity-100'>
-            <IoSend size={20} color="black"  className=" rotate-[320deg]" />
-          </button>
+         {item.role === "bot" && (
+           <div className='flex justify-end'>
+           <div className='w-[150px] flex gap-2'>
+             <HiOutlineEmojiSad className='w-6 h-auto dark:text-black' />
+             <Slider defaultValue={[50]} max={100} step={1} />
+             <CiFaceSmile className='w-6 h-auto dark:text-black' />
+           </div>
+         </div>
+         )}
+          <p className='font-bold'>{item.content}</p>
+         {item.role === "bot" ? (
+           <div ref={menuRef} className='mt-3 flex gap-2 flex-wrap'>
+           <button className='text-xs black-button flex items-center'>
+             <MdContentCopy size={15} />
+             <span>Copy</span>
+           </button> 
+           <button onClick={() => {
+            setShowShare((prev) => !prev)
+           }} className='text-xs black-button flex items-center'>
+             <IoShareSocialSharp size={15} />
+             <span>Share</span>
+           </button>
+           {showShare && item.id === conversationFocusedById && (
+           <div  className="absolute flex items-center justify-center bg-white py-3 min-w-[100px] gap-3 border top-[24px] border-black/60 left-[97px] px-2 rounded-md  ">
+             <a target='_blank' href='https://facebook.com'>
+               <FaFacebook color="#4c74ed" size={25} />
+             </a>
+               <a target='_blank' href='https://web.whatsapp.com'>
+                 <IoLogoWhatsapp color="green" size={25} />
+               </a>
+               <a target='_blank' href='https://instagram.com'>
+                 <FaInstagram color="#b5288f" size={25} />
+               </a>
+               <a target='_blank' href='https://tiktok.com'>
+                 <IoLogoTiktok size={25} color="black" />
+               </a>
+           </div>
+         )}
+           <button className='text-xs black-button flex items-center'>
+             <LuBookOpen size={15} />
+             <p><span className='font-semibold'>{item.content.length}</span> Words Count</p>
+           </button>
+           <button onClick={() => setShowFeedbackModal(true)} className='text-xs black-button flex items-center'>
+             <BiMessageDots size={15} />
+             <span>Feedback</span>
+           </button>
+         </div>
+         ) : (
+          <div className='mt-3 flex gap-2'>
+          <button className='text-xs black-button'>Copy</button>
+          <button className='text-xs black-button'>Edit</button>
+          <button className='text-xs black-button'>{item.content.length} words count</button>
+        </div>
+         )}
+         {item.role === "bot" && (
+          <button type='button' onClick={() => {
+            setToogleSendEmailWord(!toogleSendEmailWord)
+            setConversationFocusedById(item.id)
+          }} className='absolute bottom-0 right-0 p-2 opacity-80 hover:opacity-100'>
+           <IoSend size={20} color={focusedConversation ? "white" : "black"}  className=" rotate-[320deg]" />
+         </button>
+         )}
           
         </div>
-        <div className='bg-[#040C34CC] text-gray-200 rounded-md px-3 py-2 text-xs'>
-          <div>What is your name?</div>
-          <div className='mt-3 flex gap-2'>
-            <button className='text-xs black-button'>Copy</button>
-            <button className='text-xs black-button'>Edit</button>
-            <button className='text-xs black-button'>Word Count</button>
-          </div>
-        </div>
+          ))}
+       
         <div className='flex py-2 w-full gap-2'>
           <Input placeholder='Write a Question...' className='w-full' />
           <button type='button' onClick={handleMic}>

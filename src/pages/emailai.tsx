@@ -100,7 +100,7 @@ function Emailai() {
         </div>
         <div className='grid gap-3 grid-cols-12 overflow-auto'>
           <div className='col-span-8 flex flex-col justify-between border rounded-md shadow dark:border-gray-700 h-full'>
-           {contentMSWord !== "" &&  <div className="px-3 py-4 bg-[#DADAEA] text-black font-semibold max-w-[300px] mx-2 my-4 rounded-md">{contentMSWord}</div> }
+           {contentMSWord !== "" &&  <div className="px-3 py-4  font-semibold max-w-[300px] mx-2 my-4 rounded-md">{contentMSWord}</div> }
             <div className='px-3 py-4 flex flex-col justify-end h-full gap-y-3'>
               <div className='flex py-2 w-full gap-2'>
                 <Input placeholder='Write a Question...' className='w-full' />

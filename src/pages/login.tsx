@@ -4,11 +4,12 @@ import { FaApple } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import Logo from '@/assets/logo.png'
 import { CgMail } from "react-icons/cg";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { smallEllipse, standartEllipse, hugeEllipse, threeQuartersCircle, halfCircle, tinyEllipse, frame, borderEclipse } from "../assets";
 import { MdClose } from "react-icons/md";
 
 function Login() {
+  const navigate = useNavigate()
   return (
     <div className='w-full h-screen relative overflow-hidden z-20 bg-[#F5F6FA]'>
       <div className='inset-0 absolute login_background -z-50 grid grid-cols-2 '>
@@ -21,9 +22,10 @@ function Login() {
         </div>
       </div>
       <div className='flex justify-center items-center h-full w-full'>
-        <div className='px-5 max-w-6xl max-h-[85vh] bg-transparent overflow-hidden drop-shadow-2xl grid grid-cols-2 w-full'>
-          <div className='relative bg-[#755bf4] rounded-l-2xl w-full h-screen max-h-[760px] flex justify-center items-center'>
-          <div className="relative w-full h-full">
+        <div className='px-5 max-w-6xl max-h-[85vh] h-full bg-transparent overflow-hidden drop-shadow-2xl grid grid-cols-2 w-full'>
+        <div className='relative bg-[#755bf4] rounded-l-2xl w-full h-full flex justify-center items-center'>
+            {/* Image */}
+            <div className="relative w-full h-full">
             <div className="">
         <div className="w-[44px] h-[130px] absolute top-6 left-[200px] rounded-b-full bg-gradient-to-t from-white/50 from-[62.53%] to-black/0" />
         <div className="w-[65px] h-[128px] absolute border-2 border-white -top-2 left-[270px] rounded-b-full " />
@@ -33,8 +35,8 @@ function Login() {
         <img src={threeQuartersCircle} width={57} height={57} alt="Three Quarters circle eclipse" className="absolute right-[117px] top-[70px]" />
       </div>
       <div className="absolute -top-[66px] left-12 bg-white rounded-full w-[125px] h-[125px]" />
-      <img src={standartEllipse} alt="standart blue eclipse" width={51} height={51} className="absolute bottom-[165px] left-[70px]" />
-      <div className="absolute bottom-12 flex flex-col gap-0.5 left-[70px]">
+      <img src={standartEllipse} alt="standart blue eclipse" width={51} height={51} className="absolute bottom-[5rem] left-[70px]" />
+      <div className="absolute bottom-[-2.5rem] flex flex-col gap-0.5 left-[70px]">
         <img src={frame} alt="Frame" width={100} height={16} />
         <img src={frame} alt="Frame" width={100} height={16} />
         <img src={frame} alt="Frame" width={100} height={16} />
@@ -42,20 +44,21 @@ function Login() {
         <img src={frame} alt="Frame" width={100} height={16} />
         <img src={frame} alt="Frame" width={100} height={16} />
       </div>
-      <MdClose size={25} color="white" className="absolute left-60 bottom-36" />
+      <MdClose size={28} color="white" className="absolute left-60 bottom-32" />
       <div>
-        <img src={hugeEllipse} className=" absolute bottom-24 right-24" width={104} height={104} alt="Big Blue eclipse" />
+        <img src={hugeEllipse} className=" absolute bottom-[-0.5rem] right-24" width={104} height={104} alt="Big Blue eclipse" />
         {/* <img src={borderEclipse} className=" absolute bottom-24 right-24" width={181} height={181} alt="Big Circle" /> */}
-        <img src={halfCircle} width={74} height={74} className="absolute right-36 bottom-24" alt="half circle" />
-        <img src={smallEllipse} alt="small blue eclipse" className="absolute bottom-[138px] right-[70px]" />
+        <img src={halfCircle} width={74} height={74} className="absolute right-36 bottom-[-0.5rem]" alt="half circle" />
+        <img src={smallEllipse} alt="small blue eclipse" className="absolute bottom-[2rem] right-[70px]" />
       </div>
-      <div className="absolute top-20 flex flex-col gap-0.5 left-[58px]">
+      <div className="absolute top-24 flex flex-col gap-0.5 left-[58px]">
         <img src={frame} alt="Frame" width={100} height={16} />
         <img src={frame} alt="Frame" width={100} height={16} />
         <img src={frame} alt="Frame" width={100} height={16} />
         <img src={frame} alt="Frame" width={100} height={16} />
       </div>
             </div>
+            {/* Closing image */}
             <div className='login_svg absolute inset-0 z-30 w-full h-full'>
             </div>
             <div className='z-40 absolute text-white space-y-5'>
@@ -63,7 +66,7 @@ function Login() {
                 Adventure <br /> start here
               </h1>
               <h5 className='text-sm'>
-              The pen is mightier than the sword
+                The pen is mightier than the sword
               </h5>
             </div>
           </div>
@@ -101,7 +104,7 @@ function Login() {
                 </div>
               </div>
             </div>
-            <button className='btn-primary w-full max-w-md'>Sign In</button>
+            <button className='btn-primary w-full max-w-md' onClick={() => navigate("/")}>Sign In</button>
             <div className='flex gap-3'>
               <div
                 role='button'

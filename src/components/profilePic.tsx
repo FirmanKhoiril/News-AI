@@ -1,40 +1,34 @@
-import React, { useState, ChangeEvent } from 'react'
-import { FiUpload } from 'react-icons/fi'
+import { useStoreState } from '@/context/useStore';
+import { useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
 
 const ProfilePicture: React.FC = () => {
-  const [image, setImage] = useState<string>(
-    'https://eu.ui-avatars.com/api/?name=John+Doe&size=250'
-  )
-  const [isHovered, setIsHovered] = useState<boolean>(false)
+  const { imageURL, setImageURL} = useStoreState()
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    const reader = new FileReader()
-
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        setImage(reader.result)
-      }
-    }
-
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      reader.readAsDataURL(file)
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imageDataUrl = reader.result as string;
+        setImageURL(imageDataUrl);
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   return (
     <div
-      className='relative inline-block profile-picture-container'
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className='relative inline-block group profile-picture-container'
+
     >
       <img
-        src={image}
+        src={imageURL}
         alt='Profile'
-        className='w-36 h-auto object-cover rounded-full'
+        className='w-36 h-36 object-fill rounded-full'
       />
-      {isHovered && (
-        <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-full cursor-pointer w-36 h-auto'>
+
+        <div className='absolute inset-0 flex group:opacity-100 opacity-0 z-10 items-center justify-center bg-black bg-opacity-40 rounded-full cursor-pointer w-36 h-auto'>
           <label
             htmlFor='file-upload'
             className='flex items-center justify-center text-white'
@@ -50,9 +44,8 @@ const ProfilePicture: React.FC = () => {
             />
           </label>
         </div>
-      )}
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePicture
+export default ProfilePicture;

@@ -8,28 +8,34 @@ import { editorStyle } from '@/lib/data/dummyData';
 import { EditorState, ContentState  } from 'draft-js'
 
 const TextEditor = () => {
-    const { setShowAiReplace, setIsSelectUploadAiReplace, setShowSelectUploadFileAiReplace, setContentMSWord, contentMSWord} = useStoreState()
+    const { setShowAiReplace, setIsSelectUploadAiReplace, setShowSelectUploadFileAiReplace, setContentMSWord,  contentMSWord} = useStoreState()
     const menuRef = useRef(null)
     const [show, setShow] = useState(false)
+
     const [text, setText] = useState(EditorState.createWithContent(ContentState.createFromText("I'm an AI bot!")))
     const [showDroplistSelectedUploadFile, setShowDroplistSelectedUploadFile] = useState(false)
     const [points, setPoints] = useState({
       x: 0,
       y: 0
     })
-
-
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const textConvert = text.getCurrentContent().getPlainText()
+    // const editorConvert = editorState.getCurrentContent().getPlainText()
+    
     const onEditorStateChange = function (editorState: any) {
       if(contentMSWord !== "") { 
         setText(editorState)
-      } else {
+        if(contentMSWord !== "" && textConvert === "") {
+          setContentMSWord("")
+          setText(EditorState.createWithContent(ContentState.createFromText("")))
+          setEditorState(editorState);
+        } 
+      }
+      else {
         setEditorState(editorState);
       }
     };
-
-    console.log(text.getCurrentContent().getPlainText("\u0001"), text.getCurrentContent().getPlainText("\u0001") === "", editorState.getCurrentContent().getPlainText("\u0001") )
-
 
     useEffect(() => {
         const handleClick = (e: any) => {
@@ -48,11 +54,9 @@ const TextEditor = () => {
           setPoints({ x: e.pageX, y: e.pageY });
       } 
 
-  
-
   return (
     <div onContextMenu={handleRightClick}   className="border h-full mb-4 overflow-y-auto dark:border-gray-700 rounded-md">
-    <Editor  editorStyle={editorStyle}   editorState={contentMSWord !== "" ?  text : editorState}  onEditorStateChange={onEditorStateChange}   />
+    <Editor  editorStyle={editorStyle}   editorState={contentMSWord !== "" ?  text : contentMSWord && textConvert === "" ? editorState : editorState}  onEditorStateChange={onEditorStateChange}   />
     {show && (
       <div ref={menuRef} style={{top: points.y - 25, left: points.x - 300}} className={`w-full gap-2 max-w-[350px] absolute z-40 bg-white text-black p-2 flex items-center justify-between  border-[4px] border-black`}>
           <button onClick={() => {

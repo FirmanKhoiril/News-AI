@@ -11,10 +11,12 @@ import { IoChatboxEllipsesOutline, IoMicOutline, IoSend } from "react-icons/io5"
 import { useEffect, useRef, useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { Input } from './ui/input'
+import { useStoreState } from '@/context/useStore'
 
 function TopNav() {
   const [darkMode, toggleDarkMode] = useDarkMode()
   const menuRef = useRef(null);
+  const {imageURL} = useStoreState()
   const [showInviteChat, setShowInviteChat] = useState(false)
   const [showChatMessage, setShowChatMessage] = useState(false)
 
@@ -45,10 +47,10 @@ function TopNav() {
         </div>
       </div>
       <div className='flex gap-7 items-center w-full justify-end px-2'>
-        <button type='button' className='w-[32px] h-[32px] flex relative justify-center items-center rounded-full border border-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
+        {/* <button type='button' className='w-[32px] h-[32px] flex relative justify-center items-center rounded-full border border-transparent dark:bg-transparent bg-slate-200 dark:border-white/50 '>
           <div className=' absolute top-[9px] right-[10px] w-[4px] h-[4px] rounded-full bg-black border border-slate-200' />
           <HiOutlineBell />
-        </button>
+        </button> */}
        <div className="relative" ref={menuRef}>
             <button type='button' onClick={() => {
               setShowInviteChat((prev) => !prev)
@@ -120,9 +122,9 @@ function TopNav() {
        <div className="flex items-center gap-5">
         <Link to='/profile'>
           <img
-            src={'https://eu.ui-avatars.com/api/?name=John+Doe&size=250'}
+            src={imageURL}
             alt=''
-            className='w-8 h-auto rounded-full'
+            className='w-8 h-8 rounded-full'
           />
         </Link>
         <p className='text-base font-medium'>Hello, John</p>

@@ -43,25 +43,13 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
+import { useNavigate } from 'react-router-dom'
 
-function TextBlock({
-  title,
-  children,
-}: {
-  title: string
-  children: JSX.Element[] | JSX.Element | string
-}) {
-  return (
-    <div className='py-6'>
-      <h2 className='text-sm font-bold mb-4 text-2'>{title}</h2>
-      <p className='text-2'>{children}</p>
-    </div>
-  )
-}
 export default function Profile() {
   const { inputValues, handleInputChange, handleCustomChange } =
     useInputChange()
 
+    const navigate = useNavigate()
   useEffect(() => {
     // set default
     handleCustomChange({
@@ -412,7 +400,7 @@ of questions.`,
               )
             })}
             <div className='mt-10'>
-              <button className='text-sm px-4 py-2 rounded-md border-2 border-[#755de2] text-[#755de2] font-bold flex gap-3 items-center'>
+              <button onClick={() => navigate("/register")} className='text-sm px-4 py-2 rounded-md border-2 border-[#755de2] text-[#755de2] font-bold flex gap-3 items-center'>
                 <RiLogoutBoxLine />
                 Log Out
               </button>

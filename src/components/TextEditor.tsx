@@ -12,12 +12,13 @@ const TextEditor = () => {
     const menuRef = useRef(null)
     const [show, setShow] = useState(false)
 
-    const [text, setText] = useState(EditorState.createWithContent(ContentState.createFromText("I'm an AI bot!")))
     const [showDroplistSelectedUploadFile, setShowDroplistSelectedUploadFile] = useState(false)
     const [points, setPoints] = useState({
       x: 0,
       y: 0
     })
+    
+    const [text, setText] = useState(EditorState.createWithContent(ContentState.createFromText("I'm an AI bot!")))
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const textConvert = text.getCurrentContent().getPlainText()

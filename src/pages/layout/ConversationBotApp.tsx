@@ -96,7 +96,7 @@ const ConversationBotApp = () => {
              <IoShareSocialSharp size={15} />
              <span>Share</span>
            </button>
-           {showShare && item.id === conversationFocusedById && (
+           {showShare && (
            <div  className="absolute flex items-center justify-center bg-white py-3 min-w-[100px] gap-3 border top-[24px] border-black/60 left-[97px] px-2 rounded-md  ">
              <a target='_blank' href='https://facebook.com'>
                <FaFacebook color="#4c74ed" size={25} />

@@ -37,10 +37,14 @@ type Store = {
     setShowConfirmSwitchMode: (showConfirmSwitchMode: boolean) => void
     imageURL: string
     setImageURL: (imageURL: null | string) => void
+    showPopupInviteOrChat: "Chat" | "Invite" | string
+    setShowPopupInviteOrChat: (showPopupInviteOrChat: "Chat" | "Invite" | string) => void
 }
 
 export const useStoreState = create<Store>()((set) => ({
     showFeedbackModal: false,
+    showPopupInviteOrChat: "",
+    setShowPopupInviteOrChat: (showPopupInviteOrChat) => set({showPopupInviteOrChat}),
     imageURL: 'https://eu.ui-avatars.com/api/?name=John+Doe&size=250',
     setImageURL: (imageURL) => set({imageURL}),
     setToogleSendEmailWord: (toogleSendEmailWord) => set({toogleSendEmailWord}),

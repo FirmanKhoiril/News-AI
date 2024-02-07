@@ -20,7 +20,7 @@ const ConfirmSwitchStandartMode = () => {
   return showConfirmSwitchMode ? (
     <>
      <div onClick={() => setShowConfirmSwitchMode(false)} className="bg-black/80 w-full h-screen fixed z-40 " />
-     <div className={`fixed mx-auto h-full ${isStandart === "customized" ? "py-4" : "py-6"} max-h-[300px] border border-primary dark:border-white/20 flex flex-col gap-4 max-w-[600px] overflow-y-auto z-50 inset-0 top-1/4 card`}>
+     <div className={`fixed mx-auto h-full ${isStandart === "customized" ? "py-4" : "py-6"} max-h-[270px] border border-primary dark:border-white/20 flex flex-col gap-4 max-w-[600px] overflow-y-auto z-50 inset-0 top-1/4 card`}>
     <div className="flex items-center gap-2 w-full border-b border-black/20 dark:border-white/20 pb-4">
      <div className="w-[60px] h-[60px] my-2 p-4 flex rounded-full items-center justify-center text-black bg-gray-300 dark:bg-white">
         <IoIosWarning size={32} />

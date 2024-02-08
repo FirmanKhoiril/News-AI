@@ -28,7 +28,7 @@ const ProfilePicture: React.FC = () => {
         className='w-36 h-36 object-fill rounded-full'
       />
 
-        <div className='absolute inset-0 flex group:opacity-100 opacity-0 z-10 items-center justify-center bg-black bg-opacity-40 rounded-full cursor-pointer w-36 h-auto'>
+        <div className='absolute inset-0 flex group-hover:opacity-100 opacity-0 z-10 items-center justify-center bg-black bg-opacity-40 rounded-full cursor-pointer w-36 h-auto'>
           <label
             htmlFor='file-upload'
             className='flex items-center justify-center text-white'

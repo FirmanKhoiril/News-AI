@@ -12,7 +12,10 @@ const PopupInvitePerson = () => {
         setShowPopupInviteOrChat("")
     }
 
-    const handleClear = () => setShowPopupInviteOrChat("")
+    const handleClear = () => {
+        if(inputValue !== "") setInputValue("")
+        setShowPopupInviteOrChat("")
+    }
 
   return showPopupInviteOrChat === "Invite" ? (
     <>

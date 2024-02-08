@@ -15,7 +15,6 @@ const FileUploadCustomized = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setShowCustomizedPreviewFileUpload(false)
-    setSelectedDocs((prev: File[]) => [])
     setPasteTextContent("")
   }
   return (

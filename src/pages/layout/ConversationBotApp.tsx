@@ -158,7 +158,7 @@ const ConversationBotApp = () => {
             if(editableInput === "") setEditableInput(item.content)
             setEditableText(true)
           }} className='text-xs black-button'>Edit</button>
-          <button className='text-xs black-button'>{item.content.length} words count</button>
+          <button className='text-xs black-button'>{editableInput !== "" ? editableInput.length : item.content.length} words count</button>
           </div>
           {editableText && (
             <div className="flex items-center gap-4">

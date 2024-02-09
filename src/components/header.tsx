@@ -56,9 +56,9 @@ function Nav() {
   return (
     <nav className='px-3 pt-5 h-full flex-col md:flex'>
       <div className='flex flex-col items-center gap-y-1'>
-        <div className='mb-4'>
+        <a href='https://swiftintellect.com' target='_blank'  className='mb-4'>
           <img src={Logo} className='w-10 h-auto' alt='logo' />
-        </div>
+        </a>
         {menuList.map((singleMenu, index) => {
           return (
             <NavLink to={singleMenu.href} key={index} className='w-full'>

@@ -22,6 +22,7 @@ import { useStoreState } from '@/context/useStore'
 
 function Emailai() {
   const {contentMSWord} = useStoreState()
+  
   return (
     <div className='grid grid-cols-12 gap-3 py-2 px-3'>
       <section className='col-span-8 card space-y-3'>

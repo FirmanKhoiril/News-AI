@@ -8,7 +8,7 @@ import { editorStyle } from '@/lib/data/dummyData';
 import { EditorState, ContentState  } from 'draft-js'
 
 const TextEditor = () => {
-    const { setShowAiReplace, setIsSelectUploadAiReplace, setShowSelectUploadFileAiReplace, setContentMSWord,  contentMSWord} = useStoreState()
+    const { setShowAiReplace, setIsSelectUploadAiReplace,text, setText, editorState, setEditorState, setShowSelectUploadFileAiReplace, setContentMSWord,  contentMSWord} = useStoreState()
     const menuRef = useRef(null)
     const [show, setShow] = useState(false)
 
@@ -17,9 +17,6 @@ const TextEditor = () => {
       x: 0,
       y: 0
     })
-    
-    const [text, setText] = useState(EditorState.createWithContent(ContentState.createFromText("I'm an AI bot!")))
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const textConvert = text.getCurrentContent().getPlainText()
     // const editorConvert = editorState.getCurrentContent().getPlainText()

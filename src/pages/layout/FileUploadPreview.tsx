@@ -31,10 +31,10 @@ const FileUploadPreview = () => {
     {selectedDocs[0] ? (
      <>
       <div className=" max-w-[180px] pr-4 flex flex-col items-center justify-start gap-2 space-y-2 w-full h-full overflow-y-auto py-2">
-      <PreviewDocs datas={selectedDocs[1]} />
-      <PreviewDocs datas={selectedDocs[2]} />
-      <PreviewDocs datas={selectedDocs[3]} />
-      {selectedDocs.slice(4, 30).map((doc, index) => doc && <PreviewDocs key={doc.name + index} datas={doc} />)}
+      <PreviewDocs datas={selectedDocs[1]}  id={1} />
+      <PreviewDocs datas={selectedDocs[2]} id={2} />
+      <PreviewDocs datas={selectedDocs[3]} id={3} />
+      {selectedDocs.slice(4, 30).map((doc, index: number) => doc && <PreviewDocs key={doc.name + index} id={index + 4} datas={doc} />)}
     
        {selectedDocs[2] && (
          <button type='button' className="border-black/30 dark:border-white/30 border rounded-full p-2">

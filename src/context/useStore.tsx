@@ -1,7 +1,16 @@
+import { ContentState, EditorState } from 'draft-js';
 import { create } from 'zustand'
 
 type Store = {
     isSelectUploadAiReplace: string
+    conversationFocusedById: string
+    setConversationFocusedById: (conversationFocusedById: string) => void
+    focusedConversation: boolean
+    setFocusedConversation: (focusedConversation: boolean) => void
+    editorState: EditorState
+    setEditorState: (editorState: EditorState) => void
+    text: EditorState
+    setText: (text: EditorState) => void
     toogleSendEmailWord: boolean
     setToogleSendEmailWord: (toogleSendEmailWord: boolean) => void
     setIsSelectUploadAiReplace: (isSelectUploadAiReplace: string) => void
@@ -43,7 +52,15 @@ type Store = {
 
 export const useStoreState = create<Store>()((set) => ({
     showFeedbackModal: false,
+    focusedConversation: false,
+    setFocusedConversation: (focusedConversation) => set({focusedConversation}),
+    conversationFocusedById: "",
+    setConversationFocusedById: (conversationFocusedById) => set({conversationFocusedById}),
     showPopupInviteOrChat: "",
+    editorState: EditorState.createEmpty(),
+    setEditorState: (editorState) => set({editorState}),
+    text: EditorState.createWithContent(ContentState.createFromText("I'm an AI bot!")),
+    setText: (text: EditorState) => set({text}),
     setShowPopupInviteOrChat: (showPopupInviteOrChat) => set({showPopupInviteOrChat}),
     imageURL: 'https://eu.ui-avatars.com/api/?name=John+Doe&size=250',
     setImageURL: (imageURL) => set({imageURL}),

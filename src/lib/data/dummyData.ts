@@ -127,7 +127,7 @@ export const exampleConversation = [
   },
   {
     role: "bot",
-    content: "I'm an AI bot!'",
+    content: "I'm an AI bot!",
     id: "2"
   }
 ]

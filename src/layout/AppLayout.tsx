@@ -11,6 +11,7 @@ import EditSpecificFile from '@/components/modal/EditSpecificFile'
 import Feedback from '@/components/modal/Feedback'
 import ConfirmSwitchStandartMode from '@/components/modal/ConfirmSwitchStandartMode'
 import PopupInvitePerson from '@/components/modal/PopupInvitePerson'
+import PopupChatPerson from '@/components/modal/PopupChatPerson'
 
 function AppLayout() {
   const [openSideBarValue] = useAtom(openSideBar)
@@ -19,6 +20,7 @@ function AppLayout() {
     <main className='flex w-full'>
       <ModalUploadFileOrDocument />
       <PopupInvitePerson />
+      <PopupChatPerson />
       <ConfirmSwitchStandartMode />
       <Feedback />
       <EditSpecificFile />

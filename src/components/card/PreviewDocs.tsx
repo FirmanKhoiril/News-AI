@@ -3,6 +3,7 @@ import { Viewer, Worker } from '@react-pdf-viewer/core'
 import ReactPlayer from 'react-player/youtube';
 import Microlink from "@microlink/react";
 import ReactAudioPlayer from 'react-audio-player';
+import { useStoreState } from '@/context/useStore';
 
 type FileData = {
     name: string;
@@ -14,11 +15,23 @@ type FileData = {
 
 export type TDatasDocs = {
     datas: MediaSource | Blob | FileData[] | any;
+    id: number
 };
 
-const PreviewDocs = ({datas}: TDatasDocs) => {
+const PreviewDocs = ({datas, id}: TDatasDocs) => {
+  const {selectedDocs, setSelectedDocs} = useStoreState()
+
+  const handleChangeIndexSelectedDocs = () => {
+    const shiftedFiles = selectedDocs.map((_, index, arr) => {
+      const newIndex = (index + id) % arr.length;
+      return selectedDocs[newIndex];
+    });
+    setSelectedDocs((_) => [...shiftedFiles])
+  }
+
+
   return (
-    <div className="w-full h-full flex items-center flex-col">
+    <div onClick={handleChangeIndexSelectedDocs} className="w-full h-full cursor-pointer flex items-center flex-col">
     {datas && 
     <div className='max-h-[180px] border-x border-t   dark:border-white/50   h-full w-full'>
     {datas.type === "audio/mpeg" ? <ReactAudioPlayer

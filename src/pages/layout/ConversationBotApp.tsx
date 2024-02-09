@@ -9,22 +9,21 @@ import { useMicSpeechRecognition } from '@/lib/hooks/useMicSpeechRecognition'
 import { useEffect, useRef, useState } from 'react'
 import { BiMessageDots, BiTargetLock } from 'react-icons/bi'
 import { CiFaceSmile } from 'react-icons/ci'
-import { FaFacebook, FaInstagram } from 'react-icons/fa'
+import { FaCopy, FaFacebook, FaInstagram } from 'react-icons/fa'
 import { HiOutlineEmojiSad } from 'react-icons/hi'
 import { IoLogoWhatsapp } from 'react-icons/io'
-import { IoLogoTiktok, IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
+import { IoCheckmarkDone, IoLogoTiktok, IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
 import { LuBookOpen } from 'react-icons/lu'
-import { MdContentCopy } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { MdCopyAll } from 'react-icons/md'
 
 const ConversationBotApp = () => {
-
     const [showShare, setShowShare] = useState(false)
+    const [loadingCopyClipboard, setLoadingCopyClipboard] = useState(false)
     const menuRef = useRef(null)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
-    const [conversationFocusedById, setConversationFocusedById] = useState("")
-    const [focusedConversation, setFocusedConversation] = useState(false)
-    const {isStandart, setShowFeedbackModal, setContentMSWord, setToogleSendEmailWord, toogleSendEmailWord} = useStoreState()
+
+    const {isStandart, setShowFeedbackModal, setContentMSWord, focusedConversation, setFocusedConversation, setConversationFocusedById, conversationFocusedById, setToogleSendEmailWord, toogleSendEmailWord} = useStoreState()
 
     useEffect(() => {
       const handler = (e: any)=>{
@@ -49,12 +48,7 @@ const ConversationBotApp = () => {
           {exampleConversation.map((item) => (
             <div key={item.id} className={` ${item.role === "bot" ? `${focusedConversation && conversationFocusedById === item.id ?  "bg-[#a7a4f7] text-white" : "bg-[#DADAEA] text-black" } ` : "bg-[#040C34CC] text-white dark:text-gray-200"}  space-y-3 relative  rounded-md px-3 py-2 text-xs`}>
           {item.role === "bot" && toogleSendEmailWord && conversationFocusedById === item.id && (
-            <div className="absolute bottom-8 z-40 flex flex-col gap-2 border border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
-             <Link to={"/emailai"}>
-                <button type='button' onClick={() => setContentMSWord(item.content)} className='p-2 bg-primary rounded-md text-white '>
-                  Email/Text
-                </button>
-             </Link>
+            <div className="absolute bottom-8 z-20 border border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
               <button type='button'  onClick={() => {
                 setContentMSWord(item.content)
                 setToogleSendEmailWord(false)
@@ -68,7 +62,7 @@ const ConversationBotApp = () => {
             <button type='button' onClick={() => {
               setConversationFocusedById(item.id)
               setToogleSendEmailWord(false)
-              setFocusedConversation(true)
+              setFocusedConversation(!focusedConversation)
               setShowShare(false)
             }} className={`p-1 opacity-80 bg-[#040C34] dark:bg-[#343434] rounded-md absolute ${toogleSendEmailWord && item.id === conversationFocusedById ? "-top-1" : "top-2"} left-2 hover:opacity-100`}>
             <BiTargetLock size={20} color="white" />
@@ -86,10 +80,12 @@ const ConversationBotApp = () => {
           <p className='font-bold'>{item.content}</p>
          {item.role === "bot" ? (
            <div ref={menuRef} className='mt-3 flex gap-2 flex-wrap'>
-           <button className='text-xs black-button flex items-center'>
-             <MdContentCopy size={15} />
-             <span>Copy</span>
-           </button> 
+         <CopyToClipboard  text={item.content} onCopy={() => setLoadingCopyClipboard(true)}>
+          <button className='text-xs black-button flex items-center'>
+            {loadingCopyClipboard ? <IoCheckmarkDone size={17} color="white" />: <MdCopyAll size={17} color="white" />}
+            {loadingCopyClipboard ? <span>Copied</span>: <span>Copy</span>}
+            </button> 
+         </CopyToClipboard>
            <button onClick={() => {
             setShowShare((prev) => !prev)
            }} className='text-xs black-button flex items-center'>

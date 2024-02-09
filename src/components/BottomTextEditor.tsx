@@ -7,11 +7,11 @@ import { FaFacebook, FaInstagram, FaSave, FaShareAlt } from 'react-icons/fa'
 import { IoLogoWhatsapp, IoMdMail } from 'react-icons/io'
 import { IoLogoTiktok } from 'react-icons/io5'
 import { MdFileDownload } from 'react-icons/md'
-
+import { FaFilePdf } from "react-icons/fa";
+import { BsFiletypeDocx } from "react-icons/bs";
 
 const BottomTextEditor = () => {
     const navigate = useNavigate()
-
     const [showShare, setShowShare] = useState(false)
     const [showSave, setShowSave] = useState(false)
     const [showDownload, setShowDownload] = useState(false)
@@ -19,9 +19,15 @@ const BottomTextEditor = () => {
   return (  
     <div className='flex justify-between gap-2 relative py-1.5 px-3 w-full bg-[#040C34] dark:text-black'>
           {showDownload && (
-            <div className="absolute flex flex-col bg-white min-w-[100px] gap-1 border top-[-3.5rem] left-[10px] rounded-md ">
-              <button type='button' className='hover:font-semibold'>.pdf</button>
-              <button type='button' className='hover:font-semibold'>.docx</button>
+            <div className="absolute flex flex-col border border-black bg-white min-w-[100px] gap-1 top-[-6.9rem] left-[10px] rounded-md ">
+              <button type='button' className='py-3 px-4 group   flex hover:font-semibold min-w-[120px] w-full items-center gap-2'>
+                <FaFilePdf size={30} className=' group-hover:opacity-100 opacity-80' color='red' />
+                <span>.pdf</span>
+              </button>
+              <button type='button' className='pb-3 pt-2 px-4 group flex hover:font-semibold min-w-[120px] w-full items-center gap-2'>
+                <BsFiletypeDocx size={30} className=' group-hover:opacity-100 opacity-80' color='black' />
+                <span>.docx</span>
+              </button>
             </div>
           )}
           {showSave && (
@@ -49,7 +55,7 @@ const BottomTextEditor = () => {
                   <FaInstagram color="#b5288f" size={25} />
                 </a>
                 <a target='_blank' href='https://tiktok.com'>
-                  <IoLogoTiktok size={25} />
+                  <IoLogoTiktok size={25} />  
                 </a>
             </div>
           )}

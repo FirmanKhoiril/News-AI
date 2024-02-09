@@ -135,8 +135,8 @@ const RenderHTMLContent = ({ htmlContent }: { htmlContent: string }) => {
          {contentMSWord !== "" && textContent !== "" || editorContent !== "" ? (
           <>
          <div className="absolute -z-10 flex flex-wrap gap-2 flex-col w-full h-full">
-         {/* <p className=''> {contentMSWord !== "" ? textContent : contentMSWord && textContent === "" ? editorContent : editorContent}</p> */}
-         <p className='' dangerouslySetInnerHTML={{__html: contentMSWord !== "" ? draftToHtml(convertToRaw(text.getCurrentContent())) : contentMSWord && textContent === "" ? draftToHtml(convertToRaw(editorState.getCurrentContent())) : draftToHtml(convertToRaw(editorState.getCurrentContent()))}} />
+         <p className=''> {contentMSWord !== "" ? textContent : contentMSWord && textContent === "" ? editorContent : editorContent}</p>
+         {/* <p className='' dangerouslySetInnerHTML={{__html: contentMSWord !== "" ? draftToHtml(convertToRaw(text.getCurrentContent())) : contentMSWord && textContent === "" ? draftToHtml(convertToRaw(editorState.getCurrentContent())) : draftToHtml(convertToRaw(editorState.getCurrentContent()))}} /> */}
          </div>
            <PDFViewer className='w-full max-h-[64dvh] min-h-[63dvh] overflow-y-auto'>
            <Document title='MS Word' author='User' subject='Document MS Word' keywords='word document'>

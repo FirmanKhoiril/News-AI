@@ -106,7 +106,7 @@ const ConversationBotApp = () => {
           )}
 
           {item.role === "user" && (
-            <textarea disabled={editableText ? false : true}  className='outline-none pt-2 resize-none bg-transparent w-full'  value={editableText || editableInput !== "" ? editableInput : item.content } onChange={(e) => setEditableInput(e.target.value)} ></textarea>
+            <input disabled={editableText ? false : true}  className='outline-none pt-2 resize-none bg-transparent w-full'  value={editableText || editableInput !== "" ? editableInput : item.content } onChange={(e) => setEditableInput(e.target.value)} />
           )}
 
          {item.role === "bot" ? (
@@ -158,7 +158,7 @@ const ConversationBotApp = () => {
             if(editableInput === "") setEditableInput(item.content)
             setEditableText(true)
           }} className='text-xs black-button'>Edit</button>
-          <button className='text-xs black-button'>{editableInput !== "" ? editableInput.length : item.content.length} words count</button>
+          <button className='text-xs black-button'>{editableInput !== "" ? editableInput.length : editableInput === "" && editableText ? editableInput.length : item.content.length} words count</button>
           </div>
           {editableText && (
             <div className="flex items-center gap-4">

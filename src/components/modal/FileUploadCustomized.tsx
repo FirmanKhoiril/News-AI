@@ -17,6 +17,9 @@ const FileUploadCustomized = () => {
     setShowCustomizedPreviewFileUpload(false)
     setPasteTextContent("")
   }
+
+  const totalPages = Math.ceil(selectedDocs.length / 2);
+
   return (
     <div className='fixed z-30 px-4 py-6 top-16 rounded-md shadow-[0px_5px_5px_0px] shadow-black/30 bg-white dark:text-white text-black h-full max-h-[90dvh] w-[83%] mx-3 dark:bg-black flex gap-1'>
     <div className='col-span-4 border max-w-[300px] max-h-full w-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
@@ -142,7 +145,7 @@ const FileUploadCustomized = () => {
             )}
             </div>
           <button type='button' className='bg-[#040C34] mx-auto flex items-center justify-center text-white w-[84px] h-[25px] text-[10px] font-semibold rounded-[10px]'>
-            Page 1 of 2
+            Page 1 of {totalPages}
           </button>
           </div>
          }

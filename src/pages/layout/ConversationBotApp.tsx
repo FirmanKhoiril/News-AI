@@ -16,10 +16,14 @@ import { IoCheckmarkDone, IoLogoTiktok, IoMicOutline, IoSend, IoShareSocialSharp
 import { LuBookOpen } from 'react-icons/lu'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { MdCopyAll } from 'react-icons/md'
+import { Link } from 'react-router-dom'
 
 const ConversationBotApp = () => {
     const [showShare, setShowShare] = useState(false)
     const [loadingCopyClipboard, setLoadingCopyClipboard] = useState(false)
+    const [loadingCopyClipboarUser, setLoadingCopyClipboardUser] = useState(false)
+    const [editableText, setEditableText] = useState(false)
+    const [editableInput, setEditableInput] = useState("")
     const menuRef = useRef(null)
     const {listening, transcript, handleMic} = useMicSpeechRecognition()
 
@@ -35,6 +39,17 @@ const ConversationBotApp = () => {
       return () => window.removeEventListener('mousedown', handler);
     }, []);
 
+    
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoadingCopyClipboard(false);
+      setLoadingCopyClipboardUser(false);
+    }, 4000);
+
+    return () => clearTimeout(timeoutId);
+  }, [loadingCopyClipboarUser, loadingCopyClipboard]);
+
+
   return (
     <div className={`${isStandart === "standart" ? "grid  gap-3 grid-cols-12" : "flex items-center gap-2  "} card w-full  overflow-y-auto h-full`}>
     <div className='col-span-8 border w-full rounded-md shadow dark:border-gray-700 h-full'>
@@ -48,7 +63,16 @@ const ConversationBotApp = () => {
           {exampleConversation.map((item) => (
             <div key={item.id} className={` ${item.role === "bot" ? `${focusedConversation && conversationFocusedById === item.id ?  "bg-[#a7a4f7] text-white" : "bg-[#DADAEA] text-black" } ` : "bg-[#040C34CC] text-white dark:text-gray-200"}  space-y-3 relative  rounded-md px-3 py-2 text-xs`}>
           {item.role === "bot" && toogleSendEmailWord && conversationFocusedById === item.id && (
-            <div className="absolute bottom-8 z-20 border border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
+            <div className="absolute bottom-8 z-20 border flex flex-col gap-2 border-primary bg-white dark:bg-black p-1 rounded-md max-w-[180px]  right-2">
+              <Link to={"/emailai"}>
+              <button type='button'  onClick={() => {
+                setContentMSWord(item.content)
+                setToogleSendEmailWord(false)
+                setShowShare(false)
+              }} className='p-2 bg-primary w-full rounded-md text-white'>
+                Email
+              </button>
+              </Link>
               <button type='button'  onClick={() => {
                 setContentMSWord(item.content)
                 setToogleSendEmailWord(false)
@@ -77,9 +101,16 @@ const ConversationBotApp = () => {
            </div>
          </div>
          )}
-          <p className='font-bold'>{item.content}</p>
+          {item.role === "bot" && (
+            <p className=' font-semibold'>{item.content}</p>
+          )}
+
+          {item.role === "user" && (
+            <textarea disabled={editableText ? false : true}  className='outline-none pt-2 resize-none bg-transparent w-full'  value={editableText || editableInput !== "" ? editableInput : item.content } onChange={(e) => setEditableInput(e.target.value)} ></textarea>
+          )}
+
          {item.role === "bot" ? (
-           <div ref={menuRef} className='mt-3 flex gap-2 flex-wrap'>
+           <div ref={menuRef} className='mt-2 flex gap-2 flex-wrap'>
          <CopyToClipboard  text={item.content} onCopy={() => setLoadingCopyClipboard(true)}>
           <button className='text-xs black-button flex items-center'>
             {loadingCopyClipboard ? <IoCheckmarkDone size={17} color="white" />: <MdCopyAll size={17} color="white" />}
@@ -118,10 +149,26 @@ const ConversationBotApp = () => {
            </button>
          </div>
          ) : (
-          <div className='mt-3 flex gap-2'>
-          <button className='text-xs black-button'>Copy</button>
-          <button className='text-xs black-button'>Edit</button>
+        <div className='flex gap-2 justify-between items-center'>
+          <div className="w-full flex gap-2">
+          <CopyToClipboard text={editableInput !== "" ? editableInput : item.content}  onCopy={() => setLoadingCopyClipboardUser(true)}>
+              <button type='button'  className='text-xs black-button'>{loadingCopyClipboarUser ? "Copied" : "Copy"}</button>
+            </CopyToClipboard>
+          <button type='button' onClick={() => {
+            if(editableInput === "") setEditableInput(item.content)
+            setEditableText(true)
+          }} className='text-xs black-button'>Edit</button>
           <button className='text-xs black-button'>{item.content.length} words count</button>
+          </div>
+          {editableText && (
+            <div className="flex items-center gap-4">
+              <button onClick={() => setEditableText(false)} className=' rounded-md bg-primary px-5 py-2 '>Save</button>
+              <button onClick={() => {
+                setEditableText(false)
+                setEditableInput("")
+              }} className='border dark:border-white/40 rounded-md border-black/40 px-4 py-2 '>Cancel</button>
+            </div>
+          )}
         </div>
          )}
          {item.role === "bot" && (

@@ -27,7 +27,9 @@ type Store = {
     setIsStandart: (isStandart: "customized" | "standart") => void
     setSelectedDocs: (update: (prevSelectedDocs: File[]) => File[]) => void;
     setSelectedCustomizedDocs: (update: (prevSelectedDocs: File[]) => File[]) => void;
+    setSelectedAIUpload: (update: (prevSelectedDocs: File[]) => File[]) => void;
     selectedCustomizedDocs?: File[],
+    selectedAIUpload?: File[],
     pasteTextContent: string,
     setPasteTextContent: (pasteTextContent: string) => void
     showCustomizedPreviewFileUpload: boolean,
@@ -57,6 +59,8 @@ export const useStoreState = create<Store>()((set) => ({
     focusedConversation: false,
     selectedCustomizedDocs: [],
     setSelectedCustomizedDocs: (update) => set((state) => ({ selectedCustomizedDocs: update(state.selectedCustomizedDocs) })),
+    selectedAIUpload: [],
+    setSelectedAIUpload: (update) => set((state) => ({ selectedAIUpload: update(state.selectedAIUpload) })),
     setFocusedConversation: (focusedConversation) => set({focusedConversation}),
     conversationFocusedById: "",
     setConversationFocusedById: (conversationFocusedById) => set({conversationFocusedById}),

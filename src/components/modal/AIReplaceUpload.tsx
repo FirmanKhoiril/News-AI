@@ -12,14 +12,16 @@ import Microlink from "@microlink/react";
 import ReactAudioPlayer from "react-audio-player"
 
 const AIReplaceUpload = () => {
-    const {setShowAiReplace, selectedDocs} = useStoreState()
+    const {setShowAiReplace, selectedAIUpload, setSelectedDocs, setSelectedAIUpload} = useStoreState()
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setSelectedAIUpload((_) => [])
+        setSelectedDocs((prev) => [...prev, ...Array.from(selectedAIUpload)])
         setShowAiReplace(false)
     }
 
-    const totalPages = Math.ceil(selectedDocs.length / 2);
+    const totalPages = Math.ceil(selectedAIUpload.length / 2);
   return (
     <div className='fixed z-30 px-4 py-6 top-16 rounded-md shadow-[0px_5px_5px_0px] shadow-black/30 bg-white dark:text-white text-black h-full max-h-[90dvh] w-[83%] mx-3 dark:bg-black flex gap-1'>
     <div className='col-span-4 border max-w-[300px] w-full max-h-full overflow-y-auto rounded-md shadow dark:border-gray-700 h-full space-y-3 p-4'>
@@ -100,60 +102,60 @@ const AIReplaceUpload = () => {
       <div className="w-full pt-6 px-8 flex flex-col justify-between gap-3 pb-4 rounded-b-md h-full bg-[rgba(4,_12,_52,_0.50)]">
          <div className="">
           <div className="flex items-center gap-4 justify-between w-full">
-          {selectedDocs[0]?.type === "audio/mpeg" ? <ReactAudioPlayer
-              src={window.URL.createObjectURL(selectedDocs[0])}
+          {selectedAIUpload[0]?.type === "audio/mpeg" ? <ReactAudioPlayer
+              src={window.URL.createObjectURL(selectedAIUpload[0])}
               controls
-            /> :  selectedDocs[0]?.type === "youtubeURL" ? <div className="w-full h-full">
-         <ReactPlayer width={450} height={400} style={{borderRadius: '5px'}} url={selectedDocs[0].name} controls muted />
-         </div> : selectedDocs[0]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
-         <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[0].name} size="large" 
+            /> :  selectedAIUpload[0]?.type === "youtubeURL" ? <div className="w-full h-full">
+         <ReactPlayer width={450} height={400} style={{borderRadius: '5px'}} url={selectedAIUpload[0].name} controls muted />
+         </div> : selectedAIUpload[0]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
+         <Microlink  lazy={{ threshold: 0.5 }} url={selectedAIUpload[0].name} size="large" 
 		media="logo"  />
          </div> :
           <div className="w-full items-center  gap-6 max-h-[85%] h-full">
               <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
-              {selectedDocs[0] && (
+              {selectedAIUpload[0] && (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
-                {selectedDocs[0].type === "application/pdf" ? (
+                {selectedAIUpload[0].type === "application/pdf" ? (
                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[0])} />
+                <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedAIUpload[0])} />
                </Worker>
-            ) : selectedDocs[0].type.startsWith("image/") ? (
+            ) : selectedAIUpload[0].type.startsWith("image/") ? (
               <div className="max-h-[180px] rounded-t-md overflow-hidden">
-                <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[0])} alt={selectedDocs[0].name} />
+                <img className="object-cover" src={window.URL.createObjectURL(selectedAIUpload[0])} alt={selectedAIUpload[0].name} />
               </div>
             ) : 
              <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
-              uri: window.URL.createObjectURL(selectedDocs[0]),
+              uri: window.URL.createObjectURL(selectedAIUpload[0]),
              }]} />}
                 </div>
               )}
             </div>
           </div>
          }
-          {selectedDocs[1]?.type === "audio/mpeg" ? <ReactAudioPlayer
-              src={window.URL.createObjectURL(selectedDocs[1])}
+          {selectedAIUpload[1]?.type === "audio/mpeg" ? <ReactAudioPlayer
+              src={window.URL.createObjectURL(selectedAIUpload[1])}
               controls
-            /> :  selectedDocs[1]?.type === "youtubeURL" ? <div className="w-full h-full">
-         <ReactPlayer width={450} height={400} style={{borderRadius: '5px'}} url={selectedDocs[1].name} controls muted />
-         </div> : selectedDocs[1]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
-         <Microlink  lazy={{ threshold: 0.5 }} url={selectedDocs[1].name} size="large" 
+            /> :  selectedAIUpload[1]?.type === "youtubeURL" ? <div className="w-full h-full">
+         <ReactPlayer width={450} height={400} style={{borderRadius: '5px'}} url={selectedAIUpload[1].name} controls muted />
+         </div> : selectedAIUpload[1]?.type === "websiteURL" ? <div className="flex items-center justify-center w-full h-full">
+         <Microlink  lazy={{ threshold: 0.5 }} url={selectedAIUpload[1].name} size="large" 
 		media="logo"  />
          </div> :
           <div className="w-full items-center  gap-6 max-h-[85%] h-full">
               <div className="flex pb-4 justify-between gap-4 px-10 items-center w-full">
-              {selectedDocs[1] && (
+              {selectedAIUpload[1] && (
                 <div className="w-full h-full max-h-[55dvh] rounded-md overflow-y-auto">
-                {selectedDocs[1].type === "application/pdf" ? (
+                {selectedAIUpload[1].type === "application/pdf" ? (
                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedDocs[1])} />
+                <Viewer theme={"dark"} fileUrl={window.URL.createObjectURL(selectedAIUpload[1])} />
                </Worker>
-            ) : selectedDocs[1].type.startsWith("image/") ? (
+            ) : selectedAIUpload[1].type.startsWith("image/") ? (
               <div className="max-h-[180px] rounded-t-md overflow-hidden">
-                <img className="object-cover" src={window.URL.createObjectURL(selectedDocs[1])} alt={selectedDocs[1].name} />
+                <img className="object-cover" src={window.URL.createObjectURL(selectedAIUpload[1])} alt={selectedAIUpload[1].name} />
               </div>
             ) : 
              <DocViewer pluginRenderers={DocViewerRenderers} documents={[{
-              uri: window.URL.createObjectURL(selectedDocs[1]),
+              uri: window.URL.createObjectURL(selectedAIUpload[1]),
              }]} />}
                 </div>
               )}

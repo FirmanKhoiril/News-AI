@@ -4,7 +4,7 @@ import { YouTubeFile } from './ModalUploadFileOrDocument'
 
 
 const UploadFileAiReplace = () => {
-    const {  isSelectUploadAiReplace, setShowAiReplace, setShowSelectUploadFileAiReplace,  setIsSelectUploadAiReplace,  showSelectUploadFileAiReplace, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl,  setSelectedDocs} = useStoreState() 
+    const {  isSelectUploadAiReplace, setShowAiReplace, setShowSelectUploadFileAiReplace,  setIsSelectUploadAiReplace,  showSelectUploadFileAiReplace, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl,  setSelectedAIUpload} = useStoreState() 
 
     const handleClearSelectedUpload = () => {
         setIsSelectUploadAiReplace("")
@@ -33,7 +33,7 @@ const UploadFileAiReplace = () => {
               text: null as any,
             };
             setYoutubeUrl("")
-            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);   
+            setSelectedAIUpload((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);   
       }
 
       if(websiteUrl !== "") {
@@ -55,7 +55,7 @@ const UploadFileAiReplace = () => {
               text: null as any,
             };
             setWebsiteUrl("")
-            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+            setSelectedAIUpload((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
             setShowAiReplace(true)
             setShowSelectUploadFileAiReplace(false)
 
@@ -93,7 +93,7 @@ const UploadFileAiReplace = () => {
                         >
                         <IoCloudUploadOutline size={38} />
                         <p>
-                        <span>Upload Your {isSelectUploadAiReplace} File</span>     
+                        <span>Upload Your AI Replace {isSelectUploadAiReplace} File</span>     
                         </p>
                         <input
                         type='file'
@@ -103,7 +103,7 @@ const UploadFileAiReplace = () => {
                         onChange={(e) => { 
                             const newFiles = e.target.files;
                              if(newFiles.length > 0) {
-                            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, ...Array.from(newFiles)]);
+                            setSelectedAIUpload((prevSelectedDocs) => [...prevSelectedDocs, ...Array.from(newFiles)]);
                             }}
                           }
                         className='hidden'

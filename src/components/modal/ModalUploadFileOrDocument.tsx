@@ -9,7 +9,7 @@ export type YouTubeFile = {
   }
 
 const ModalUploadFileOrDocument = () => {
-    const {  isSelectUpload, setIsSelectUpload, setShowSelectUploadFile, isStandart,pasteTextContent, setShowCustomizedPreviewFileUpload, showSelectUploadFile, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl, setPasteTextContent, setSelectedDocs} = useStoreState() 
+    const {  isSelectUpload, setIsSelectUpload, setShowSelectUploadFile, isStandart,pasteTextContent, setShowCustomizedPreviewFileUpload, showSelectUploadFile, setSelectedCustomizedDocs, youtubeUrl,websiteUrl,setWebsiteUrl, setYoutubeUrl, setPasteTextContent, setSelectedDocs} = useStoreState() 
 
     const handleClearSelectedUpload = () => {
         setShowSelectUploadFile(false)
@@ -41,8 +41,12 @@ const ModalUploadFileOrDocument = () => {
                 text: null as any,
               };
               setYoutubeUrl("")
-              setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
               setShowSelectUploadFile(false)  
+              if(isStandart === "customized") {
+                setSelectedCustomizedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+              } else {
+                setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+              }
         }
 
         if(websiteUrl !== "") {
@@ -64,8 +68,12 @@ const ModalUploadFileOrDocument = () => {
                 text: null as any,
               };
               setWebsiteUrl("")
-              setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
               setShowSelectUploadFile(false)
+              if(isStandart === "customized") {
+                setSelectedCustomizedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+              } else {
+                setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, convertedFile]);
+              }
         }
         setShowSelectUploadFile(false)  
     }
@@ -114,7 +122,12 @@ const ModalUploadFileOrDocument = () => {
                         onChange={(e) => { 
                             const newFiles = e.target.files;
                              if(newFiles.length > 0) {
-                            setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, ...Array.from(newFiles)]);
+                              if(isStandart === "customized") {
+                                setSelectedCustomizedDocs((prevSelectedDocs) => [...prevSelectedDocs,  ...Array.from(newFiles)]);
+                              } else {
+                                setSelectedDocs((prevSelectedDocs) => [...prevSelectedDocs, ...Array.from(newFiles)]);
+                              }
+                           
                             }}
                           }
                         className='hidden'

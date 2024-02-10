@@ -15,7 +15,7 @@ import { IoLogoWhatsapp } from 'react-icons/io'
 import { IoCheckmarkDone, IoLogoTiktok, IoMicOutline, IoSend, IoShareSocialSharp } from 'react-icons/io5'
 import { LuBookOpen } from 'react-icons/lu'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { MdCopyAll } from 'react-icons/md'
+import { MdCopyAll,MdEdit } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 const ConversationBotApp = () => {
@@ -44,7 +44,7 @@ const ConversationBotApp = () => {
     const timeoutId = setTimeout(() => {
       setLoadingCopyClipboard(false);
       setLoadingCopyClipboardUser(false);
-    }, 4000);
+    }, 8000);
 
     return () => clearTimeout(timeoutId);
   }, [loadingCopyClipboarUser, loadingCopyClipboard]);
@@ -152,13 +152,22 @@ const ConversationBotApp = () => {
         <div className='flex gap-2 justify-between items-center'>
           <div className="w-full flex gap-2">
           <CopyToClipboard text={editableInput !== "" ? editableInput : item.content}  onCopy={() => setLoadingCopyClipboardUser(true)}>
-              <button type='button'  className='text-xs black-button'>{loadingCopyClipboarUser ? "Copied" : "Copy"}</button>
+              <button type='button'  className='text-xs black-button'>
+              {loadingCopyClipboarUser ? <IoCheckmarkDone size={17} color="white" />: <MdCopyAll size={17} color="white" />}
+            {loadingCopyClipboarUser ? <span>Copied</span>: <span>Copy</span>}
+              </button>
             </CopyToClipboard>
           <button type='button' onClick={() => {
             if(editableInput === "") setEditableInput(item.content)
             setEditableText(true)
-          }} className='text-xs black-button'>Edit</button>
-          <button className='text-xs black-button'>{editableInput !== "" ? editableInput.length : editableInput === "" && editableText ? editableInput.length : item.content.length} words count</button>
+          }} className='text-xs flex items-center gap-1 black-button'>
+              <MdEdit size={15} />
+              <span>Edit</span>
+            </button>
+          <button className='text-xs flex items-center black-button'>
+            <LuBookOpen size={15} />
+            <span>{editableInput !== "" ? editableInput.length : editableInput === "" && editableText ? editableInput.length : item.content.length} words count</span>  
+          </button>
           </div>
           {editableText && (
             <div className="flex items-center gap-4">

@@ -14,16 +14,12 @@ import PreviewDocs from "@/components/card/PreviewDocs";
 import ReactAudioPlayer from 'react-audio-player';
 
 const FileUploadPreview = () => {
-    const {selectedDocs, setShowSelectUploadFile, setShowEditUploadFile, isEditMode, isStandart, setShowCustomizedPreviewFileUpload} = useStoreState()
+    const {selectedDocs, setShowSelectUploadFile, setShowEditUploadFile, isEditMode} = useStoreState()
     const [showPreviewImage, setShowPreviewImage] = useState(true)
     
     const ShowEditSpecificFile = () => {
-      if(isStandart === "customized") {
-        setShowCustomizedPreviewFileUpload(true)
-      } else {
         setShowEditUploadFile(true)
         setShowSelectUploadFile(false)
-      }
      }
 
   return (

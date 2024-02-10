@@ -17,7 +17,6 @@ const EditSpecificFile = () => {
     <>
         <div onClick={handleClearSelectedUpload} className="bg-black/80 w-full h-screen fixed z-40 " />
         <form onSubmit={handleSubmit} className="fixed mx-auto h-full max-h-[400px] flex flex-col gap-4 max-w-[350px] overflow-y-auto z-50 inset-0 border dark:border-gray-800/80 top-1/4 card">
-
                 <h1>Edit Your File</h1>
                <div className="w-full overflow-y-auto group outline-none cursor-pointer relative border max-h-[280px] h-full text-sm px-4 py-3 rounded-md border-input bg-background">
                     <div className='absolute inset-0 group-hover:opacity-80 flex items-center  w-full h-full justify-center bg-primary opacity-50 cursor-pointer'>

@@ -49,6 +49,15 @@ const ConversationBotApp = () => {
     return () => clearTimeout(timeoutId);
   }, [loadingCopyClipboarUser, loadingCopyClipboard]);
 
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // Check if editableText is true, and if so, focus the input element
+    if (editableText && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editableText]); 
+
 
   return (
     <div className={`${isStandart === "standart" ? "grid  gap-3 grid-cols-12" : "flex items-center gap-2  "} card w-full  overflow-y-auto h-full`}>
@@ -106,7 +115,7 @@ const ConversationBotApp = () => {
           )}
 
           {item.role === "user" && (
-            <input disabled={editableText ? false : true}  className='outline-none pt-2 resize-none bg-transparent w-full'  value={editableText || editableInput !== "" ? editableInput : item.content } onChange={(e) => setEditableInput(e.target.value)} />
+            <input ref={inputRef} disabled={editableText ? false : true}  className='outline-none pt-2 resize-none bg-transparent w-full'  value={editableText || editableInput !== "" ? editableInput : item.content } onChange={(e) => setEditableInput(e.target.value)} />
           )}
 
          {item.role === "bot" ? (
